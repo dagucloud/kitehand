@@ -1,0 +1,68 @@
+---
+// The top of the home page: the promise, and the reader that proves it on the
+// visitor's own job, with an example already read below it.
+import { SAMPLES } from "../data/samples";
+import type { Copy } from "../i18n/copy";
+import { json, readerConfig } from "../lib/reader-config";
+import ResultCard from "./ResultCard.astro";
+
+interface Props {
+  copy: Copy;
+}
+
+const { copy } = Astro.props;
+const lang = copy.lang;
+const example = SAMPLES[0];
+---
+
+<section class="hero" id="read">
+  <div class="wrap grid">
+    <div>
+      <span class="badge rise rise-1"><span class="dot"></span>{copy.hero.badge}</span>
+      <p class="kicker rise rise-2">{copy.hero.kicker}</p>
+      <h1 class="rise rise-3"><span>{copy.hero.title[0]}</span><span>{copy.hero.title[1]}</span></h1>
+      <p class="lede rise rise-4">{copy.hero.lede}</p>
+    </div>
+    <div class="reader-col rise rise-5">
+      <div class="ghost-stamp" aria-hidden="true">{lang === "ja" ? "募集中" : "Now hiring"}</div>
+      <form class="sheet reader" data-reader novalidate>
+        <div class="sheet-head">
+          <span class="sheet-label">{copy.tool.label}</span>
+          <div class="modes" role="group">
+            {copy.tool.modes.map((m, i) => <button type="button" data-mode={i} aria-pressed={i === 0 ? "true" : "false"}>{m}</button>)}
+          </div>
+        </div>
+        <textarea
+          name="text"
+          data-text
+          aria-label={copy.tool.label}
+          placeholder={copy.tool.placeholders[0]}
+          data-placeholders={JSON.stringify(copy.tool.placeholders)}
+          maxlength={12000}
+          rows={7}></textarea>
+        <div class="reader-foot">
+          <span class="count" data-count></span>
+          <button class="btn btn--shu" type="submit">{copy.tool.submit} <span class="arrow">→</span></button>
+          <span class="working"><span class="spin"></span><span data-working></span></span>
+        </div>
+        <p class="status" data-status role="status"></p>
+        <p class="privacy">{copy.tool.privacy}</p>
+        <div class="samples">
+          <p>{copy.tool.samples}</p>
+          <div class="chips">
+            {SAMPLES.map((s) => <button type="button" class="chip" data-sample={s.slug}>{s.diagnosis[lang].title}</button>)}
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="wrap result-wrap">
+    <ResultCard copy={copy} d={example.diagnosis[lang]} label={copy.tool.example} slug={example.slug} interactive />
+  </div>
+  <div class="toast" data-toast role="status"></div>
+  <script type="application/json" id="reader-config" set:html={json(readerConfig(copy))} />
+</section>
+
+<script>
+  import "../scripts/reader.ts";
+</script>

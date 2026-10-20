@@ -1,0 +1,88 @@
+---
+// Early access: a company hands a job over, with the reading it just saw
+// carried along when there is one.
+import type { Copy } from "../i18n/copy";
+
+interface Props {
+  copy: Copy;
+}
+
+const { copy } = Astro.props;
+const h = copy.handover;
+---
+
+<section class="section handover" id="handover">
+  <div class="wrap grid">
+    <div>
+      <span class="eyebrow">{h.eyebrow}</span>
+      <h2 class="section-title">{h.title}</h2>
+      <p class="lede">{h.lede}</p>
+    </div>
+    <form data-handover data-lang={copy.lang} data-sending={h.sending} data-error={h.error} novalidate>
+      <div class="field">
+        <label for="ho-email">{h.email}</label>
+        <input id="ho-email" name="email" type="email" autocomplete="email" required />
+      </div>
+      <div class="field">
+        <label for="ho-company">{h.company}</label>
+        <input id="ho-company" name="company" autocomplete="organization" required />
+      </div>
+      <div class="field">
+        <label for="ho-job">{h.job}</label>
+        <textarea id="ho-job" name="job" placeholder={h.jobHint}></textarea>
+      </div>
+      <p class="note" data-note aria-live="polite"></p>
+      <button class="btn btn--shu" type="submit">{h.submit} <span class="arrow">→</span></button>
+      <div class="done" role="status">{h.done}</div>
+    </form>
+  </div>
+</section>
+
+<script>
+  import { formatHires, tally, type Diagnosis } from "../lib/diagnosis";
+  import { track } from "../scripts/track";
+
+  const form = document.querySelector<HTMLFormElement>("[data-handover]")!;
+  const note = form.querySelector<HTMLElement>("[data-note]")!;
+  const button = form.querySelector<HTMLButtonElement>("button[type=submit]")!;
+  const job = form.querySelector<HTMLTextAreaElement>("[name=job]")!;
+  let reading: { d: Diagnosis; slug: string } | null = null;
+
+  // A job read on this page comes along, so nobody pastes it twice.
+  window.addEventListener("kitehand:read", (event) => {
+    const detail = (event as CustomEvent<{ d: Diagnosis; slug: string; text: string }>).detail;
+    reading = detail;
+    if (!job.value.trim() && detail.text) job.value = detail.text;
+  });
+
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const data = new FormData(form);
+    const label = button.innerHTML;
+    button.disabled = true;
+    button.textContent = form.dataset.sending ?? "";
+    note.textContent = "";
+    try {
+      const response = await fetch("/api/handover", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({
+          email: data.get("email"),
+          company: data.get("company"),
+          job: data.get("job"),
+          title: reading?.d.title ?? "",
+          hires: reading ? Number(formatHires(tally(reading.d).hires)) : null,
+          lang: form.dataset.lang,
+        }),
+      });
+      if (!response.ok) throw new Error(String(response.status));
+      form.classList.add("is-done");
+      track("handover_sent", { slug: reading?.slug ?? "", read: reading !== null });
+    } catch {
+      note.textContent = form.dataset.error ?? "";
+    } finally {
+      button.disabled = false;
+      button.innerHTML = label;
+    }
+  });
+</script>

@@ -1,0 +1,86 @@
+---
+// One clerk's morning as Kitehand runs it, revealed step by step as the
+// visitor scrolls: the empty seat and its clock beside the work getting done.
+import type { Copy } from "../i18n/copy";
+
+interface Props {
+  copy: Copy;
+}
+
+const { copy } = Astro.props;
+const m = copy.morning;
+---
+
+<section class="section morning" id="morning">
+  <div class="wrap">
+    <span class="eyebrow">{m.eyebrow}</span>
+    <h2 class="section-title">{m.title}</h2>
+    <p class="lede">{m.lede}</p>
+    <div class="grid">
+      <aside class="seat" aria-hidden="true">
+        <div class="who">
+          <svg width="56" height="64" viewBox="0 0 92 104" fill="none">
+            <rect x="22" y="4" width="48" height="46" rx="12" fill="#262d39" stroke="#6b7180" stroke-width="3"></rect>
+            <rect x="12" y="52" width="68" height="16" rx="8" fill="#262d39" stroke="#6b7180" stroke-width="3"></rect>
+            <path d="M46 68 V86 M24 98 L46 86 L68 98" stroke="#6b7180" stroke-width="4" stroke-linecap="round"></path>
+          </svg>
+          <div>
+            <strong>{m.seat}</strong>
+            <span class="tag">{m.empty}</span>
+          </div>
+        </div>
+        <div class="on"><img src="/icon-small.svg" alt="" width="28" height="28" />● {m.working}</div>
+        <div class="clock" data-clock>{m.steps[0].time}</div>
+        <div class="bar"><i data-progress></i></div>
+      </aside>
+      <ol class="steps">
+        {
+          m.steps.map((s) => (
+            <li class:list={["step", s.mark && `step--${s.mark}`]} data-step data-time={s.time}>
+              <span class="mark">
+                <svg viewBox="0 0 16 16" fill="none">
+                  <path d="M3.5 8.5l3 3L12.5 5" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </span>
+              <span class="time">{s.time}</span>
+              <div class="body">
+                <h3>{s.title}</h3>
+                <p>{s.body}</p>
+                {s.mark === "stamp" && <span class="approved">{m.approved}</span>}
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+    {
+      m.film && (
+        <div class="film">
+          <span class="eyebrow">{m.film}</span>
+          <video src="/kitehand-film-ja.mp4" poster="/film-poster.jpg" controls preload="none" playsinline />
+        </div>
+      )
+    }
+  </div>
+</section>
+
+<script>
+  const steps = [...document.querySelectorAll<HTMLElement>("[data-step]")];
+  const clock = document.querySelector<HTMLElement>("[data-clock]");
+  const progress = document.querySelector<HTMLElement>("[data-progress]");
+  let reached = -1;
+  // A step lights when it reaches the middle of the screen, with every step
+  // before it; the seat's clock shows its time.
+  const light = (index: number) => {
+    if (index <= reached) return;
+    reached = index;
+    steps.forEach((s, i) => s.classList.toggle("is-on", i <= index));
+    if (clock) clock.textContent = steps[index].dataset.time ?? "";
+    if (progress) progress.style.width = `${((index + 1) / steps.length) * 100}%`;
+  };
+  const observer = new IntersectionObserver(
+    (entries) => entries.forEach((e) => e.isIntersecting && light(steps.indexOf(e.target as HTMLElement))),
+    { rootMargin: "-45% 0px -45% 0px" },
+  );
+  steps.forEach((s) => observer.observe(s));
+</script>

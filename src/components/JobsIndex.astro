@@ -1,0 +1,47 @@
+---
+import { SAMPLES } from "../data/samples";
+import type { Copy } from "../i18n/copy";
+import Base from "../layouts/Base.astro";
+import { formatHires, tally } from "../lib/diagnosis";
+import Footer from "./Footer.astro";
+import Header from "./Header.astro";
+
+interface Props {
+  copy: Copy;
+}
+
+const { copy } = Astro.props;
+const lang = copy.lang;
+const base = lang === "ja" ? "/ja/" : "/";
+const path = `${base}jobs/`;
+const alternate = `${lang === "ja" ? "/" : "/ja/"}jobs/`;
+---
+
+<Base copy={copy} path={path} alternate={alternate} title={`${copy.jobs.more} · Kitehand`}>
+  <Header copy={copy} alternate={alternate} home={false} />
+  <main class="job-hero">
+    <div class="wrap">
+      <span class="eyebrow">{copy.jobs.eyebrow}</span>
+      <h1>{copy.jobs.more}</h1>
+      <div class="trust" style="padding-bottom: 120px">
+        <div class="items">
+          {
+            SAMPLES.map((s) => {
+              const d = s.diagnosis[lang];
+              return (
+                <a class="item" href={`${base}jobs/${s.slug}/`} style="text-decoration:none">
+                  <h3>{d.title}</h3>
+                  <p>{d.summary}</p>
+                  <p style="color: var(--shu); font-weight: 700">
+                    ≈ {formatHires(tally(d).hires)} {copy.result.of}
+                  </p>
+                </a>
+              );
+            })
+          }
+        </div>
+      </div>
+    </div>
+  </main>
+  <Footer copy={copy} alternate={alternate} />
+</Base>

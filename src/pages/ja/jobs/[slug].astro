@@ -1,0 +1,13 @@
+---
+import JobPage from "../../../components/JobPage.astro";
+import { SAMPLES, type Sample } from "../../../data/samples";
+import { COPY } from "../../../i18n/copy";
+
+export function getStaticPaths() {
+  return SAMPLES.map((sample) => ({ params: { slug: sample.slug }, props: { sample } }));
+}
+
+const { sample } = Astro.props as { sample: Sample };
+---
+
+<JobPage copy={COPY.ja} sample={sample} />

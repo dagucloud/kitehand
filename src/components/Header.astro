@@ -1,0 +1,36 @@
+---
+import type { Copy } from "../i18n/copy";
+
+interface Props {
+  copy: Copy;
+  // Where the language switch leads: this page in the other language.
+  alternate: string;
+  // Anchors live on the home page; elsewhere they lead back to it.
+  home?: boolean;
+}
+
+const { copy, alternate, home = true } = Astro.props;
+const base = copy.lang === "ja" ? "/ja/" : "/";
+const to = (anchor: string) => (home ? `#${anchor}` : `${base}#${anchor}`);
+---
+
+<header class="site-header" data-header>
+  <div class="wrap bar">
+    <a class="logo" href={base} aria-label="Kitehand"><img src="/lockup.svg" alt="Kitehand" width="134" height="30" /></a>
+    <nav>
+      <a href={to("morning")}>{copy.nav.morning}</a>
+      <a href={to("how")}>{copy.nav.how}</a>
+      <a href={to("contrast")}>{copy.nav.contrast}</a>
+      <a href={to("faq")}>{copy.nav.faq}</a>
+    </nav>
+    <a class="lang" href={alternate} hreflang={copy.other.lang} lang={copy.other.lang}>{copy.other.label}</a>
+    <a class="btn btn--ink btn--small" href={to("handover")}>{copy.nav.cta}</a>
+  </div>
+</header>
+
+<script>
+  const header = document.querySelector<HTMLElement>("[data-header]");
+  const mark = () => header?.classList.toggle("is-scrolled", window.scrollY > 8);
+  mark();
+  window.addEventListener("scroll", mark, { passive: true });
+</script>

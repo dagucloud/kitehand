@@ -1,0 +1,27 @@
+---
+import type { Copy } from "../i18n/copy";
+
+interface Props {
+  copy: Copy;
+}
+
+const { copy } = Astro.props;
+---
+
+<section class="section how" id="how">
+  <div class="wrap">
+    <span class="eyebrow">{copy.how.eyebrow}</span>
+    <h2 class="section-title">{copy.how.title}</h2>
+    <div class="steps-3">
+      {
+        copy.how.steps.map((s, i) => (
+          <div>
+            <div class="n">{i + 1}</div>
+            <h3>{s.title}</h3>
+            <p>{s.body}</p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

@@ -1,0 +1,273 @@
+// Six common back-office jobs, read the way Kitehand reads a pasted one. They
+// fill the samples a visitor can try without a posting at hand and the job
+// pages search engines find. Hours are for one full-time person's month.
+import type { Diagnosis, Lang } from "../lib/diagnosis";
+
+export type Sample = { slug: string; posting: Record<Lang, string>; diagnosis: Record<Lang, Diagnosis> };
+
+export const SAMPLES: Sample[] = [
+  {
+    slug: "accounting-clerk",
+    posting: {
+      en: "Accounting clerk, full time. Enter vendor invoices, match customer payments, check expense claims, prepare vendor payments, help with the monthly close, answer the phone and internal questions.",
+      ja: "経理事務（派遣・フルタイム）。請求書の受け取りと会計ソフトへの入力、入金の消し込み、経費精算のチェック、支払いの準備、月次決算の補助、電話・来客対応、社内からの問い合わせ対応。",
+    },
+    diagnosis: {
+      en: {
+        title: "Accounting clerk",
+        summary: "Keeps payables, receivables and expenses moving for a small finance team.",
+        hours_per_month: 160,
+        duties: [
+          { name: "Enter vendor invoices", share: "kitehand", hours: 38, how: "Reads each invoice in the inbox, whatever its layout, and enters it in the accounting software.", apps: ["Email", "Accounting software"] },
+          { name: "Match customer payments", share: "kitehand", hours: 22, how: "Clears each deposit against an open invoice and sets aside any payer it can't place, to ask you.", apps: ["Bank portal", "Accounting software"] },
+          { name: "Check expense claims", share: "kitehand", hours: 18, how: "Passes claims within policy and sends the rest back with the rule they broke.", apps: ["Expense tool"] },
+          { name: "Prepare vendor payments", share: "approve", hours: 14, how: "Builds the transfer from the invoices it entered, then waits for your approval to book it.", apps: ["Bank portal"] },
+          { name: "Monthly close reports", share: "kitehand", hours: 18, how: "Pulls the month's figures into your report template and flags anything unusual.", apps: ["Accounting software", "Excel"] },
+          { name: "Phone calls and visitors", share: "human", hours: 30, how: "People expect a person here, so it stays with your team.", apps: [] },
+          { name: "Internal questions about spending", share: "human", hours: 20, how: "Needs judgment and context; Kitehand can draft answers for you to send.", apps: ["Chat"] },
+        ],
+        schedule: "Every weekday 8:00–9:00, plus the 1st of the month for the close",
+        asks_before: ["Any payment", "Paying a vendor whose bank details changed", "Writing off a difference"],
+        first_week: ["Day 1: connect the inbox, the accounting software and the bank", "Day 2: show it payments and expense checks once", "Days 3–5: it works through last month, writing nothing until you approve the results"],
+      },
+      ja: {
+        title: "経理事務",
+        summary: "少人数の経理で、支払い・入金・経費の流れを止めない仕事。",
+        hours_per_month: 160,
+        duties: [
+          { name: "請求書の受け取りと入力", share: "kitehand", hours: 38, how: "届いた請求書を、書式が違っても読み取り、会計ソフトに入力します。", apps: ["メール", "会計ソフト"] },
+          { name: "入金の消し込み", share: "kitehand", hours: 22, how: "入金を売掛と突き合わせて消し込み、取引先がわからないものは確認に回します。", apps: ["銀行ポータル", "会計ソフト"] },
+          { name: "経費精算のチェック", share: "kitehand", hours: 18, how: "規程どおりのものは通し、違反は理由を添えて差し戻します。", apps: ["経費精算システム"] },
+          { name: "支払いの準備", share: "approve", hours: 14, how: "入力した請求書から振込を作り、承認されてから予約します。", apps: ["銀行ポータル"] },
+          { name: "月次決算の資料作成", share: "kitehand", hours: 18, how: "月の数字を報告書のひな形にまとめ、いつもと違う点を知らせます。", apps: ["会計ソフト", "Excel"] },
+          { name: "電話・来客の対応", share: "human", hours: 30, how: "人が出ることが期待される仕事なので、チームに残します。", apps: [] },
+          { name: "社内からの問い合わせ対応", share: "human", hours: 20, how: "判断と文脈が要るため人に。回答の下書きは Kitehand が用意できます。", apps: ["チャット"] },
+        ],
+        schedule: "平日 8:00〜9:00、月初は月次決算も",
+        asks_before: ["すべての支払い", "振込先の口座が変わった取引先への支払い", "差額の処理"],
+        first_week: ["1日目：メール・会計ソフト・銀行をつなぐ", "2日目：支払いと経費チェックを一度やって見せる", "3〜5日目：先月分で試し、承認するまで何も書き込まない"],
+      },
+    },
+  },
+  {
+    slug: "order-entry-clerk",
+    posting: {
+      en: "Order entry clerk. Enter customer orders from email and PDF, confirm orders and delivery dates, check stock, arrange shipments, handle changes and cancellations, answer customer calls about orders.",
+      ja: "受注事務（派遣）。メールやFAXで届く注文の入力、注文確認と納期の連絡、在庫確認、出荷手配、変更・キャンセル対応、注文に関する電話対応。",
+    },
+    diagnosis: {
+      en: {
+        title: "Order entry clerk",
+        summary: "Turns customer orders into shipments, from inbox to tracking number.",
+        hours_per_month: 160,
+        duties: [
+          { name: "Enter customer orders", share: "kitehand", hours: 52, how: "Reads orders from email and PDF, checks codes and prices, and keys them into the order system.", apps: ["Email", "Order system"] },
+          { name: "Send order confirmations", share: "kitehand", hours: 16, how: "Confirms each order with its delivery date from your template.", apps: ["Email"] },
+          { name: "Check stock and delivery dates", share: "kitehand", hours: 20, how: "Looks up stock and lead times before confirming a date.", apps: ["Inventory sheet"] },
+          { name: "Book shipments", share: "kitehand", hours: 14, how: "Books pickups on the carrier's site and sends tracking numbers.", apps: ["Carrier portal"] },
+          { name: "Changes and cancellations", share: "approve", hours: 18, how: "Applies the change, and holds anything that touches price or a shipped order for your OK.", apps: ["Order system"] },
+          { name: "Customer calls about orders", share: "human", hours: 28, how: "Customers want a person on the phone, so this stays with your team.", apps: [] },
+          { name: "Delivery problems", share: "human", hours: 12, how: "Needs negotiation and judgment; Kitehand gathers the order history for you.", apps: [] },
+        ],
+        schedule: "Every 30 minutes through the working day",
+        asks_before: ["Changing a price", "Cancelling an order that has shipped", "A customer's first order"],
+        first_week: ["Day 1: connect the order inbox, order system and carrier", "Day 2: show it one order end to end", "Days 3–5: it enters last week's orders as a trial for you to check"],
+      },
+      ja: {
+        title: "受注事務",
+        summary: "届いた注文を、入力から出荷・追跡番号まで流す仕事。",
+        hours_per_month: 160,
+        duties: [
+          { name: "注文の入力", share: "kitehand", hours: 52, how: "メールや PDF の注文を読み、品番と価格を確かめて受注システムに入力します。", apps: ["メール", "受注システム"] },
+          { name: "注文確認の送信", share: "kitehand", hours: 16, how: "ひな形どおりに、納期を添えて注文確認を送ります。", apps: ["メール"] },
+          { name: "在庫と納期の確認", share: "kitehand", hours: 20, how: "納期を返す前に、在庫と手配日数を確かめます。", apps: ["在庫表"] },
+          { name: "出荷の手配", share: "kitehand", hours: 14, how: "運送会社のサイトで集荷を予約し、追跡番号を送ります。", apps: ["運送会社サイト"] },
+          { name: "変更・キャンセル対応", share: "approve", hours: 18, how: "変更を反映し、価格や出荷済みに関わるものは承認を待ちます。", apps: ["受注システム"] },
+          { name: "注文に関する電話対応", share: "human", hours: 28, how: "電話は人が出ることが期待されるので、チームに残します。", apps: [] },
+          { name: "配送トラブルの対応", share: "human", hours: 12, how: "交渉と判断が要るため人に。注文の経緯は Kitehand がまとめます。", apps: [] },
+        ],
+        schedule: "営業時間中、30分ごと",
+        asks_before: ["価格の変更", "出荷済みの注文のキャンセル", "初めての取引先の注文"],
+        first_week: ["1日目：注文の受付メール・受注システム・運送会社をつなぐ", "2日目：注文を1件、最初から最後までやって見せる", "3〜5日目：先週の注文で試し、結果を確認してもらう"],
+      },
+    },
+  },
+  {
+    slug: "office-administrator",
+    posting: {
+      en: "Office administrator. Track attendance and leave, order supplies, keep employee records, book rooms and travel, prepare payroll data, reception and mail, deal with facility issues, answer internal requests.",
+      ja: "総務事務（パート）。勤怠・休暇の管理、備品の発注、社員情報の更新と入社手続き、会議室・出張の手配、給与データの準備、受付・郵便物、設備トラブル対応、社内からの問い合わせ。",
+    },
+    diagnosis: {
+      en: {
+        title: "Office administrator",
+        summary: "Keeps the office, its people records and its paperwork in order.",
+        hours_per_month: 160,
+        duties: [
+          { name: "Attendance and leave", share: "kitehand", hours: 20, how: "Checks timesheets, flags gaps and updates leave balances.", apps: ["Attendance system", "Excel"] },
+          { name: "Supply orders", share: "approve", hours: 10, how: "Reorders from your usual suppliers; new suppliers or large orders wait for you.", apps: ["Supplier site"] },
+          { name: "Employee records and onboarding", share: "kitehand", hours: 22, how: "Updates records and collects onboarding paperwork from new hires.", apps: ["HR system", "Email"] },
+          { name: "Rooms and travel", share: "kitehand", hours: 16, how: "Books rooms and travel within your travel policy.", apps: ["Calendar", "Travel site"] },
+          { name: "Payroll data", share: "approve", hours: 16, how: "Collects hours and changes into the payroll sheet; you sign off before it goes out.", apps: ["Excel"] },
+          { name: "Routine internal questions", share: "kitehand", hours: 16, how: "Answers questions on leave, forms and policies from your handbook.", apps: ["Chat"] },
+          { name: "Reception and mail", share: "human", hours: 40, how: "Someone has to be at the desk, so this stays with your team.", apps: [] },
+          { name: "Facility issues and on-site vendors", share: "human", hours: 20, how: "Hands-on work in the building stays with people.", apps: [] },
+        ],
+        schedule: "Every weekday at 9:00 and 15:00",
+        asks_before: ["Orders from a new supplier", "Anything over your order limit", "Sending payroll data"],
+        first_week: ["Day 1: connect attendance, HR and the shared inbox", "Day 2: hand it the handbook and show it a payroll month", "Days 3–5: it runs last month's payroll data as a trial"],
+      },
+      ja: {
+        title: "総務事務",
+        summary: "オフィスと社員情報、書類まわりを整えておく仕事。",
+        hours_per_month: 160,
+        duties: [
+          { name: "勤怠・休暇の管理", share: "kitehand", hours: 20, how: "勤怠を確かめ、漏れを知らせ、休暇の残日数を更新します。", apps: ["勤怠システム", "Excel"] },
+          { name: "備品の発注", share: "approve", hours: 10, how: "いつもの取引先から補充し、新しい取引先や大口は承認を待ちます。", apps: ["発注サイト"] },
+          { name: "社員情報と入社手続き", share: "kitehand", hours: 22, how: "社員情報を更新し、入社書類を集めます。", apps: ["人事システム", "メール"] },
+          { name: "会議室・出張の手配", share: "kitehand", hours: 16, how: "出張規程の範囲で会議室と交通・宿を予約します。", apps: ["カレンダー", "予約サイト"] },
+          { name: "給与データの準備", share: "approve", hours: 16, how: "勤怠と変更を給与表にまとめ、確認されてから送ります。", apps: ["Excel"] },
+          { name: "社内からの定型の問い合わせ", share: "kitehand", hours: 16, how: "休暇・申請書・規程の質問に、就業規則をもとに答えます。", apps: ["チャット"] },
+          { name: "受付・郵便物", share: "human", hours: 40, how: "席に人がいる必要があるため、チームに残します。", apps: [] },
+          { name: "設備トラブル・業者の立ち会い", share: "human", hours: 20, how: "建物の中での作業は人に残します。", apps: [] },
+        ],
+        schedule: "平日 9:00 と 15:00",
+        asks_before: ["新しい取引先への発注", "上限を超える発注", "給与データの送信"],
+        first_week: ["1日目：勤怠・人事システム・共有メールをつなぐ", "2日目：就業規則を渡し、給与の1か月分をやって見せる", "3〜5日目：先月の給与データで試す"],
+      },
+    },
+  },
+  {
+    slug: "recruiting-coordinator",
+    posting: {
+      en: "Recruiting coordinator. Screen applications, schedule interviews, keep candidates updated, post jobs, prepare offer letters, collect onboarding documents, talk with candidates and hiring managers, run recruiting events.",
+      ja: "採用アシスタント。応募書類のスクリーニング、面接日程の調整、候補者への連絡、求人媒体への掲載、内定通知書の作成、入社書類の回収、候補者・面接官とのやりとり、採用イベントの運営。",
+    },
+    diagnosis: {
+      en: {
+        title: "Recruiting coordinator",
+        summary: "Moves candidates from application to first day without anyone falling through.",
+        hours_per_month: 160,
+        duties: [
+          { name: "Screen applications", share: "approve", hours: 30, how: "Sorts applicants against your requirements and shows its reasons; you decide who moves on.", apps: ["Applicant tracking"] },
+          { name: "Schedule interviews", share: "kitehand", hours: 28, how: "Finds times across interviewers' calendars and sends the invites.", apps: ["Calendar", "Email"] },
+          { name: "Candidate updates and reminders", share: "kitehand", hours: 18, how: "Keeps every candidate informed at each stage from your templates.", apps: ["Email"] },
+          { name: "Post jobs", share: "kitehand", hours: 10, how: "Posts and refreshes openings on your job boards.", apps: ["Job boards"] },
+          { name: "Offer letters", share: "approve", hours: 8, how: "Drafts each offer from your template; nothing goes out until you approve.", apps: ["Documents"] },
+          { name: "Onboarding documents", share: "kitehand", hours: 14, how: "Collects and checks new hires' documents before day one.", apps: ["Email", "HR system"] },
+          { name: "Conversations with candidates and managers", share: "human", hours: 32, how: "Relationships are the job here; they stay with your team.", apps: [] },
+          { name: "Recruiting events", share: "human", hours: 20, how: "In-person work stays with people.", apps: [] },
+        ],
+        schedule: "Every working hour",
+        asks_before: ["Rejecting a candidate", "Sending an offer", "Changing an interview a manager confirmed"],
+        first_week: ["Day 1: connect the applicant tracking system, calendars and inbox", "Day 2: walk it through one hire's journey", "Days 3–5: it schedules next week's interviews for you to check"],
+      },
+      ja: {
+        title: "採用アシスタント",
+        summary: "応募から入社日まで、候補者を取りこぼさずに進める仕事。",
+        hours_per_month: 160,
+        duties: [
+          { name: "応募書類のスクリーニング", share: "approve", hours: 30, how: "要件に照らして並べ替え、理由を示します。次に進めるかはあなたが決めます。", apps: ["採用管理システム"] },
+          { name: "面接日程の調整", share: "kitehand", hours: 28, how: "面接官の予定から候補日を見つけ、招待を送ります。", apps: ["カレンダー", "メール"] },
+          { name: "候補者への連絡", share: "kitehand", hours: 18, how: "選考の段階ごとに、ひな形どおりに連絡します。", apps: ["メール"] },
+          { name: "求人の掲載", share: "kitehand", hours: 10, how: "求人媒体への掲載と更新をします。", apps: ["求人媒体"] },
+          { name: "内定通知書の作成", share: "approve", hours: 8, how: "ひな形から作り、承認されるまで送りません。", apps: ["文書"] },
+          { name: "入社書類の回収", share: "kitehand", hours: 14, how: "入社日までに書類を集めて確かめます。", apps: ["メール", "人事システム"] },
+          { name: "候補者・面接官とのやりとり", share: "human", hours: 32, how: "関係づくりが仕事の中心なので、チームに残します。", apps: [] },
+          { name: "採用イベントの運営", share: "human", hours: 20, how: "対面の仕事は人に残します。", apps: [] },
+        ],
+        schedule: "営業時間中、1時間ごと",
+        asks_before: ["候補者の不採用連絡", "内定通知の送付", "面接官が確定した日程の変更"],
+        first_week: ["1日目：採用管理システム・カレンダー・メールをつなぐ", "2日目：1人分の選考の流れをやって見せる", "3〜5日目：来週の面接調整を試し、確認してもらう"],
+      },
+    },
+  },
+  {
+    slug: "customer-support-associate",
+    posting: {
+      en: "Customer support associate. Sort incoming tickets, answer common questions by email, process refunds and returns, update order status, write a weekly support report, handle phone support and escalations.",
+      ja: "カスタマーサポート。問い合わせの振り分け、よくある質問へのメール回答、返金・返品の処理、注文状況の更新、週次レポートの作成、電話対応とエスカレーション。",
+    },
+    diagnosis: {
+      en: {
+        title: "Customer support associate",
+        summary: "Answers customers by email and keeps orders, refunds and the support queue moving.",
+        hours_per_month: 160,
+        duties: [
+          { name: "Sort and tag tickets", share: "kitehand", hours: 20, how: "Reads each ticket, tags it and routes it to the right queue.", apps: ["Helpdesk"] },
+          { name: "Answer common questions", share: "approve", hours: 40, how: "Drafts answers from your help center; new kinds of answers wait for you until they're proven.", apps: ["Helpdesk"] },
+          { name: "Refunds and returns", share: "approve", hours: 16, how: "Checks eligibility and prepares the refund; money moves only with your OK.", apps: ["Payments", "Order system"] },
+          { name: "Update order status", share: "kitehand", hours: 14, how: "Keeps orders and customers in step with the carrier.", apps: ["Order system"] },
+          { name: "Weekly support report", share: "kitehand", hours: 6, how: "Counts volumes, response times and top issues into your report.", apps: ["Helpdesk", "Excel"] },
+          { name: "Phone support and escalations", share: "human", hours: 44, how: "Live conversations stay with your team.", apps: [] },
+          { name: "Upset or complex customers", share: "human", hours: 20, how: "Empathy and judgment stay with people; Kitehand prepares the history.", apps: [] },
+        ],
+        schedule: "Continuously through support hours",
+        asks_before: ["Any refund", "An answer to a new kind of question", "Closing a complaint"],
+        first_week: ["Day 1: connect the helpdesk, order system and help center", "Day 2: review its drafts on yesterday's tickets", "Days 3–5: it drafts every reply while you approve"],
+      },
+      ja: {
+        title: "カスタマーサポート",
+        summary: "メールで顧客に答え、注文・返金・問い合わせの列を止めない仕事。",
+        hours_per_month: 160,
+        duties: [
+          { name: "問い合わせの振り分け", share: "kitehand", hours: 20, how: "問い合わせを読んでタグを付け、担当の列に回します。", apps: ["ヘルプデスク"] },
+          { name: "よくある質問への回答", share: "approve", hours: 40, how: "ヘルプセンターをもとに下書きし、新しい種類の回答は承認を待ちます。", apps: ["ヘルプデスク"] },
+          { name: "返金・返品の処理", share: "approve", hours: 16, how: "条件を確かめて返金を準備し、承認されてから実行します。", apps: ["決済", "受注システム"] },
+          { name: "注文状況の更新", share: "kitehand", hours: 14, how: "配送状況に合わせて注文と顧客への連絡を更新します。", apps: ["受注システム"] },
+          { name: "週次レポート", share: "kitehand", hours: 6, how: "件数・応答時間・多い問い合わせをレポートにまとめます。", apps: ["ヘルプデスク", "Excel"] },
+          { name: "電話対応とエスカレーション", share: "human", hours: 44, how: "生の会話はチームに残します。", apps: [] },
+          { name: "難しい・怒っている顧客の対応", share: "human", hours: 20, how: "共感と判断は人に。経緯は Kitehand がまとめます。", apps: [] },
+        ],
+        schedule: "受付時間中、常に",
+        asks_before: ["すべての返金", "新しい種類の質問への回答", "苦情のクローズ"],
+        first_week: ["1日目：ヘルプデスク・受注システム・ヘルプセンターをつなぐ", "2日目：昨日の問い合わせへの下書きを確認する", "3〜5日目：すべての返信を下書きし、承認して送る"],
+      },
+    },
+  },
+  {
+    slug: "sales-assistant",
+    posting: {
+      en: "Sales assistant. Prepare quotes, update the CRM, process contracts and orders, send invoices and follow up on late payments, prepare weekly sales reports, support customer calls and visits, coordinate with the sales team.",
+      ja: "営業アシスタント。見積書の作成、顧客管理システムの更新、契約・受注処理、請求書の送付と入金の催促、週次の営業資料作成、顧客対応の補助、営業チームとの調整。",
+    },
+    diagnosis: {
+      en: {
+        title: "Sales assistant",
+        summary: "Handles the paperwork behind every deal so the sales team can sell.",
+        hours_per_month: 160,
+        duties: [
+          { name: "Prepare quotes", share: "approve", hours: 26, how: "Builds each quote from your price list; any discount waits for your OK.", apps: ["CRM", "Excel"] },
+          { name: "Update the CRM", share: "kitehand", hours: 18, how: "Turns meeting notes and emails into CRM updates.", apps: ["CRM", "Email"] },
+          { name: "Contracts and orders", share: "kitehand", hours: 20, how: "Processes signed contracts into orders and accounts.", apps: ["CRM", "Order system"] },
+          { name: "Invoices and late payments", share: "approve", hours: 16, how: "Sends invoices on schedule and drafts reminders; second reminders wait for you.", apps: ["Accounting software", "Email"] },
+          { name: "Weekly sales report", share: "kitehand", hours: 12, how: "Builds the pipeline report for the weekly meeting.", apps: ["CRM", "Excel"] },
+          { name: "Supporting customer calls and visits", share: "human", hours: 40, how: "Customer relationships stay with your team.", apps: [] },
+          { name: "Coordinating the sales team", share: "human", hours: 28, how: "People work stays with people.", apps: [] },
+        ],
+        schedule: "Every weekday at 8:30 and after each meeting",
+        asks_before: ["Any discount", "A second payment reminder", "Changing contract terms"],
+        first_week: ["Day 1: connect the CRM, price list and accounting software", "Day 2: show it one deal from quote to invoice", "Days 3–5: it prepares this week's quotes for you to check"],
+      },
+      ja: {
+        title: "営業アシスタント",
+        summary: "商談の裏側の事務を引き受け、営業が売ることに集中できるようにする仕事。",
+        hours_per_month: 160,
+        duties: [
+          { name: "見積書の作成", share: "approve", hours: 26, how: "価格表から見積を作り、値引きは承認を待ちます。", apps: ["顧客管理システム", "Excel"] },
+          { name: "顧客管理システムの更新", share: "kitehand", hours: 18, how: "議事メモとメールから顧客情報を更新します。", apps: ["顧客管理システム", "メール"] },
+          { name: "契約・受注処理", share: "kitehand", hours: 20, how: "締結した契約を受注と取引先に登録します。", apps: ["顧客管理システム", "受注システム"] },
+          { name: "請求書の送付と入金の催促", share: "approve", hours: 16, how: "予定どおりに請求書を送り、催促を下書きします。2回目の催促は承認を待ちます。", apps: ["会計ソフト", "メール"] },
+          { name: "週次の営業資料", share: "kitehand", hours: 12, how: "週次会議の案件一覧を作ります。", apps: ["顧客管理システム", "Excel"] },
+          { name: "顧客対応の補助", share: "human", hours: 40, how: "顧客との関係はチームに残します。", apps: [] },
+          { name: "営業チームとの調整", share: "human", hours: 28, how: "人との調整は人に残します。", apps: [] },
+        ],
+        schedule: "平日 8:30 と、商談のあとに",
+        asks_before: ["すべての値引き", "2回目の入金催促", "契約条件の変更"],
+        first_week: ["1日目：顧客管理システム・価格表・会計ソフトをつなぐ", "2日目：見積から請求まで1件やって見せる", "3〜5日目：今週の見積を作り、確認してもらう"],
+      },
+    },
+  },
+];
+
+export const sampleBySlug = (slug: string) => SAMPLES.find((s) => s.slug === slug);

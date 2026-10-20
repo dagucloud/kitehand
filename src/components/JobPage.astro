@@ -1,0 +1,54 @@
+---
+// A job read by Kitehand, as a page search engines find: the posting, the
+// reading, and the way back to read your own.
+import type { Sample } from "../data/samples";
+import { SAMPLES } from "../data/samples";
+import type { Copy } from "../i18n/copy";
+import Base from "../layouts/Base.astro";
+import Footer from "./Footer.astro";
+import Handover from "./Handover.astro";
+import Header from "./Header.astro";
+import ResultCard from "./ResultCard.astro";
+
+interface Props {
+  copy: Copy;
+  sample: Sample;
+}
+
+const { copy, sample } = Astro.props;
+const lang = copy.lang;
+const d = sample.diagnosis[lang];
+const base = lang === "ja" ? "/ja/" : "/";
+const otherBase = lang === "ja" ? "/" : "/ja/";
+const path = `${base}jobs/${sample.slug}/`;
+const alternate = `${otherBase}jobs/${sample.slug}/`;
+---
+
+<Base copy={copy} path={path} alternate={alternate} title={`${copy.jobs.title(d.title)} · Kitehand`} description={copy.jobs.lede(d.title)}>
+  <Header copy={copy} alternate={alternate} home={false} />
+  <main>
+    <section class="job-hero">
+      <div class="wrap">
+        <span class="eyebrow">{copy.jobs.eyebrow}</span>
+        <h1>{copy.jobs.title(d.title)}</h1>
+        <p class="lede">{copy.jobs.lede(d.title)}</p>
+        <div class="posting">
+          <span class="eyebrow">{copy.jobs.posting}</span>
+          <blockquote>{sample.posting[lang]}</blockquote>
+        </div>
+      </div>
+    </section>
+    <div class="wrap result-wrap">
+      <ResultCard copy={copy} d={d} label={copy.jobs.eyebrow} slug={sample.slug} />
+      <div style="margin-top: 40px">
+        <span class="eyebrow">{copy.jobs.more}</span>
+        <div class="job-links">
+          {SAMPLES.filter((s) => s.slug !== sample.slug).map((s) => <a class="chip" href={`${base}jobs/${s.slug}/`}>{s.diagnosis[lang].title}</a>)}
+        </div>
+      </div>
+    </div>
+    <div style="height: clamp(80px, 10vw, 140px)"></div>
+    <Handover copy={copy} />
+  </main>
+  <Footer copy={copy} alternate={alternate} />
+</Base>

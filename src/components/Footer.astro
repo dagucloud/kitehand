@@ -1,0 +1,24 @@
+---
+import type { Copy } from "../i18n/copy";
+
+interface Props {
+  copy: Copy;
+  alternate: string;
+}
+
+const { copy, alternate } = Astro.props;
+const base = copy.lang === "ja" ? "/ja/" : "/";
+---
+
+<footer class="site-footer">
+  <div class="wrap row">
+    <a href={base} aria-label="Kitehand"><img src="/lockup.svg" alt="Kitehand" width="116" height="26" /></a>
+    <span>{copy.footer.made}</span>
+    <nav>
+      <a href={`${base}jobs/`}>{copy.jobs.more}</a>
+      <a href="https://kitewell.app">{copy.footer.kitewell}</a>
+      <a href={`${base}privacy/`}>{copy.footer.privacy}</a>
+      <a href={alternate} hreflang={copy.other.lang} lang={copy.other.lang}>{copy.other.label}</a>
+    </nav>
+  </div>
+</footer>

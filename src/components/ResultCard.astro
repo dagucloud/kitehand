@@ -1,0 +1,123 @@
+---
+// A job read into duties: the share of a hire Kitehand takes, each duty and
+// who does it, and how the work would run. The reader updates this same
+// markup in place when it reads a pasted job (scripts/reader.ts).
+import type { Copy } from "../i18n/copy";
+import { formatHires, tally, type Diagnosis } from "../lib/diagnosis";
+
+interface Props {
+  copy: Copy;
+  d: Diagnosis;
+  label: string;
+  // The reader's result has actions; a job page's points back to the reader.
+  interactive?: boolean;
+  slug?: string;
+}
+
+const { copy, d, label, interactive = false, slug = "" } = Astro.props;
+const t = tally(d);
+const share = (s: "kitehand" | "approve" | "human") => d.duties.filter((x) => x.share === s).reduce((sum, x) => sum + x.hours, 0);
+const pct = (n: number) => `${(n / t.total) * 100}%`;
+const most = Math.max(...d.duties.map((x) => x.hours));
+const base = copy.lang === "ja" ? "/ja/" : "/";
+---
+
+<section class="result" data-result data-slug={slug} aria-live="polite">
+  <div class="result-top">
+    <div class="result-sum">
+      <div class="sum-inner">
+      <div class="label" data-r="label">{label}</div>
+      <h3 data-r="title">{d.title}</h3>
+      <p class="summary" data-r="summary">{d.summary}</p>
+      <div class="take">{copy.result.hire}</div>
+      <div class="hires"><span class="n" data-r="hires">{formatHires(t.hires)}</span><span class="unit">{copy.result.of}</span></div>
+      <p class="taken" data-r="taken">{copy.result.taken(t.taken, t.total)}</p>
+      <div class="meter" aria-hidden="true">
+        <i class="kitehand" data-r="m-kitehand" style={`width:${pct(share("kitehand"))}`}></i>
+        <i class="approve" data-r="m-approve" style={`width:${pct(share("approve"))}`}></i>
+        <i class="human" data-r="m-human" style={`width:${pct(share("human"))}`}></i>
+      </div>
+      <div class="stamp" aria-hidden="true">{copy.result.stamp}</div>
+      </div>
+    </div>
+    <div class="duties">
+      <table>
+        <thead>
+          <tr>{copy.result.columns.map((c) => <th scope="col">{c}</th>)}</tr>
+        </thead>
+        <tbody data-r="rows">
+          {
+            d.duties.map((x) => (
+              <tr class={x.share}>
+                <td>
+                  <div class="duty-name">{x.name}</div>
+                  <div class="duty-how">{x.how}</div>
+                  {x.apps.length > 0 && <div class="duty-apps">{x.apps.map((a) => <span>{a}</span>)}</div>}
+                </td>
+                <td class="who">
+                  <span class={`pill ${x.share}`}>
+                    <span class={`share-dot ${x.share}`} />
+                    {copy.result.shares[x.share]}
+                  </span>
+                </td>
+                <td>
+                  <span class="duty-hours">
+                    {x.hours}
+                    {copy.result.hours}
+                  </span>
+                  <div class={`duty-bar ${x.share}`} style={`width:${Math.round((x.hours / most) * 72)}px`} />
+                </td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="run">
+    <div>
+      <h4>{copy.result.schedule}</h4>
+      <p data-r="schedule">{d.schedule}</p>
+    </div>
+    <div>
+      <h4>{copy.result.asks}</h4>
+      <ul data-r="asks">{d.asks_before.map((a) => <li>{a}</li>)}</ul>
+    </div>
+    <div>
+      <h4>{copy.result.week}</h4>
+      <ol data-r="week">{d.first_week.map((w) => <li>{w}</li>)}</ol>
+    </div>
+  </div>
+  <div class="result-foot">
+    <p class="estimate">{copy.result.estimate}</p>
+    {
+      interactive ? (
+        <div class="actions">
+          <a class="btn btn--shu" href="#handover" data-act="handover">
+            {copy.result.cta} <span class="arrow">→</span>
+          </a>
+          <button class="btn btn--ghost" type="button" data-act="share">{copy.result.share}</button>
+          <button class="btn btn--ghost" type="button" data-act="save">{copy.result.save}</button>
+        </div>
+      ) : (
+        <div class="actions">
+          <a class="btn btn--shu" href={`${base}#read`}>
+            {copy.jobs.yours} <span class="arrow">→</span>
+          </a>
+          <a class="btn btn--ghost" href={`${base}#handover`}>{copy.result.cta}</a>
+        </div>
+      )
+    }
+  </div>
+  <template data-r="row">
+    <tr>
+      <td>
+        <div class="duty-name"></div>
+        <div class="duty-how"></div>
+        <div class="duty-apps"></div>
+      </td>
+      <td class="who"><span class="pill"><span class="share-dot"></span><span class="who-label"></span></span></td>
+      <td><span class="duty-hours"></span><div class="duty-bar"></div></td>
+    </tr>
+  </template>
+</section>

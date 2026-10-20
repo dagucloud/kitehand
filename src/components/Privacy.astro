@@ -1,0 +1,25 @@
+---
+import type { Copy } from "../i18n/copy";
+import Base from "../layouts/Base.astro";
+import Footer from "./Footer.astro";
+import Header from "./Header.astro";
+
+interface Props {
+  copy: Copy;
+}
+
+const { copy } = Astro.props;
+const base = copy.lang === "ja" ? "/ja/" : "/";
+const alternate = `${copy.lang === "ja" ? "/" : "/ja/"}privacy/`;
+---
+
+<Base copy={copy} path={`${base}privacy/`} alternate={alternate} title={`${copy.privacy.title} · Kitehand`}>
+  <Header copy={copy} alternate={alternate} home={false} />
+  <main class="job-hero" style="padding-bottom: 120px">
+    <div class="wrap prose">
+      <h1>{copy.privacy.title}</h1>
+      {copy.privacy.body.map((p) => <p>{p}</p>)}
+    </div>
+  </main>
+  <Footer copy={copy} alternate={alternate} />
+</Base>
