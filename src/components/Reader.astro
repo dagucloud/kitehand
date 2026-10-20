@@ -1,0 +1,78 @@
+---
+// The sheet a visitor hands their job over on, with samples read ahead of
+// time and one already shown below it.
+import { SAMPLES } from "../data/samples";
+import type { Copy } from "../i18n/copy";
+import { json, readerConfig } from "../lib/reader-config";
+import Phrases from "./Phrases.astro";
+import ResultCard from "./ResultCard.astro";
+
+interface Props {
+  copy: Copy;
+}
+
+const { copy } = Astro.props;
+const lang = copy.lang;
+const example = SAMPLES[0];
+---
+
+<section class="section read" id="read">
+  <div class="wrap grid">
+    <div>
+      <span class="eyebrow">{copy.read.eyebrow}</span>
+      <h2 class="section-title"><Phrases text={copy.read.title} /></h2>
+      <p class="lede">{copy.read.lede}</p>
+    </div>
+    <div class="reader-col">
+      <form class="sheet reader" data-reader novalidate>
+        <div class="sheet-head">
+          <span class="sheet-label">{copy.tool.label}</span>
+          <div class="modes" role="group">
+            {copy.tool.modes.map((m, i) => <button type="button" data-mode={i} aria-pressed={i === 0 ? "true" : "false"}>{m}</button>)}
+          </div>
+        </div>
+        <textarea
+          name="text"
+          data-text
+          aria-label={copy.tool.label}
+          placeholder={copy.tool.placeholders[0]}
+          data-placeholders={JSON.stringify(copy.tool.placeholders)}
+          maxlength={12000}
+          rows={7}></textarea>
+        <div class="contact">
+          <div class="field">
+            <label for="read-email">{copy.handover.email}</label>
+            <input id="read-email" name="email" type="email" autocomplete="email" required />
+          </div>
+          <div class="field">
+            <label for="read-company">{copy.handover.company}</label>
+            <input id="read-company" name="company" autocomplete="organization" required />
+          </div>
+        </div>
+        <div class="reader-foot">
+          <span class="count" data-count></span>
+          <button class="btn btn--shu" type="submit">{copy.tool.submit} <span class="arrow">→</span></button>
+          <span class="working"><span class="spin"></span><span data-working></span></span>
+        </div>
+        <div class="done" role="status">{copy.handover.done}</div>
+        <p class="status" data-status role="status"></p>
+        <p class="privacy">{copy.tool.privacy}</p>
+        <div class="samples">
+          <p>{copy.tool.samples}</p>
+          <div class="chips">
+            {SAMPLES.map((s) => <button type="button" class="chip" data-sample={s.slug}>{s.diagnosis[lang].title}</button>)}
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="wrap result-wrap">
+    <ResultCard copy={copy} d={example.diagnosis[lang]} label={copy.tool.example} slug={example.slug} interactive />
+  </div>
+  <div class="toast" data-toast role="status"></div>
+  <script type="application/json" id="reader-config" set:html={json(readerConfig(copy))} />
+</section>
+
+<script>
+  import "../scripts/reader.ts";
+</script>

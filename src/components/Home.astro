@@ -9,6 +9,7 @@ import Header from "./Header.astro";
 import Hero from "./Hero.astro";
 import How from "./How.astro";
 import Morning from "./Morning.astro";
+import Reader from "./Reader.astro";
 import Trust from "./Trust.astro";
 
 interface Props {
@@ -23,7 +24,7 @@ const path = copy.lang === "ja" ? "/ja/" : "/";
   <Header copy={copy} alternate={copy.other.home} />
   <main>
     <Hero copy={copy} />
-    <div style="height: clamp(80px, 10vw, 140px)"></div>
+    <Reader copy={copy} />
     <Morning copy={copy} />
     <How copy={copy} />
     <Contrast copy={copy} />

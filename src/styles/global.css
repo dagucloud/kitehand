@@ -305,17 +305,48 @@ textarea {
   padding: clamp(40px, 7vw, 96px) 0 0;
 }
 
-.hero .grid {
+.hero .grid,
+.read .grid {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
   gap: clamp(32px, 5vw, 72px);
   align-items: start;
 }
 
+.hero .grid {
+  align-items: center;
+}
+
 @media (max-width: 980px) {
-  .hero .grid {
+  .hero .grid,
+  .read .grid {
     grid-template-columns: 1fr;
   }
+}
+
+.hero .actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 32px;
+}
+
+/* The film's working day, silent, beside the promise. */
+.hero-film {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 16px;
+  background: var(--surface);
+  box-shadow: var(--shadow), 0 0 0 1px rgba(29, 32, 39, 0.08);
+  object-fit: cover;
+}
+
+.read .lede {
+  margin: 22px 0 0;
+  max-width: 30em;
+  font-size: 18px;
+  color: var(--ink-2);
 }
 
 .badge {
@@ -354,9 +385,11 @@ textarea {
 
 .hero h1 {
   margin: 16px 0 0;
-  font: 400 clamp(54px, 8.2vw, 116px) / 0.94 var(--display);
+  font: 400 clamp(44px, 10vw, 72px) / 0.98 var(--display);
   letter-spacing: -0.025em;
 }
+
+
 
 .hero h1 span {
   display: block;
@@ -376,6 +409,17 @@ textarea {
 /* Each half of the Japanese headline stays on one line. */
 :lang(ja) .hero h1 span {
   white-space: nowrap;
+}
+
+/* Beside the film, each line of the headline keeps to one line. */
+@media (min-width: 981px) {
+  .hero h1,
+  :lang(ja) .hero h1 {
+    font-size: clamp(40px, 4.8vw, 70px);
+  }
+  .hero h1 span {
+    white-space: nowrap;
+  }
 }
 
 .hero .lede {
@@ -645,34 +689,6 @@ textarea {
   box-shadow: inset 0 0 0 1.5px var(--ink);
   color: var(--ink);
   transform: translateY(-1px);
-}
-
-/* The faint posting stamp behind the reader. */
-.hero .ghost-stamp {
-  position: absolute;
-  z-index: 0;
-  right: -18px;
-  top: -74px;
-  padding: 10px 22px;
-  border: 5px solid var(--shu);
-  border-radius: 10px;
-  color: var(--shu);
-  font: 400 44px/1 var(--display);
-  letter-spacing: 0.06em;
-  rotate: 9deg;
-  opacity: 0.14;
-  pointer-events: none;
-  white-space: nowrap;
-}
-
-:lang(ja) .hero .ghost-stamp {
-  font-weight: 800;
-}
-
-@media (max-width: 980px) {
-  .hero .ghost-stamp {
-    display: none;
-  }
 }
 
 .reader-col {

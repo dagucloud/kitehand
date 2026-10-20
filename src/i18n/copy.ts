@@ -7,7 +7,8 @@ export type Copy = {
   other: { lang: Lang; label: string; home: string };
   meta: { title: string; description: string; og: string };
   nav: { how: string; morning: string; contrast: string; faq: string; cta: string };
-  hero: { badge: string; kicker: string; title: [string, string]; lede: string };
+  hero: { badge: string; kicker: string; title: [string, string]; lede: string; actions: [string, string] };
+  read: { eyebrow: string; title: string; lede: string };
   tool: {
     label: string;
     modes: [string, string, string];
@@ -80,7 +81,7 @@ const en: Copy = {
   lang: "en",
   other: { lang: "ja", label: "日本語", home: "/ja/" },
   meta: {
-    title: "Kitehand — Hand it the job. Skip the hire.",
+    title: "Kitehand — AI staff for back-office work",
     description: "Hand over a job posting, a manual, or one line. We'll tell you how much of the job Kitehand can take; then it works it in the cloud around the clock, following the process flow you approved, and asks you before money moves.",
     og: "/og-en.png",
   },
@@ -88,8 +89,14 @@ const en: Copy = {
   hero: {
     badge: "Early access · Taking design partners",
     kicker: "Before you post that job",
-    title: ["Hand it the job.", "Skip the hire."],
-    lede: "Hand over a job posting, a manual, or one line, and we'll tell you how much of the job Kitehand can take. Then it works in the cloud around the clock, nights and weekends too, and asks you before money moves.",
+    title: ["Skip the hire.", "Hand it to AI staff."],
+    lede: "Kitehand is AI staff for back-office work: order entry, shipping, accounting. It works your email, accounting software, bank and spreadsheets on screen, the way a person would, around the clock in the cloud, and asks you before money moves.",
+    actions: ["Hand over a job", "Watch the film (77 s)"],
+  },
+  read: {
+    eyebrow: "Hand over a job",
+    title: "Paste the job as you have it.",
+    lede: "A job posting, a manual, or one line. We'll email you how much of it Kitehand can take, and set up its first week with you.",
   },
   tool: {
     label: "The job",
@@ -233,7 +240,7 @@ const ja: Copy = {
   lang: "ja",
   other: { lang: "en", label: "English", home: "/" },
   meta: {
-    title: "Kitehand — その仕事、Kitehand に。",
+    title: "Kitehand — 事務の仕事を引き受ける AI の担当者",
     description: "求人票、手順書、ひとこと。渡していただければ、何人分の仕事を任せられるかをお知らせします。あとはあなたが承認した業務フローのとおりに、クラウドで24時間仕事を進め、お金が動く前には必ずあなたに聞きます。",
     og: "/og-ja.png",
   },
@@ -241,8 +248,14 @@ const ja: Copy = {
   hero: {
     badge: "先行受付中 · デザインパートナー募集",
     kicker: "求人を出す前に",
-    title: ["その仕事、", "Kitehand に。"],
-    lede: "求人票、手順書、ひとこと。渡していただければ、何人分の仕事を任せられるかをお知らせします。あとはクラウドで24時間、夜も休日も仕事を進め、お金が動く前には必ずあなたに聞きます。",
+    title: ["その仕事、", "AI の担当者に。"],
+    lede: "Kitehand は、受注・出荷・経理などの事務を引き受ける AI の担当者です。人と同じように、メール・会計ソフト・銀行・Excel の画面を操作して、クラウドで24時間仕事を進め、お金が動く前だけあなたに聞きます。",
+    actions: ["仕事を渡す", "映像で見る（77秒）"],
+  },
+  read: {
+    eyebrow: "仕事を渡す",
+    title: "あなたの仕事を、貼ってください。",
+    lede: "求人票でも、手順書でも、ひとことでも。どこまで任せられるかをメールでお知らせし、最初の1週間を一緒に立ち上げます。",
   },
   tool: {
     label: "仕事",

@@ -61,7 +61,7 @@ const m = copy.morning;
     </div>
     {
       m.film && (
-        <div class="film">
+        <div class="film" id="film">
           <span class="eyebrow">{m.film}</span>
           <video src={`/kitehand-film-${copy.lang}.mp4`} poster={`/film-poster-${copy.lang}.jpg`} controls preload="none" playsinline />
         </div>

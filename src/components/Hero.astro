@@ -1,10 +1,7 @@
 ---
-// The top of the home page: the promise, and the sheet a visitor hands their
-// job over on, with samples read ahead of time and one already shown below.
-import { SAMPLES } from "../data/samples";
+// The top of the home page: what Kitehand is, in words and on screen. The
+// film's working day plays silently beside the promise, its lines burned in.
 import type { Copy } from "../i18n/copy";
-import { json, readerConfig } from "../lib/reader-config";
-import ResultCard from "./ResultCard.astro";
 
 interface Props {
   copy: Copy;
@@ -12,68 +9,38 @@ interface Props {
 
 const { copy } = Astro.props;
 const lang = copy.lang;
-const example = SAMPLES[0];
 ---
 
-<section class="hero" id="read">
+<section class="hero">
   <div class="wrap grid">
     <div>
       <span class="badge rise rise-1"><span class="dot"></span>{copy.hero.badge}</span>
       <p class="kicker rise rise-2">{copy.hero.kicker}</p>
       <h1 class="rise rise-3"><span>{copy.hero.title[0]}</span><span>{copy.hero.title[1]}</span></h1>
       <p class="lede rise rise-4">{copy.hero.lede}</p>
+      <div class="actions rise rise-5">
+        <a class="btn btn--shu" href="#read">{copy.hero.actions[0]} <span class="arrow">→</span></a>
+        <a class="btn btn--ghost" href="#film">▶ {copy.hero.actions[1]}</a>
+      </div>
     </div>
-    <div class="reader-col rise rise-5">
-      <div class="ghost-stamp" aria-hidden="true">{lang === "ja" ? "募集中" : "Now hiring"}</div>
-      <form class="sheet reader" data-reader novalidate>
-        <div class="sheet-head">
-          <span class="sheet-label">{copy.tool.label}</span>
-          <div class="modes" role="group">
-            {copy.tool.modes.map((m, i) => <button type="button" data-mode={i} aria-pressed={i === 0 ? "true" : "false"}>{m}</button>)}
-          </div>
-        </div>
-        <textarea
-          name="text"
-          data-text
-          aria-label={copy.tool.label}
-          placeholder={copy.tool.placeholders[0]}
-          data-placeholders={JSON.stringify(copy.tool.placeholders)}
-          maxlength={12000}
-          rows={7}></textarea>
-        <div class="contact">
-          <div class="field">
-            <label for="read-email">{copy.handover.email}</label>
-            <input id="read-email" name="email" type="email" autocomplete="email" required />
-          </div>
-          <div class="field">
-            <label for="read-company">{copy.handover.company}</label>
-            <input id="read-company" name="company" autocomplete="organization" required />
-          </div>
-        </div>
-        <div class="reader-foot">
-          <span class="count" data-count></span>
-          <button class="btn btn--shu" type="submit">{copy.tool.submit} <span class="arrow">→</span></button>
-          <span class="working"><span class="spin"></span><span data-working></span></span>
-        </div>
-        <div class="done" role="status">{copy.handover.done}</div>
-        <p class="status" data-status role="status"></p>
-        <p class="privacy">{copy.tool.privacy}</p>
-        <div class="samples">
-          <p>{copy.tool.samples}</p>
-          <div class="chips">
-            {SAMPLES.map((s) => <button type="button" class="chip" data-sample={s.slug}>{s.diagnosis[lang].title}</button>)}
-          </div>
-        </div>
-      </form>
-    </div>
+    <video
+      class="hero-film rise rise-5"
+      src={`/hero-loop-${lang}.mp4`}
+      poster={`/hero-poster-${lang}.jpg`}
+      aria-label={copy.morning.title}
+      autoplay
+      muted
+      loop
+      playsinline
+      preload="metadata"></video>
   </div>
-  <div class="wrap result-wrap">
-    <ResultCard copy={copy} d={example.diagnosis[lang]} label={copy.tool.example} slug={example.slug} interactive />
-  </div>
-  <div class="toast" data-toast role="status"></div>
-  <script type="application/json" id="reader-config" set:html={json(readerConfig(copy))} />
 </section>
 
 <script>
-  import "../scripts/reader.ts";
+  // Motion stays still for visitors who ask for less of it.
+  const film = document.querySelector<HTMLVideoElement>(".hero-film");
+  if (film && matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    film.removeAttribute("autoplay");
+    film.pause();
+  }
 </script>
