@@ -1,6 +1,8 @@
 ---
-// One clerk's morning as Kitehand runs it, revealed step by step as the
-// visitor scrolls: the empty seat and its clock beside the work getting done.
+// One day of three hands passing orders along, revealed step by step as the
+// visitor scrolls: the empty seats, the hand at work, and the clock beside
+// the work getting done.
+import Phrases from "./Phrases.astro";
 import type { Copy } from "../i18n/copy";
 
 interface Props {
@@ -14,7 +16,7 @@ const m = copy.morning;
 <section class="section morning" id="morning">
   <div class="wrap">
     <span class="eyebrow">{m.eyebrow}</span>
-    <h2 class="section-title">{m.title}</h2>
+    <h2 class="section-title"><Phrases text={m.title} /></h2>
     <p class="lede">{m.lede}</p>
     <div class="grid">
       <aside class="seat" aria-hidden="true">
@@ -30,13 +32,16 @@ const m = copy.morning;
           </div>
         </div>
         <div class="on"><img src="/icon-small.svg" alt="" width="28" height="28" />● {m.working}</div>
+        <ul class="hands">
+          {m.hands.map((hand, i) => <li data-hand={i}>{hand}</li>)}
+        </ul>
         <div class="clock" data-clock>{m.steps[0].time}</div>
         <div class="bar"><i data-progress></i></div>
       </aside>
       <ol class="steps">
         {
           m.steps.map((s) => (
-            <li class:list={["step", s.mark && `step--${s.mark}`]} data-step data-time={s.time}>
+            <li class:list={["step", s.mark && `step--${s.mark}`]} data-step data-time={s.time} data-who={s.who}>
               <span class="mark">
                 <svg viewBox="0 0 16 16" fill="none">
                   <path d="M3.5 8.5l3 3L12.5 5" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
@@ -44,6 +49,7 @@ const m = copy.morning;
               </span>
               <span class="time">{s.time}</span>
               <div class="body">
+                {s.who !== undefined && <span class="who">{m.hands[s.who]}</span>}
                 <h3>{s.title}</h3>
                 <p>{s.body}</p>
                 {s.mark === "stamp" && <span class="approved">{m.approved}</span>}
@@ -66,16 +72,18 @@ const m = copy.morning;
 
 <script>
   const steps = [...document.querySelectorAll<HTMLElement>("[data-step]")];
+  const hands = [...document.querySelectorAll<HTMLElement>("[data-hand]")];
   const clock = document.querySelector<HTMLElement>("[data-clock]");
   const progress = document.querySelector<HTMLElement>("[data-progress]");
   let reached = -1;
   // A step lights when it reaches the middle of the screen, with every step
-  // before it; the seat's clock shows its time.
+  // before it; the seats' clock shows its time and the hand doing it.
   const light = (index: number) => {
     if (index <= reached) return;
     reached = index;
     steps.forEach((s, i) => s.classList.toggle("is-on", i <= index));
     if (clock) clock.textContent = steps[index].dataset.time ?? "";
+    hands.forEach((h) => h.classList.toggle("is-on", h.dataset.hand === steps[index].dataset.who));
     if (progress) progress.style.width = `${((index + 1) / steps.length) * 100}%`;
   };
   const observer = new IntersectionObserver(

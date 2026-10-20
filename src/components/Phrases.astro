@@ -1,0 +1,12 @@
+---
+// A heading's text in phrases a line may break between: after Japanese
+// commas and periods, and between English sentences. Each phrase is set
+// inline-block, so a line never breaks inside one, such as ルール.
+interface Props {
+  text: string;
+}
+
+const pieces = Astro.props.text.split(/(?<=[、。])|(?<=\.)(\s+)/).filter(Boolean);
+---
+
+{pieces.map((piece) => (piece.trim() ? <span class="phrase">{piece}</span> : " "))}

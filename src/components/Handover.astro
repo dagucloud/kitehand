@@ -1,6 +1,7 @@
 ---
 // Early access: a company hands a job over, with the reading it just saw
 // carried along when there is one.
+import Phrases from "./Phrases.astro";
 import type { Copy } from "../i18n/copy";
 
 interface Props {
@@ -15,7 +16,7 @@ const h = copy.handover;
   <div class="wrap grid">
     <div>
       <span class="eyebrow">{h.eyebrow}</span>
-      <h2 class="section-title">{h.title}</h2>
+      <h2 class="section-title"><Phrases text={h.title} /></h2>
       <p class="lede">{h.lede}</p>
     </div>
     <form data-handover data-lang={copy.lang} data-sending={h.sending} data-error={h.error} novalidate>

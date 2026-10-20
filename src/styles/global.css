@@ -136,6 +136,11 @@ textarea {
   font-size: 13px;
 }
 
+/* A heading breaks only between its phrases (components/Phrases.astro). */
+.section-title .phrase {
+  display: inline-block;
+}
+
 .section-title {
   margin: 18px 0 0;
   font: 400 clamp(36px, 5vw, 64px) / 1.04 var(--display);
@@ -1164,6 +1169,44 @@ textarea {
   height: 28px;
 }
 
+.seat .hands {
+  list-style: none;
+  margin: 14px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 6px;
+}
+
+.seat .hands li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  font-size: 15px;
+  color: var(--night-muted);
+  background: rgba(236, 232, 223, 0.04);
+  transition: background 0.4s, color 0.4s;
+}
+
+.seat .hands li::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #9fd2b0;
+  opacity: 0.5;
+}
+
+.seat .hands li.is-on {
+  color: var(--night-ink);
+  background: rgba(159, 210, 176, 0.14);
+}
+
+.seat .hands li.is-on::before {
+  opacity: 1;
+}
+
 .seat .clock {
   margin-top: 18px;
   font: 300 clamp(72px, 8vw, 104px) / 1 var(--mono);
@@ -1207,7 +1250,7 @@ textarea {
 .step {
   position: relative;
   display: grid;
-  grid-template-columns: 32px 64px minmax(0, 1fr);
+  grid-template-columns: 32px 84px minmax(0, 1fr);
   gap: 18px;
   padding: 22px 0;
   opacity: 0.35;
@@ -1267,6 +1310,16 @@ textarea {
   font: 500 16px var(--mono);
   color: var(--night-muted);
   padding-top: 4px;
+}
+
+.step .who {
+  display: inline-block;
+  margin-bottom: 8px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: rgba(236, 232, 223, 0.08);
+  font-size: 13px;
+  color: var(--night-muted);
 }
 
 .step h3 {

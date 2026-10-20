@@ -1,4 +1,5 @@
 ---
+import Phrases from "./Phrases.astro";
 import type { Copy } from "../i18n/copy";
 
 interface Props {
@@ -12,7 +13,7 @@ const c = copy.contrast;
 <section class="section contrast" id="contrast">
   <div class="wrap">
     <span class="eyebrow">{c.eyebrow}</span>
-    <h2 class="section-title">{c.title}</h2>
+    <h2 class="section-title"><Phrases text={c.title} /></h2>
     <table>
       <thead>
         <tr><th scope="col">{c.left}</th><th scope="col">{c.right}</th></tr>

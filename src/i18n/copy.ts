@@ -47,7 +47,10 @@ export type Copy = {
     seat: string;
     empty: string;
     working: string;
-    steps: { time: string; title: string; body: string; mark?: "ask" | "stamp" }[];
+    // The hands at work, in the order the work flows; a step names its hand
+    // by index.
+    hands: string[];
+    steps: { time: string; who?: number; title: string; body: string; mark?: "ask" | "stamp" }[];
     approved: string;
     film?: string;
   };
@@ -79,15 +82,15 @@ const en: Copy = {
   other: { lang: "ja", label: "日本語", home: "/ja/" },
   meta: {
     title: "Kitehand — Hand it the job. Skip the hire.",
-    description: "Paste a job posting, a manual, or one line. Kitehand shows how much of the job it can take, then does it every day on your own computer, and asks you before money moves.",
+    description: "Paste a job posting, a manual, or one line. Kitehand shows how much of the job it can take, then works it in the cloud around the clock, following the process flow you approved, and asks you before money moves.",
     og: "/og-en.png",
   },
-  nav: { how: "How it works", morning: "A morning", contrast: "Not an agent", faq: "FAQ", cta: "Hand over a job" },
+  nav: { how: "How it works", morning: "A day", contrast: "Not an agent", faq: "FAQ", cta: "Hand over a job" },
   hero: {
     badge: "Early access · Taking design partners",
     kicker: "Before you post that job",
     title: ["Hand it the job.", "Skip the hire."],
-    lede: "Paste a job posting, a manual, or one line. Kitehand shows how much of the job it can take, then does it every day on your own computer, and asks you before money moves.",
+    lede: "Paste a job posting, a manual, or one line. Kitehand shows how much of the job it can take, then works it in the cloud around the clock, nights and weekends too, and asks you before money moves.",
   },
   tool: {
     label: "The job",
@@ -134,19 +137,20 @@ const en: Copy = {
     yours: "Your job",
   },
   morning: {
-    eyebrow: "A morning, start to finish",
-    title: "The seat is empty. The work gets done.",
-    lede: "One accounting clerk's morning, as Kitehand runs it. Nobody sits at the desk. The manager approves one thing, from a phone.",
-    seat: "Accounting clerk's seat",
-    empty: "Empty",
+    eyebrow: "A day, start to finish",
+    title: "Three empty seats. The work gets done.",
+    lede: "Order entry, shipping and accounting, worked by three Kitehand hands that pass each order along the process flow Kitehand wrote and you approved. Nobody sits at the desks. The manager approves one thing, from a phone.",
+    seat: "Order entry, shipping, accounting",
+    empty: "3 empty seats",
     working: "Kitehand at work",
+    hands: ["Order entry", "Shipping", "Accounting"],
     steps: [
-      { time: "8:00", title: "12 invoices in the inbox", body: "Reads each one, though every vendor lays theirs out differently, and enters it in the accounting software." },
-      { time: "8:20", title: "32 deposits matched", body: "Clears each against an open invoice. One payer it can't place, it sets aside to ask about." },
-      { time: "8:33", title: "14 expense claims checked", body: "Passes the ones within policy and sends one back to its owner with the rule it broke." },
-      { time: "8:47", title: "9 vendor payments built", body: "Prepares the transfer and signs it as preparer. Then it stops and asks.", mark: "ask" },
-      { time: "8:52", title: "Approved from a phone", body: "The manager taps approve. Only then does Kitehand book the transfer with the bank.", mark: "stamp" },
-      { time: "9:00", title: "Morning reported", body: "A summary in the team chat, one question answered, the day's books closed." },
+      { time: "8:02", who: 0, title: "An order arrives, and is keyed in", body: "Reads the customer's purchase order, enters it in the order desk, sends the confirmation, and hands the order to shipping." },
+      { time: "8:15", who: 1, title: "Pickup booked", body: "Books the pickup on the carrier's site, takes the tracking number, and hands the order to accounting." },
+      { time: "8:21", who: 2, title: "Invoice sent", body: "Builds the invoice, emails it, and books the payment it expects. The first order of the day is done." },
+      { time: "11:45", who: 0, title: "An order over its credit limit", body: "One customer's order runs $6,400 over its credit limit. Order entry stops there and asks before anything ships.", mark: "ask" },
+      { time: "11:52", title: "Approved from a phone", body: "The manager taps approve. Only then does the order go on to shipping.", mark: "stamp" },
+      { time: "5:00 PM", title: "42 orders, all invoiced", body: "Where every order is, and whose desk it's on, is on one board. Stuck: none." },
     ],
     approved: "Approved",
     film: "Watch the film (77 s)",
@@ -155,9 +159,9 @@ const en: Copy = {
     eyebrow: "How it works",
     title: "Onboard it like a new hire. Once.",
     steps: [
-      { title: "Hand over the job", body: "A job posting, the manual the last person left, or one line. Kitehand turns it into duties and tells you which it can take." },
+      { title: "Hand over the job", body: "A job posting, the manual the last person left, or one line. Kitehand turns it into duties, tells you which it can take, and writes the process flow it will follow." },
       { title: "Show it once", body: "Give it the sign-ins and do the tricky part while it watches. From then on it repeats the steps exactly, with no improvising." },
-      { title: "Keep the decisions", body: "It asks before money moves or anything leaves the company, and it reports any step it relearned before using it." },
+      { title: "Keep the decisions", body: "It asks before money moves or anything leaves the company. The process flow and the steps change only after you approve them." },
     ],
   },
   contrast: {
@@ -167,7 +171,8 @@ const en: Copy = {
     right: "Kitehand",
     rows: [
       ["Thinks from scratch on every run, so results drift.", "Learns the job once, then repeats the same steps every day."],
-      ["Runs in a vendor's cloud browser that can't reach your systems.", "Runs on your own computer, with your sign-ins, apps and network."],
+      ["Stops when the laptop it runs on sleeps.", "Works in the cloud around the clock. Systems only your office can reach, it works through one office PC."],
+      ["Leaves you guessing what got done across jobs.", "One board shows every order on the process flow, and whose desk it's on."],
       ["Acts first and tells you later.", "Asks before money moves, and keeps every approval on record."],
       ["Quietly changes how it works when a screen changes.", "Tells you what it relearned and waits for your OK."],
       ["Charges for AI on every action.", "Uses AI to learn and relearn; the daily work runs without it."],
@@ -177,9 +182,9 @@ const en: Copy = {
     eyebrow: "Why you can trust it",
     title: "Your desk, your rules, your records.",
     items: [
-      { title: "Passwords stay on your computer", body: "Sign-ins are kept on the machine that does the work. They never reach us." },
+      { title: "Sign-ins encrypted", body: "Passwords and sign-ins are encrypted, kept apart for each company, and used only for the work you handed over. Rather keep them in-house? Run that work on a PC in your office." },
       { title: "Every action on record", body: "What it did, when, with which data, and who approved it, ready for your auditor." },
-      { title: "Desktop apps too", body: "Browsers, email and Excel, and also the old Windows app nobody can replace." },
+      { title: "Desktop apps too", body: "Browsers, email and Excel in the cloud, and the old Windows app nobody can replace, through a PC in your office." },
       { title: "Built on proven engines", body: "Kitehand runs on Kitewell and Dagu, the open-source workflow engine teams run in production." },
     ],
   },
@@ -190,7 +195,9 @@ const en: Copy = {
       { q: "Which jobs fit?", a: "Back-office work that follows a routine: accounting, order entry, admin, recruiting coordination, support. Paste the job and Kitehand says what fits and what should stay with people." },
       { q: "What won't it do?", a: "Phone calls, visitors, negotiation and judgment calls stay with your team. Kitehand marks them as yours from the start." },
       { q: "What if it gets something wrong?", a: "Anything that moves money or leaves the company waits for your approval. Everything else is on record, and you can send work back with a note; it learns from the correction." },
-      { q: "Where does my data go?", a: "Kitehand works on your own computer. Screens go to an AI model only while it learns or relearns a step, and you choose the model, including one on your own network." },
+      { q: "Does it stop when our computers are off?", a: "No. It works in the cloud, nights and weekends included. Only work you choose to keep on an office PC needs that PC switched on." },
+      { q: "Do we have to draw the process?", a: "No. Kitehand writes the process flow from the job you handed over. You approve it, and the work follows it. To change it, say what should change; nobody edits diagrams." },
+      { q: "Where does my data go?", a: "The work runs in our cloud. Sign-ins are encrypted and kept apart for each company. Screens go to an AI model only while it learns or relearns a step. Anything that must stay in-house can run on a PC in your office instead." },
       { q: "Is it available now?", a: "We're taking design partners. Hand over a job and we'll set up its first week with you." },
       { q: "How is it priced?", a: "Per staff member, not per seat or per action. Pricing is set with our design partners." },
     ],
@@ -198,7 +205,7 @@ const en: Copy = {
   handover: {
     eyebrow: "Early access",
     title: "Before you post the next job, hand it over.",
-    lede: "Tell us where to reach you. We'll set up its first week with you, on your own computer.",
+    lede: "Tell us where to reach you. We'll set up its first week with you.",
     email: "Work email",
     company: "Company",
     job: "The job",
@@ -233,15 +240,15 @@ const ja: Copy = {
   other: { lang: "en", label: "English", home: "/" },
   meta: {
     title: "Kitehand — その仕事、Kitehand に。",
-    description: "求人票、手順書、ひとこと。貼るだけで、何人分の仕事を任せられるかがわかります。あとは毎日あなたのパソコンで仕事をこなし、お金が動く前には必ずあなたに聞きます。",
+    description: "求人票、手順書、ひとこと。貼るだけで、何人分の仕事を任せられるかがわかります。あとはあなたが承認した業務フローのとおりに、クラウドで24時間仕事を進め、お金が動く前には必ずあなたに聞きます。",
     og: "/og-ja.png",
   },
-  nav: { how: "しくみ", morning: "ある朝", contrast: "エージェントとの違い", faq: "よくある質問", cta: "仕事を渡す" },
+  nav: { how: "しくみ", morning: "ある一日", contrast: "エージェントとの違い", faq: "よくある質問", cta: "仕事を渡す" },
   hero: {
     badge: "先行受付中 · デザインパートナー募集",
     kicker: "求人を出す前に",
     title: ["その仕事、", "Kitehand に。"],
-    lede: "求人票、手順書、ひとこと。貼るだけで、何人分の仕事を任せられるかがわかります。あとは毎日あなたのパソコンで仕事をこなし、お金が動く前には必ずあなたに聞きます。",
+    lede: "求人票、手順書、ひとこと。貼るだけで、何人分の仕事を任せられるかがわかります。あとはクラウドで24時間、夜も休日も仕事を進め、お金が動く前には必ずあなたに聞きます。",
   },
   tool: {
     label: "仕事",
@@ -288,19 +295,20 @@ const ja: Copy = {
     yours: "あなたの仕事",
   },
   morning: {
-    eyebrow: "ある朝の、最初から最後まで",
-    title: "席には誰もいない。仕事は終わる。",
-    lede: "経理担当1人分の朝を、Kitehand が回すとこうなります。席には誰も座っていません。上長はスマホで1回、承認するだけです。",
-    seat: "経理担当の席",
-    empty: "空席",
+    eyebrow: "ある一日の、最初から最後まで",
+    title: "3つの席は空いたまま。仕事は終わる。",
+    lede: "受注・出荷・経理の3人分を、Kitehand の担当者が回すとこうなります。注文は Kitehand が書き、あなたが承認した業務フローのとおりに、担当者から担当者へ引き継がれます。上長はスマホで1回、承認するだけです。",
+    seat: "受注・出荷・経理の席",
+    empty: "空席 3",
     working: "Kitehand が勤務中",
+    hands: ["受注担当", "出荷担当", "経理アシスタント"],
     steps: [
-      { time: "8:00", title: "受信トレイに請求書が12件", body: "取引先ごとに書式の違う請求書を読み、会計ソフトに入力します。" },
-      { time: "8:20", title: "入金32件を消し込み", body: "売掛と突き合わせて消し込み、取引先がわからない1件は確認に回します。" },
-      { time: "8:33", title: "経費14件をチェック", body: "規程どおりのものは通し、1件は違反の理由を添えて本人に差し戻します。" },
-      { time: "8:47", title: "支払い9件の振込を作成", body: "振込を作り、作成者として印を押して、そこで止まって聞きます。", mark: "ask" },
-      { time: "8:52", title: "スマホで承認", body: "上長が承認を押してから、はじめて銀行に振込を予約します。", mark: "stamp" },
-      { time: "9:00", title: "朝の報告", body: "チームのチャットに報告し、確認1件の答えをもらって、今日の分を締めます。" },
+      { time: "8:02", who: 0, title: "注文が届き、入力する", body: "取引先の注文書を読んで販売管理に登録し、注文請書を返して、出荷担当に引き継ぎます。" },
+      { time: "8:15", who: 1, title: "集荷を手配する", body: "運送会社のサイトで集荷を依頼し、送り状番号を取って、経理アシスタントに引き継ぎます。" },
+      { time: "8:21", who: 2, title: "請求書を送る", body: "請求書を作ってメールで送り、入金予定を登録します。今日最初の注文は、ここで完了です。" },
+      { time: "11:45", who: 0, title: "与信枠を超える注文", body: "ある取引先の注文が、与信枠を64万円超えます。受注担当はそこで止まり、出荷の前にあなたに聞きます。", mark: "ask" },
+      { time: "11:52", title: "スマホで承認", body: "上長が承認を押してから、はじめて出荷担当に渡ります。", mark: "stamp" },
+      { time: "17:00", title: "今日の注文42件、すべて請求まで", body: "どの注文がいま誰のところにあるかは、業務の状況で一目でわかります。止まっている注文は0件。" },
     ],
     approved: "承認",
     film: "映像で見る（77秒）",
@@ -309,9 +317,9 @@ const ja: Copy = {
     eyebrow: "しくみ",
     title: "新しい人と同じように、一度だけ教える。",
     steps: [
-      { title: "仕事を渡す", body: "求人票、前任者の手順書、ひとこと。Kitehand が業務に分け、どれを引き受けられるかを示します。" },
+      { title: "仕事を渡す", body: "求人票、前任者の手順書、ひとこと。Kitehand が業務に分け、どれを引き受けられるかを示し、そのとおりに動く業務フローを書きます。" },
       { title: "一度やって見せる", body: "アカウントを渡し、難しいところを一度やって見せる。あとは同じ手順を、毎日そのまま繰り返します。" },
-      { title: "決めるのは、あなた", body: "お金が動く前や社外に出す前には必ず聞き、覚え直した手順は使う前に報告します。" },
+      { title: "決めるのは、あなた", body: "お金が動く前や社外に出す前には必ず聞きます。業務フローや手順を変えるときは、使う前にあなたの承認を取ります。" },
     ],
   },
   contrast: {
@@ -321,7 +329,8 @@ const ja: Copy = {
     right: "Kitehand",
     rows: [
       ["毎回ゼロから考えるので、結果がぶれる。", "一度覚えた仕事を、毎日同じ手順で繰り返す。"],
-      ["提供元のクラウドのブラウザで動き、社内のシステムに届かない。", "あなたのパソコンで、あなたのアカウント・アプリ・ネットワークを使って動く。"],
+      ["動かしているパソコンが閉じると止まる。", "クラウドで24時間動く。社内からしか使えないシステムには、オフィスのパソコン1台を通して届く。"],
+      ["仕事が複数にまたがると、何がどこまで進んだか見えない。", "業務フローの上で、どの注文がいま誰のところにあるかが一目でわかる。"],
       ["先にやってから、あとで知らせる。", "お金が動く前に聞き、承認はすべて記録に残す。"],
       ["画面が変わると、黙ってやり方を変える。", "覚え直したことを報告し、OK を待つ。"],
       ["操作のたびに AI の利用料がかかる。", "AI を使うのは覚える時と覚え直す時だけ。毎日の仕事は AI なしで回る。"],
@@ -331,9 +340,9 @@ const ja: Copy = {
     eyebrow: "任せられる理由",
     title: "あなたの席、あなたのルール、あなたの記録。",
     items: [
-      { title: "パスワードはパソコンの中だけ", body: "アカウント情報は仕事をするパソコンに保存され、私たちには届きません。" },
+      { title: "アカウント情報は暗号化", body: "パスワードやログイン情報は暗号化し、会社ごとに分けて保管し、渡された仕事にだけ使います。社内に置きたい場合は、その仕事だけオフィスのパソコンで動かせます。" },
       { title: "すべての操作が記録に残る", body: "何を、いつ、どのデータで行い、誰が承認したか。監査にそのまま出せます。" },
-      { title: "デスクトップアプリも", body: "ブラウザ、メール、Excel、そして替えのきかない古い Windows アプリまで。" },
+      { title: "デスクトップアプリも", body: "ブラウザ、メール、Excel はクラウドで。替えのきかない古い Windows アプリは、オフィスのパソコンを通して。" },
       { title: "実績のある基盤の上に", body: "Kitehand は Kitewell と、本番で使われているオープンソースのワークフローエンジン Dagu の上で動きます。" },
     ],
   },
@@ -344,7 +353,9 @@ const ja: Copy = {
       { q: "どんな仕事に向いていますか？", a: "決まった流れのある事務の仕事です。経理、受注、総務、採用の調整、サポートなど。仕事を貼れば、何が向いていて何を人に残すべきかを示します。" },
       { q: "やらないことは？", a: "電話、来客、交渉、判断の要る仕事はチームに残します。Kitehand は最初からそれをあなたの担当として分けます。" },
       { q: "間違えたらどうなりますか？", a: "お金が動くことや社外に出ることは、承認されるまで実行しません。それ以外もすべて記録に残り、コメントを付けて差し戻せば、その指摘から覚え直します。" },
-      { q: "データはどこに行きますか？", a: "Kitehand はあなたのパソコンで動きます。画面が AI モデルに送られるのは手順を覚える時と覚え直す時だけで、モデルは社内のものも含めて選べます。" },
+      { q: "パソコンの電源を切ると止まりますか？", a: "止まりません。仕事はクラウドで、夜も休日も進みます。オフィスのパソコンで動かすと決めた仕事だけ、そのパソコンの電源が要ります。" },
+      { q: "業務フローを描く必要はありますか？", a: "ありません。渡された仕事から Kitehand が業務フローを書き、あなたが承認すると、仕事はそのとおりに進みます。変えたいときは、変えたいことを伝えるだけです。図を編集する必要はありません。" },
+      { q: "データはどこに行きますか？", a: "仕事はクラウドで動きます。アカウント情報は暗号化し、会社ごとに分けて保管します。画面が AI モデルに送られるのは、手順を覚える時と覚え直す時だけです。社内に置くべきものは、オフィスのパソコンで動かせます。" },
       { q: "いま使えますか？", a: "デザインパートナーを募集しています。仕事を渡していただければ、最初の1週間を一緒に立ち上げます。" },
       { q: "料金は？", a: "席数や操作回数ではなく、担当者1人ごとの料金です。デザインパートナーと一緒に決めています。" },
     ],
@@ -352,7 +363,7 @@ const ja: Copy = {
   handover: {
     eyebrow: "先行受付",
     title: "次の求人を出す前に、仕事を渡してください。",
-    lede: "連絡先を教えてください。あなたのパソコンで、最初の1週間を一緒に立ち上げます。",
+    lede: "連絡先を教えてください。最初の1週間を一緒に立ち上げます。",
     email: "会社のメールアドレス",
     company: "会社名",
     job: "仕事",
