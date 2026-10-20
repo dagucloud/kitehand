@@ -1840,11 +1840,19 @@ a.badge:hover {
 
 .site-footer nav {
   display: flex;
-  gap: 20px;
+  flex-wrap: wrap;
+  gap: 12px 20px;
 }
 
 .site-footer a {
   text-decoration: none;
+}
+
+/* The company's name inside the sentence reads as a link. */
+.site-footer span a {
+  color: var(--ink-2);
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 .site-footer a:hover {

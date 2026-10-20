@@ -72,7 +72,8 @@ export type Copy = {
     error: string;
   };
   jobs: { eyebrow: string; title: (role: string) => string; lede: (role: string) => string; posting: string; yours: string; more: string };
-  footer: { made: string; kitewell: string; privacy: string };
+  // made is the sentence around the company's name, which links to its site.
+  footer: { made: [string, string]; company: string; companyUrl: string; kitewell: string; privacy: string };
   privacy: { title: string; body: string[] };
   notFound: { title: string; body: string; home: string };
 };
@@ -225,7 +226,7 @@ const en: Copy = {
     yours: "Read your own job",
     more: "Other jobs",
   },
-  footer: { made: "Kitehand is made by Descarty, the team behind Kitewell.", kitewell: "Kitewell", privacy: "Privacy" },
+  footer: { made: ["Kitehand is made by ", ", the team behind Kitewell."], company: "Descarty", companyUrl: "https://descarty.com/en/", kitewell: "Kitewell", privacy: "Privacy" },
   privacy: {
     title: "Privacy",
     body: [
@@ -384,7 +385,7 @@ const ja: Copy = {
     yours: "自分の仕事を読む",
     more: "ほかの仕事",
   },
-  footer: { made: "Kitehand は、Kitewell をつくる Descarty が開発しています。", kitewell: "Kitewell", privacy: "プライバシー" },
+  footer: { made: ["Kitehand は、Kitewell をつくる ", " が開発しています。"], company: "Descarty", companyUrl: "https://descarty.com/", kitewell: "Kitewell", privacy: "プライバシー" },
   privacy: {
     title: "プライバシー",
     body: [
