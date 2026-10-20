@@ -149,6 +149,7 @@ const en: Copy = {
       { time: "9:00", title: "Morning reported", body: "A summary in the team chat, one question answered, the day's books closed." },
     ],
     approved: "Approved",
+    film: "Watch the film (77 s)",
   },
   how: {
     eyebrow: "How it works",

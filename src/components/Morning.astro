@@ -57,7 +57,7 @@ const m = copy.morning;
       m.film && (
         <div class="film">
           <span class="eyebrow">{m.film}</span>
-          <video src="/kitehand-film-ja.mp4" poster="/film-poster.jpg" controls preload="none" playsinline />
+          <video src={`/kitehand-film-${copy.lang}.mp4`} poster={`/film-poster-${copy.lang}.jpg`} controls preload="none" playsinline />
         </div>
       )
     }
