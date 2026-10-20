@@ -41,8 +41,8 @@ npx wrangler kv namespace create STORE   # put the id in wrangler.jsonc
 npx wrangler secret put ANTHROPIC_API_KEY
 ```
 
-Then `npm run deploy`, and attach `kitehand.ai` to the Worker as a custom
-domain. Set `PUBLIC_POSTHOG_KEY` when building to record the reader's events
+Then `npm run deploy`. `kitehand.ai` is the Worker's custom domain in
+`wrangler.jsonc`. Set `PUBLIC_POSTHOG_KEY` when building to record the reader's events
 (`job_read`, `result_shared`, `handover_sent`, …).
 
 Limits: six readings a minute per visitor (`DIAGNOSE_LIMIT`) and

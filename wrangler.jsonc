@@ -12,9 +12,9 @@
     "not_found_handling": "404-page",
     "html_handling": "auto-trailing-slash"
   },
+  "routes": [{ "pattern": "kitehand.ai", "custom_domain": true }],
   // Handed-over jobs, and the day's count of diagnoses.
-  // Create with: npx wrangler kv namespace create STORE
-  "kv_namespaces": [{ "binding": "STORE", "id": "REPLACE_WITH_KV_NAMESPACE_ID" }],
+  "kv_namespaces": [{ "binding": "STORE", "id": "630fa7fda84f4f3fa89ad431ec3d1cff" }],
   // Diagnoses per visitor: six a minute.
   "ratelimits": [{ "name": "DIAGNOSE_LIMIT", "namespace_id": "1101", "simple": { "limit": 6, "period": 60 } }],
   "vars": { "DAILY_DIAGNOSES": "3000" },
