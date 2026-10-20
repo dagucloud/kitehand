@@ -359,6 +359,14 @@ textarea {
   box-shadow: inset 0 0 0 1px var(--line);
   font: 500 13px/1 var(--sans);
   color: var(--ink-2);
+  text-decoration: none;
+  transition: box-shadow 0.2s;
+}
+
+/* The badge is the way in to early access. */
+a.badge:hover {
+  box-shadow: inset 0 0 0 1.5px var(--ink);
+  color: var(--ink);
 }
 
 .badge .dot {
