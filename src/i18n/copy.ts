@@ -16,7 +16,7 @@ export type Copy = {
     working: string[];
     samples: string;
     privacy: string;
-    errors: Record<"too_short" | "too_long", string>;
+    errors: Record<"too_short" | "too_long" | "contact" | "send", string>;
     example: string;
   };
   result: {
@@ -67,7 +67,6 @@ export type Copy = {
     jobHint: string;
     submit: string;
     sending: string;
-    pasted: string;
     done: string;
     error: string;
   };
@@ -103,10 +102,12 @@ const en: Copy = {
     submit: "Hand this job over",
     working: ["Reading the job", "Splitting it into duties", "Marking what needs you", "Adding up the hours"],
     samples: "See how Kitehand reads a job:",
-    privacy: "Nothing you paste leaves this page until you hand the job over.",
+    privacy: "Only the Kitehand team reads what you send.",
     errors: {
       too_short: "Give it a little more: a posting, a manual, or a sentence about the work.",
       too_long: "That's longer than a job needs. Paste the duties part.",
+      contact: "Add your work email and company, so we can reply.",
+      send: "That didn't go through. Try again in a moment.",
     },
     example: "Example",
   },
@@ -206,7 +207,6 @@ const en: Copy = {
     jobHint: "A posting, a manual, or a line about the work",
     submit: "Hand over a job",
     sending: "Sending…",
-    pasted: "Your job is in. Add where to reach you, and hand it over.",
     done: "Got it. We'll be in touch with how much of the job Kitehand can take, and to set up its first week.",
     error: "That didn't go through. Check your email and company, and try again.",
   },
@@ -222,7 +222,6 @@ const en: Copy = {
   privacy: {
     title: "Privacy",
     body: [
-      "What you paste into the job box stays on the page until you hand the job over. Nothing is sent before that.",
       "When you hand a job over, your email, your company and the job you gave us reach us through the form service Web3Forms. We use them to contact you about the job and its setup. Ask us to delete them at any time.",
       "We use PostHog to count visits. It records the pages viewed, the referring site, and the type of device and browser, and keeps an identifier for this in your browser. It does not record the screen or keystrokes. We don't sell data.",
     ],
@@ -256,10 +255,12 @@ const ja: Copy = {
     submit: "この仕事を渡す",
     working: ["仕事を読んでいます", "業務に分けています", "あなたの確認が要るものを分けています", "時間を合計しています"],
     samples: "Kitehand が仕事をどう読むか、例で見られます：",
-    privacy: "貼った内容は、仕事を渡すまでどこにも送られません。",
+    privacy: "送っていただいた内容は、Kitehand のチームだけが読みます。",
     errors: {
       too_short: "もう少し詳しく。求人票、手順書、または仕事の一文を。",
       too_long: "仕事の説明としては長すぎます。業務内容の部分だけ貼ってください。",
+      contact: "お返事のために、会社のメールアドレスと会社名を入れてください。",
+      send: "送信できませんでした。少し待ってから、もう一度お試しください。",
     },
     example: "例",
   },
@@ -359,7 +360,6 @@ const ja: Copy = {
     jobHint: "求人票、手順書、または仕事のひとこと",
     submit: "仕事を渡す",
     sending: "送信中…",
-    pasted: "貼った仕事を入れました。連絡先を入れて、渡してください。",
     done: "受け付けました。どこまで任せられるかと、最初の1週間の立ち上げについて、ご連絡します。",
     error: "送信できませんでした。メールアドレスと会社名を確かめて、もう一度お試しください。",
   },
@@ -375,7 +375,6 @@ const ja: Copy = {
   privacy: {
     title: "プライバシー",
     body: [
-      "仕事の欄に貼った内容は、仕事を渡すまでページの中にとどまり、どこにも送られません。",
       "仕事を渡した場合は、メールアドレス・会社名・渡された仕事を、フォームサービス Web3Forms を通じて受け取り、仕事と立ち上げのご連絡に使います。いつでも削除をご依頼いただけます。",
       "訪問数を把握するため、PostHog を利用しています。PostHog は、閲覧したページ、参照元のサイト、端末とブラウザの種類を記録し、そのための識別子をブラウザに保存します。画面の録画やキー入力の記録は行いません。データを販売することはありません。",
     ],

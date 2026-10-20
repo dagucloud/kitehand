@@ -499,6 +499,50 @@ textarea {
   color: #a19b8f;
 }
 
+/* Where to reach the visitor, under the job they pasted. */
+.reader .contact {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+@media (max-width: 560px) {
+  .reader .contact {
+    grid-template-columns: 1fr;
+  }
+}
+
+.reader .field label {
+  font-size: 13px;
+}
+
+.reader .field input {
+  padding: 11px 12px;
+  font-size: 15px;
+}
+
+.reader .done {
+  display: none;
+  margin-top: 18px;
+  padding: 18px;
+  border-radius: 12px;
+  background: var(--ok-soft);
+  color: var(--ok);
+  font-weight: 600;
+}
+
+.reader.is-sent .done {
+  display: block;
+}
+
+.reader.is-sent textarea,
+.reader.is-sent .contact,
+.reader.is-sent .reader-foot,
+.reader.is-sent .status {
+  display: none;
+}
+
 .reader-foot {
   display: flex;
   align-items: center;

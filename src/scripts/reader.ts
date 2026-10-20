@@ -1,16 +1,20 @@
 // The reader on the home page. A sample fills the result card below with what
-// Kitehand would take, read ahead of time; a pasted job goes to the hand-over
-// form, and the team replies with its reading. Nothing is read on the site.
+// Kitehand would take, read ahead of time; a job the visitor pastes is handed
+// over, with where to reach them, and the team replies with its reading.
+// Nothing is read on the site.
 import { track } from "../lib/analytics";
 import { formatHires, tally, TEXT_LIMITS, type Diagnosis } from "../lib/diagnosis";
 import type { ReaderConfig } from "../lib/reader-config";
 import { drawCard } from "./card";
+import { reachable, sendHandover } from "./handover";
 
 type Reading = { d: Diagnosis; slug: string; text: string };
 
 const config = JSON.parse(document.getElementById("reader-config")!.textContent!) as ReaderConfig;
 const form = document.querySelector<HTMLFormElement>("[data-reader]")!;
 const text = form.querySelector<HTMLTextAreaElement>("[data-text]")!;
+const email = form.querySelector<HTMLInputElement>("[name=email]")!;
+const company = form.querySelector<HTMLInputElement>("[name=company]")!;
 const count = form.querySelector<HTMLElement>("[data-count]")!;
 const working = form.querySelector<HTMLElement>("[data-working]")!;
 const status = form.querySelector<HTMLElement>("[data-status]")!;
@@ -47,14 +51,21 @@ form.querySelectorAll<HTMLButtonElement>("[data-sample]").forEach((button) => {
   });
 });
 
-form.addEventListener("submit", (event) => {
+form.addEventListener("submit", async (event) => {
   event.preventDefault();
   const value = text.value.trim();
   if (value.length < TEXT_LIMITS.min) return fail("too_short");
   if (value.length > TEXT_LIMITS.max) return fail("too_long");
+  const handover = { email: email.value.trim(), company: company.value.trim(), job: value, sample: null, lang: config.lang };
+  if (!reachable(handover)) return fail("contact");
   status.classList.remove("is-shown");
-  window.dispatchEvent(new CustomEvent("kitehand:paste", { detail: { text: value } }));
-  track("job_pasted", { chars: value.length });
+  form.classList.add("is-busy");
+  working.textContent = config.words.sending;
+  const sent = await sendHandover(handover);
+  form.classList.remove("is-busy");
+  if (!sent) return fail("send");
+  form.classList.add("is-sent");
+  track("handover_sent", { from: "reader", chars: value.length });
 });
 
 const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -78,7 +89,7 @@ async function read(d: Diagnosis, slug: string) {
   window.dispatchEvent(new CustomEvent("kitehand:read", { detail: current }));
 }
 
-function fail(code: "too_short" | "too_long") {
+function fail(code: keyof ReaderConfig["words"]["errors"]) {
   status.textContent = config.words.errors[code];
   status.classList.add("is-shown");
   track("job_read_failed", { code });
