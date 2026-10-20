@@ -16,7 +16,7 @@ export type Copy = {
     working: string[];
     samples: string;
     privacy: string;
-    errors: Record<"too_short" | "too_long" | "not_job" | "rate_limited" | "busy" | "unavailable" | "generic", string>;
+    errors: Record<"too_short" | "too_long", string>;
     example: string;
   };
   result: {
@@ -38,7 +38,6 @@ export type Copy = {
     save: string;
     again: string;
     stamp: string;
-    yours: string;
   };
   morning: {
     eyebrow: string;
@@ -68,6 +67,7 @@ export type Copy = {
     jobHint: string;
     submit: string;
     sending: string;
+    pasted: string;
     done: string;
     error: string;
   };
@@ -82,7 +82,7 @@ const en: Copy = {
   other: { lang: "ja", label: "日本語", home: "/ja/" },
   meta: {
     title: "Kitehand — Hand it the job. Skip the hire.",
-    description: "Paste a job posting, a manual, or one line. Kitehand shows how much of the job it can take, then works it in the cloud around the clock, following the process flow you approved, and asks you before money moves.",
+    description: "Hand over a job posting, a manual, or one line. We'll tell you how much of the job Kitehand can take; then it works it in the cloud around the clock, following the process flow you approved, and asks you before money moves.",
     og: "/og-en.png",
   },
   nav: { how: "How it works", morning: "A day", contrast: "Not an agent", faq: "FAQ", cta: "Hand over a job" },
@@ -90,7 +90,7 @@ const en: Copy = {
     badge: "Early access · Taking design partners",
     kicker: "Before you post that job",
     title: ["Hand it the job.", "Skip the hire."],
-    lede: "Paste a job posting, a manual, or one line. Kitehand shows how much of the job it can take, then works it in the cloud around the clock, nights and weekends too, and asks you before money moves.",
+    lede: "Hand over a job posting, a manual, or one line, and we'll tell you how much of the job Kitehand can take. Then it works in the cloud around the clock, nights and weekends too, and asks you before money moves.",
   },
   tool: {
     label: "The job",
@@ -100,18 +100,13 @@ const en: Copy = {
       "Paste the manual or handover notes the last person left…",
       "Say what needs doing, e.g. “Enter the invoices that come in by email every morning.”",
     ],
-    submit: "See what Kitehand takes",
+    submit: "Hand this job over",
     working: ["Reading the job", "Splitting it into duties", "Marking what needs you", "Adding up the hours"],
-    samples: "No posting at hand? Try one:",
-    privacy: "What you paste is read once and not kept, unless you hand the job over.",
+    samples: "See how Kitehand reads a job:",
+    privacy: "Nothing you paste leaves this page until you hand the job over.",
     errors: {
       too_short: "Give it a little more: a posting, a manual, or a sentence about the work.",
       too_long: "That's longer than a job needs. Paste the duties part.",
-      not_job: "That doesn't read like work yet. Paste a posting or a manual, or describe the job in a line.",
-      rate_limited: "That's a lot of jobs in a minute. Try again shortly.",
-      busy: "Kitehand is reading a lot of jobs right now. Try a sample, or come back in a moment.",
-      unavailable: "Live reading isn't switched on yet. Try one of the samples below.",
-      generic: "Kitehand couldn't read that just now. Try again, or try a sample.",
     },
     example: "Example",
   },
@@ -134,7 +129,6 @@ const en: Copy = {
     save: "Save card",
     again: "Read another job",
     stamp: "Handed over",
-    yours: "Your job",
   },
   morning: {
     eyebrow: "A day, start to finish",
@@ -212,7 +206,8 @@ const en: Copy = {
     jobHint: "A posting, a manual, or a line about the work",
     submit: "Hand over a job",
     sending: "Sending…",
-    done: "Got it. We'll be in touch to set up its first week.",
+    pasted: "Your job is in. Add where to reach you, and hand it over.",
+    done: "Got it. We'll be in touch with how much of the job Kitehand can take, and to set up its first week.",
     error: "That didn't go through. Check your email and company, and try again.",
   },
   jobs: {
@@ -227,9 +222,9 @@ const en: Copy = {
   privacy: {
     title: "Privacy",
     body: [
-      "When you paste a job into Kitehand's reader, the text is sent to Anthropic's Claude to be read and the result is shown to you. We don't store what you paste.",
-      "When you hand a job over, we keep your email, your company, the job you gave us and the reading you saw, to contact you about setting it up. Ask us to delete it at any time.",
-      "We count page visits and clicks to learn what works on this site. We don't sell data.",
+      "What you paste into the job box stays on the page until you hand the job over. Nothing is sent before that.",
+      "When you hand a job over, your email, your company and the job you gave us reach us through the form service Web3Forms. We use them to contact you about the job and its setup. Ask us to delete them at any time.",
+      "We use PostHog to count visits. It records the pages viewed, the referring site, and the type of device and browser, and keeps an identifier for this in your browser. It does not record the screen or keystrokes. We don't sell data.",
     ],
   },
   notFound: { title: "Nothing here.", body: "That page doesn't exist. The job you came for might.", home: "Back to Kitehand" },
@@ -240,7 +235,7 @@ const ja: Copy = {
   other: { lang: "en", label: "English", home: "/" },
   meta: {
     title: "Kitehand — その仕事、Kitehand に。",
-    description: "求人票、手順書、ひとこと。貼るだけで、何人分の仕事を任せられるかがわかります。あとはあなたが承認した業務フローのとおりに、クラウドで24時間仕事を進め、お金が動く前には必ずあなたに聞きます。",
+    description: "求人票、手順書、ひとこと。渡していただければ、何人分の仕事を任せられるかをお知らせします。あとはあなたが承認した業務フローのとおりに、クラウドで24時間仕事を進め、お金が動く前には必ずあなたに聞きます。",
     og: "/og-ja.png",
   },
   nav: { how: "しくみ", morning: "ある一日", contrast: "エージェントとの違い", faq: "よくある質問", cta: "仕事を渡す" },
@@ -248,7 +243,7 @@ const ja: Copy = {
     badge: "先行受付中 · デザインパートナー募集",
     kicker: "求人を出す前に",
     title: ["その仕事、", "Kitehand に。"],
-    lede: "求人票、手順書、ひとこと。貼るだけで、何人分の仕事を任せられるかがわかります。あとはクラウドで24時間、夜も休日も仕事を進め、お金が動く前には必ずあなたに聞きます。",
+    lede: "求人票、手順書、ひとこと。渡していただければ、何人分の仕事を任せられるかをお知らせします。あとはクラウドで24時間、夜も休日も仕事を進め、お金が動く前には必ずあなたに聞きます。",
   },
   tool: {
     label: "仕事",
@@ -258,18 +253,13 @@ const ja: Copy = {
       "前任者が残した手順書や引き継ぎ書を貼ってください…",
       "やってほしいことを一文で。例：「毎朝メールで届く請求書を会計ソフトに入れて」",
     ],
-    submit: "任せられる仕事を見る",
+    submit: "この仕事を渡す",
     working: ["仕事を読んでいます", "業務に分けています", "あなたの確認が要るものを分けています", "時間を合計しています"],
-    samples: "手元に求人票がなければ、例で試せます：",
-    privacy: "貼った内容は読むためだけに使い、保存しません（仕事を渡した場合を除く）。",
+    samples: "Kitehand が仕事をどう読むか、例で見られます：",
+    privacy: "貼った内容は、仕事を渡すまでどこにも送られません。",
     errors: {
       too_short: "もう少し詳しく。求人票、手順書、または仕事の一文を。",
       too_long: "仕事の説明としては長すぎます。業務内容の部分だけ貼ってください。",
-      not_job: "仕事の説明として読めませんでした。求人票か手順書を貼るか、仕事を一文で書いてください。",
-      rate_limited: "短い時間に多くの仕事を読みました。少し待ってから試してください。",
-      busy: "ただいま多くの仕事を読んでいます。例を試すか、少し待ってからどうぞ。",
-      unavailable: "読み取りはまだ公開前です。下の例で試してください。",
-      generic: "いまは読み取れませんでした。もう一度試すか、例を試してください。",
     },
     example: "例",
   },
@@ -292,7 +282,6 @@ const ja: Copy = {
     save: "カードを保存",
     again: "別の仕事を読む",
     stamp: "引受済",
-    yours: "あなたの仕事",
   },
   morning: {
     eyebrow: "ある一日の、最初から最後まで",
@@ -370,7 +359,8 @@ const ja: Copy = {
     jobHint: "求人票、手順書、または仕事のひとこと",
     submit: "仕事を渡す",
     sending: "送信中…",
-    done: "受け付けました。最初の1週間の立ち上げについて、ご連絡します。",
+    pasted: "貼った仕事を入れました。連絡先を入れて、渡してください。",
+    done: "受け付けました。どこまで任せられるかと、最初の1週間の立ち上げについて、ご連絡します。",
     error: "送信できませんでした。メールアドレスと会社名を確かめて、もう一度お試しください。",
   },
   jobs: {
@@ -385,9 +375,9 @@ const ja: Copy = {
   privacy: {
     title: "プライバシー",
     body: [
-      "Kitehand の読み取りに仕事を貼ると、その文章は読み取りのために Anthropic の Claude に送られ、結果があなたに表示されます。貼った内容は保存しません。",
-      "仕事を渡した場合は、立ち上げのご連絡のために、メールアドレス・会社名・渡された仕事・表示された読み取り結果を保存します。いつでも削除をご依頼いただけます。",
-      "サイトの改善のために、ページの閲覧とクリックを計測しています。データを販売することはありません。",
+      "仕事の欄に貼った内容は、仕事を渡すまでページの中にとどまり、どこにも送られません。",
+      "仕事を渡した場合は、メールアドレス・会社名・渡された仕事を、フォームサービス Web3Forms を通じて受け取り、仕事と立ち上げのご連絡に使います。いつでも削除をご依頼いただけます。",
+      "訪問数を把握するため、PostHog を利用しています。PostHog は、閲覧したページ、参照元のサイト、端末とブラウザの種類を記録し、そのための識別子をブラウザに保存します。画面の録画やキー入力の記録は行いません。データを販売することはありません。",
     ],
   },
   notFound: { title: "ここには何もありません。", body: "このページは存在しません。お探しの仕事は、あるかもしれません。", home: "Kitehand に戻る" },

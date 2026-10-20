@@ -1,14 +1,12 @@
-// The reader on the home page: paste a job, or pick a sample, and the result
-// card below fills in with what Kitehand would take. Live readings come
-// from /api/diagnose; samples are read ahead of time.
+// The reader on the home page. A sample fills the result card below with what
+// Kitehand would take, read ahead of time; a pasted job goes to the hand-over
+// form, and the team replies with its reading. Nothing is read on the site.
+import { track } from "../lib/analytics";
 import { formatHires, tally, TEXT_LIMITS, type Diagnosis } from "../lib/diagnosis";
 import type { ReaderConfig } from "../lib/reader-config";
 import { drawCard } from "./card";
-import { track } from "./track";
 
 type Reading = { d: Diagnosis; slug: string; text: string };
-
-class ReadError extends Error {}
 
 const config = JSON.parse(document.getElementById("reader-config")!.textContent!) as ReaderConfig;
 const form = document.querySelector<HTMLFormElement>("[data-reader]")!;
@@ -45,7 +43,7 @@ form.querySelectorAll<HTMLButtonElement>("[data-sample]").forEach((button) => {
     const sample = config.samples.find((s) => s.slug === button.dataset.sample)!;
     text.value = sample.posting;
     showCount();
-    read(async () => sample.diagnosis, sample.slug, true);
+    void read(sample.diagnosis, sample.slug);
   });
 });
 
@@ -54,23 +52,15 @@ form.addEventListener("submit", (event) => {
   const value = text.value.trim();
   if (value.length < TEXT_LIMITS.min) return fail("too_short");
   if (value.length > TEXT_LIMITS.max) return fail("too_long");
-  read(() => fetchReading(value), "", false);
+  status.classList.remove("is-shown");
+  window.dispatchEvent(new CustomEvent("kitehand:paste", { detail: { text: value } }));
+  track("job_pasted", { chars: value.length });
 });
-
-async function fetchReading(value: string): Promise<Diagnosis> {
-  const response = await fetch("/api/diagnose", {
-    method: "POST",
-    headers: { "content-type": "application/json" },
-    body: JSON.stringify({ text: value, lang: config.lang }),
-  });
-  const body = (await response.json().catch(() => ({}))) as { diagnosis?: Diagnosis; error?: string };
-  if (!response.ok || !body.diagnosis) throw new ReadError(body.error ?? "generic");
-  return body.diagnosis;
-}
 
 const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
-async function read(get: () => Promise<Diagnosis>, slug: string, sample: boolean) {
+// read shows a sample's reading, held for a beat so it reads as work.
+async function read(d: Diagnosis, slug: string) {
   status.classList.remove("is-shown");
   form.classList.add("is-busy");
   let step = 0;
@@ -79,27 +69,17 @@ async function read(get: () => Promise<Diagnosis>, slug: string, sample: boolean
     step = Math.min(step + 1, config.words.working.length - 1);
     working.textContent = config.words.working[step];
   }, 1100);
-  const started = performance.now();
-  track("job_read_started", { sample, slug });
-  try {
-    const d = await get();
-    // A sample is read ahead of time; hold it for a beat so it reads as work.
-    if (sample) await wait(Math.max(0, 1300 - (performance.now() - started)));
-    current = { d, slug, text: text.value.trim() };
-    render(d, sample ? config.words.example : config.words.yours, slug);
-    const t = tally(d);
-    track("job_read", { sample, slug, hires: Number(formatHires(t.hires)), duties: d.duties.length, seconds: Math.round((performance.now() - started) / 100) / 10 });
-    window.dispatchEvent(new CustomEvent("kitehand:read", { detail: current }));
-  } catch (error) {
-    fail(error instanceof ReadError ? error.message : "generic");
-  } finally {
-    clearInterval(cycle);
-    form.classList.remove("is-busy");
-  }
+  await wait(1300);
+  clearInterval(cycle);
+  form.classList.remove("is-busy");
+  current = { d, slug, text: text.value.trim() };
+  render(d, config.words.example, slug);
+  track("job_read", { slug, hires: Number(formatHires(tally(d).hires)), duties: d.duties.length });
+  window.dispatchEvent(new CustomEvent("kitehand:read", { detail: current }));
 }
 
-function fail(code: string) {
-  status.textContent = config.words.errors[code] ?? config.words.errors.generic;
+function fail(code: "too_short" | "too_long") {
+  status.textContent = config.words.errors[code];
   status.classList.add("is-shown");
   track("job_read_failed", { code });
 }

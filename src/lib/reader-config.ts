@@ -11,9 +11,8 @@ export type ReaderConfig = {
   samples: { slug: string; posting: string; diagnosis: Diagnosis }[];
   words: {
     working: string[];
-    errors: Record<string, string>;
+    errors: Record<"too_short" | "too_long", string>;
     example: string;
-    yours: string;
     taken: string;
     shareText: string;
     copied: string;
@@ -37,7 +36,6 @@ export function readerConfig(copy: Copy): ReaderConfig {
       working: copy.tool.working,
       errors: copy.tool.errors,
       example: copy.tool.example,
-      yours: copy.result.yours,
       taken: copy.result.taken("{taken}", "{total}"),
       shareText: copy.result.shareText("{title}", "{hires}"),
       copied: copy.result.copied,

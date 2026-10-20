@@ -1622,6 +1622,12 @@ textarea {
   }
 }
 
+/* The heading shares the row with the form, so its longest phrase,
+   仕事を渡してください。, must fit half the width. */
+:lang(ja) .handover .section-title {
+  font-size: clamp(28px, 3.4vw, 44px);
+}
+
 .handover .eyebrow {
   color: var(--night-muted);
 }
