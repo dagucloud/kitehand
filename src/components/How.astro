@@ -15,7 +15,7 @@ const { copy } = Astro.props;
     <h2 class="section-title"><Phrases text={copy.how.title} /></h2>
     <div class="steps-3">
       {
-        copy.how.steps.map((s, i) => (
+        copy.how.parts.map((s, i) => (
           <div>
             <div class="n">{i + 1}</div>
             <h3>{s.title}</h3>

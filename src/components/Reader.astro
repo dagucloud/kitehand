@@ -1,5 +1,5 @@
 ---
-// The sheet a visitor hands their job over on, with samples read ahead of
+// The sheet an owner hands their work over on, with samples read ahead of
 // time and one already shown below it.
 import { SAMPLES } from "../data/samples";
 import type { Copy } from "../i18n/copy";
@@ -41,11 +41,11 @@ const example = SAMPLES[0];
           rows={7}></textarea>
         <div class="contact">
           <div class="field">
-            <label for="read-email">{copy.handover.email}</label>
+            <label for="read-email">{copy.apply.email}</label>
             <input id="read-email" name="email" type="email" autocomplete="email" required />
           </div>
           <div class="field">
-            <label for="read-company">{copy.handover.company}</label>
+            <label for="read-company">{copy.apply.company}</label>
             <input id="read-company" name="company" autocomplete="organization" required />
           </div>
         </div>
@@ -54,7 +54,7 @@ const example = SAMPLES[0];
           <button class="btn btn--shu" type="submit">{copy.tool.submit} <span class="arrow">→</span></button>
           <span class="working"><span class="spin"></span><span data-working></span></span>
         </div>
-        <div class="done" role="status">{copy.handover.done}</div>
+        <div class="done" role="status">{copy.apply.done}</div>
         <p class="status" data-status role="status"></p>
         <p class="privacy">{copy.tool.privacy}</p>
         <div class="samples">

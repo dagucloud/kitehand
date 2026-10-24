@@ -1,6 +1,6 @@
-// drawCard paints a job's reading as a 1200×630 image to save or post: the
-// role, the share of a hire Kitehand takes, and its biggest duties.
-import { formatHires, tally, type Diagnosis } from "../lib/diagnosis";
+// drawCard paints a reading as a 1200×630 image to save or post: the work,
+// the hours it gives back to the owner each month, and its biggest tasks.
+import { tally, type Diagnosis } from "../lib/diagnosis";
 import type { ReaderConfig } from "../lib/reader-config";
 
 const W = 1200;
@@ -48,21 +48,21 @@ export async function drawCard(d: Diagnosis, config: ReaderConfig): Promise<Blob
 
   ctx.fillStyle = COLOR.ink2;
   ctx.font = `500 24px ${sans}`;
-  ctx.fillText(config.words.hire, 64, 250);
+  ctx.fillText(config.words.back, 64, 250);
 
   ctx.fillStyle = COLOR.shu;
   ctx.font = `${ja ? 800 : 400} 196px ${display}`;
-  const n = `≈${formatHires(t.hires)}`;
+  const n = String(t.taken);
   ctx.fillText(n, 56, 430);
   const nw = ctx.measureText(n).width;
   ctx.font = `700 34px ${sans}`;
-  ctx.fillText(config.words.of, 56 + nw + 14, 430);
+  ctx.fillText(config.words.unit, 56 + nw + 14, 430);
 
   ctx.fillStyle = COLOR.muted;
   ctx.font = `500 22px ${sans}`;
   ctx.fillText(config.words.taken.replace("{taken}", String(t.taken)).replace("{total}", String(t.total)), 64, 486);
 
-  // The biggest duties, each with who does it.
+  // The biggest tasks, each with who does it.
   const duties = [...d.duties].sort((a, b) => b.hours - a.hours).slice(0, 6);
   const x = 680;
   let y = 150;

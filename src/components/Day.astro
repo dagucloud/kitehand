@@ -1,0 +1,86 @@
+---
+// A day of the owner's assistant holding three pieces of work, revealed
+// moment by moment as the visitor scrolls: the owner's desk with its work
+// handed over, the work being done now, and the clock beside it.
+import Phrases from "./Phrases.astro";
+import type { Copy } from "../i18n/copy";
+
+interface Props {
+  copy: Copy;
+}
+
+const { copy } = Astro.props;
+const d = copy.day;
+---
+
+<section class="section morning" id="day">
+  <div class="wrap">
+    <span class="eyebrow">{d.eyebrow}</span>
+    <h2 class="section-title"><Phrases text={d.title} /></h2>
+    <p class="lede">{d.lede}</p>
+    <div class="grid">
+      <aside class="seat" aria-hidden="true">
+        <div class="who">
+          <svg width="56" height="64" viewBox="0 0 92 104" fill="none">
+            <rect x="22" y="4" width="48" height="46" rx="12" fill="#262d39" stroke="#6b7180" stroke-width="3"></rect>
+            <rect x="12" y="52" width="68" height="16" rx="8" fill="#262d39" stroke="#6b7180" stroke-width="3"></rect>
+            <path d="M46 68 V86 M24 98 L46 86 L68 98" stroke="#6b7180" stroke-width="4" stroke-linecap="round"></path>
+          </svg>
+          <div>
+            <strong>{d.desk}</strong>
+            <span class="tag">{d.handed}</span>
+          </div>
+        </div>
+        <div class="on"><img src="/icon-small.svg" alt="" width="28" height="28" />● {d.working}</div>
+        <ul class="hands">
+          {d.work.map((work, i) => <li data-work={i}>{work}</li>)}
+        </ul>
+        <div class="clock" data-clock>{d.moments[0].time}</div>
+        <div class="bar"><i data-progress></i></div>
+      </aside>
+      <ol class="steps">
+        {
+          d.moments.map((m) => (
+            <li class:list={["step", m.mark && `step--${m.mark}`]} data-moment data-time={m.time} data-who={m.who}>
+              <span class="mark">
+                <svg viewBox="0 0 16 16" fill="none">
+                  <path d="M3.5 8.5l3 3L12.5 5" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </span>
+              <span class="time">{m.time}</span>
+              <div class="body">
+                {m.who !== undefined && <span class="who">{d.work[m.who]}</span>}
+                <h3>{m.title}</h3>
+                <p>{m.body}</p>
+                {m.mark === "stamp" && <span class="approved">{d.approved}</span>}
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </div>
+</section>
+
+<script>
+  const moments = [...document.querySelectorAll<HTMLElement>("[data-moment]")];
+  const work = [...document.querySelectorAll<HTMLElement>("[data-work]")];
+  const clock = document.querySelector<HTMLElement>("[data-clock]");
+  const progress = document.querySelector<HTMLElement>("[data-progress]");
+  let reached = -1;
+  // A moment lights when it reaches the middle of the screen, with every one
+  // before it; the desk's clock shows its time and the work it belongs to.
+  const light = (index: number) => {
+    if (index <= reached) return;
+    reached = index;
+    moments.forEach((m, i) => m.classList.toggle("is-on", i <= index));
+    if (clock) clock.textContent = moments[index].dataset.time ?? "";
+    work.forEach((w) => w.classList.toggle("is-on", w.dataset.work === moments[index].dataset.who));
+    if (progress) progress.style.width = `${((index + 1) / moments.length) * 100}%`;
+  };
+  const observer = new IntersectionObserver(
+    (entries) => entries.forEach((e) => e.isIntersecting && light(moments.indexOf(e.target as HTMLElement))),
+    { rootMargin: "-45% 0px -45% 0px" },
+  );
+  moments.forEach((m) => observer.observe(m));
+</script>

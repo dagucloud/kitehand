@@ -1,0 +1,107 @@
+---
+// The application at the foot of the page: an owner applies for membership
+// with the first piece of work to hand over, and any sample they read comes
+// along, through the same inbox as the reader.
+import Phrases from "./Phrases.astro";
+import type { Copy } from "../i18n/copy";
+
+interface Props {
+  copy: Copy;
+}
+
+const { copy } = Astro.props;
+const a = copy.apply;
+---
+
+<section class="section apply" id="apply">
+  <div class="wrap grid">
+    <div>
+      <span class="eyebrow">{a.eyebrow}</span>
+      <h2 class="section-title"><Phrases text={a.title} /></h2>
+      <p class="lede">{a.lede}</p>
+    </div>
+    <form data-apply data-lang={copy.lang} data-sending={a.sending} data-error={a.error} novalidate>
+      <div class="field-row">
+        <div class="field">
+          <label for="ap-name">{a.name}</label>
+          <input id="ap-name" name="name" autocomplete="name" />
+        </div>
+        <div class="field">
+          <label for="ap-company">{a.company}</label>
+          <input id="ap-company" name="company" autocomplete="organization" required />
+        </div>
+      </div>
+      <div class="field">
+        <label for="ap-email">{a.email}</label>
+        <input id="ap-email" name="email" type="email" autocomplete="email" required />
+      </div>
+      <fieldset class="field sizes">
+        <legend>{a.size}</legend>
+        <div class="choices">
+          {
+            a.sizes.map((size, i) => (
+              <label class="choice">
+                <input type="radio" name="size" value={size} checked={i === 0} />
+                <span>{size}</span>
+              </label>
+            ))
+          }
+        </div>
+      </fieldset>
+      <div class="field">
+        <label for="ap-job">{a.job}</label>
+        <textarea id="ap-job" name="job" placeholder={a.jobHint}></textarea>
+      </div>
+      <p class="note" data-note aria-live="polite"></p>
+      <button class="btn btn--shu" type="submit">{a.submit} <span class="arrow">→</span></button>
+      <div class="done" role="status">{a.done}</div>
+    </form>
+  </div>
+</section>
+
+<script>
+  import { track } from "../lib/analytics";
+  import type { Diagnosis } from "../lib/diagnosis";
+  import { reachable, sendApplication } from "../scripts/apply";
+
+  const form = document.querySelector<HTMLFormElement>("[data-apply]")!;
+  const note = form.querySelector<HTMLElement>("[data-note]")!;
+  const button = form.querySelector<HTMLButtonElement>("button[type=submit]")!;
+  let reading: { d: Diagnosis; slug: string } | null = null;
+
+  // A sample read on this page comes along with the application.
+  window.addEventListener("kitehand:read", (event) => {
+    reading = (event as CustomEvent<{ d: Diagnosis; slug: string; text: string }>).detail;
+  });
+
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const data = new FormData(form);
+    const application = {
+      email: String(data.get("email") ?? "").trim(),
+      company: String(data.get("company") ?? "").trim(),
+      name: String(data.get("name") ?? "").trim(),
+      size: String(data.get("size") ?? ""),
+      job: String(data.get("job") ?? "").trim(),
+      sample: reading?.d ?? null,
+      lang: form.dataset.lang ?? "en",
+    };
+    note.textContent = "";
+    if (!reachable(application)) {
+      note.textContent = form.dataset.error ?? "";
+      return;
+    }
+    const label = button.innerHTML;
+    button.disabled = true;
+    button.textContent = form.dataset.sending ?? "";
+    const sent = await sendApplication(application);
+    button.disabled = false;
+    button.innerHTML = label;
+    if (!sent) {
+      note.textContent = form.dataset.error ?? "";
+      return;
+    }
+    form.classList.add("is-done");
+    track("apply_sent", { from: "foot", slug: reading?.slug ?? "", read: reading !== null, size: application.size });
+  });
+</script>

@@ -1,6 +1,6 @@
 ---
-// The top of the home page: what Kitehand is, in words and on screen. The
-// film's working day plays silently beside the promise, its lines burned in.
+// The top of the home page: what Kitehand is, beside the owner's phone with
+// what their assistant told them this morning and the one thing it asked.
 import type { Copy } from "../i18n/copy";
 
 interface Props {
@@ -8,39 +8,47 @@ interface Props {
 }
 
 const { copy } = Astro.props;
-const lang = copy.lang;
+const phone = copy.hero.phone;
 ---
 
 <section class="hero">
   <div class="wrap grid">
     <div>
-      <a class="badge rise rise-1" href="#read"><span class="dot"></span>{copy.hero.badge} <span class="arrow">→</span></a>
+      <a class="badge rise rise-1" href="#apply"><span class="dot"></span>{copy.hero.badge} <span class="arrow">→</span></a>
       <p class="kicker rise rise-2">{copy.hero.kicker}</p>
       <h1 class="rise rise-3"><span>{copy.hero.title[0]}</span><span>{copy.hero.title[1]}</span></h1>
       <p class="lede rise rise-4">{copy.hero.lede}</p>
       <div class="actions rise rise-5">
-        <a class="btn btn--shu" href="#read">{copy.hero.actions[0]} <span class="arrow">→</span></a>
-        <a class="btn btn--ghost" href="#film">▶ {copy.hero.actions[1]}</a>
+        <a class="btn btn--shu" href="#apply">{copy.hero.actions[0]} <span class="arrow">→</span></a>
+        <a class="btn btn--ghost" href="#pricing">{copy.hero.actions[1]}</a>
       </div>
     </div>
-    <video
-      class="hero-film rise rise-5"
-      src={`/hero-loop-${lang}.mp4`}
-      poster={`/hero-poster-${lang}.jpg`}
-      aria-label={copy.morning.title}
-      autoplay
-      muted
-      loop
-      playsinline
-      preload="metadata"></video>
+    <div class="phone rise rise-5" aria-hidden="true">
+      <div class="phone-screen">
+        <p class="phone-date">{phone.date}</p>
+        <ul class="phone-notes">
+          {
+            phone.items.map((item) => (
+              <li class:list={["phone-note", item.ask && "is-ask"]}>
+                <div class="phone-note-head">
+                  <img src="/icon-small.svg" alt="" width="20" height="20" />
+                  <strong>{phone.app}</strong>
+                  <span>{item.time}</span>
+                </div>
+                <p>{item.text}</p>
+                {
+                  item.ask && (
+                    <div class="phone-note-actions">
+                      <span class="phone-approve">{phone.approve}</span>
+                      <span class="phone-hold">{phone.hold}</span>
+                    </div>
+                  )
+                }
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
   </div>
 </section>
-
-<script>
-  // Motion stays still for visitors who ask for less of it.
-  const film = document.querySelector<HTMLVideoElement>(".hero-film");
-  if (film && matchMedia("(prefers-reduced-motion: reduce)").matches) {
-    film.removeAttribute("autoplay");
-    film.pause();
-  }
-</script>

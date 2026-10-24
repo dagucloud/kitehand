@@ -1,14 +1,15 @@
 ---
 import type { Copy } from "../i18n/copy";
 import Base from "../layouts/Base.astro";
+import Apply from "./Apply.astro";
 import Contrast from "./Contrast.astro";
+import Day from "./Day.astro";
 import Faq from "./Faq.astro";
 import Footer from "./Footer.astro";
-import Handover from "./Handover.astro";
 import Header from "./Header.astro";
 import Hero from "./Hero.astro";
 import How from "./How.astro";
-import Morning from "./Morning.astro";
+import Pricing from "./Pricing.astro";
 import Reader from "./Reader.astro";
 import Trust from "./Trust.astro";
 
@@ -25,12 +26,13 @@ const path = copy.lang === "ja" ? "/ja/" : "/";
   <main>
     <Hero copy={copy} />
     <Reader copy={copy} />
-    <Morning copy={copy} />
+    <Day copy={copy} />
     <How copy={copy} />
     <Contrast copy={copy} />
     <Trust copy={copy} />
+    <Pricing copy={copy} />
     <Faq copy={copy} />
-    <Handover copy={copy} />
+    <Apply copy={copy} />
   </main>
   <Footer copy={copy} alternate={copy.other.home} />
 </Base>

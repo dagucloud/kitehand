@@ -1,0 +1,56 @@
+---
+// The one membership: its price, the founding price for the first members,
+// what it includes, and why intake is limited.
+import Phrases from "./Phrases.astro";
+import type { Copy } from "../i18n/copy";
+
+interface Props {
+  copy: Copy;
+}
+
+const { copy } = Astro.props;
+const p = copy.pricing;
+---
+
+<section class="section pricing" id="pricing">
+  <div class="wrap">
+    <span class="eyebrow">{p.eyebrow}</span>
+    <h2 class="section-title"><Phrases text={p.title} /></h2>
+    <div class="plan">
+      <div class="plan-price">
+        <h3>{p.plan}</h3>
+        <p class="founding-label">{p.founding.label}</p>
+        <p class="price"><span class="amount">{p.founding.price}</span><span class="per">{p.per}</span></p>
+        <p class="list-price">{p.regular} <s>{p.price}</s> {p.per}</p>
+        <p class="founding-note">{p.founding.note}</p>
+        <p class="yearly">{p.yearly}</p>
+        <a class="btn btn--shu" href="#apply">{p.cta} <span class="arrow">→</span></a>
+      </div>
+      <div class="plan-body">
+        <ul class="includes">
+          {p.includes.map((item) => <li>{item}</li>)}
+        </ul>
+        <p class="intake">{p.intake}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { track } from "../lib/analytics";
+
+  // The price counts as seen once the card is half on screen.
+  const plan = document.querySelector(".pricing .plan");
+  if (plan) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          track("pricing_viewed", {});
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.5 },
+    );
+    observer.observe(plan);
+  }
+</script>

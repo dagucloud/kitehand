@@ -1,10 +1,13 @@
 ---
+// The one page the site serves for any address it doesn't have, so it says
+// so in both languages.
 import Footer from "../components/Footer.astro";
 import Header from "../components/Header.astro";
 import { COPY } from "../i18n/copy";
 import Base from "../layouts/Base.astro";
 
 const copy = COPY.en;
+const ja = COPY.ja;
 ---
 
 <Base copy={copy} path="/404/" alternate="/ja/" title={`${copy.notFound.title} · Kitehand`}>
@@ -13,7 +16,11 @@ const copy = COPY.en;
     <div class="wrap">
       <h1>{copy.notFound.title}</h1>
       <p class="lede">{copy.notFound.body}</p>
-      <p style="margin-top: 32px"><a class="btn btn--shu" href="/">{copy.notFound.home} <span class="arrow">→</span></a></p>
+      <p class="lede" lang="ja">{ja.notFound.body}</p>
+      <p style="margin-top: 32px; display: flex; gap: 12px; flex-wrap: wrap">
+        <a class="btn btn--shu" href="/">{copy.notFound.home} <span class="arrow">→</span></a>
+        <a class="btn btn--ghost" href="/ja/" lang="ja">{ja.notFound.home}</a>
+      </p>
     </div>
   </main>
   <Footer copy={copy} alternate="/ja/" />

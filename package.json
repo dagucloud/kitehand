@@ -10,7 +10,8 @@
     "build": "astro build",
     "check": "astro check",
     "serve": "astro build && wrangler dev",
-    "deploy": "astro build && wrangler deploy"
+    "deploy": "astro build && wrangler deploy",
+    "test": "astro build && node --test test/*.test.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.4",

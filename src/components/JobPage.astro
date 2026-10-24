@@ -1,12 +1,12 @@
 ---
-// A job read by Kitehand, as a page search engines find: the posting, the
-// reading, and the way back to read your own.
+// A piece of owner work read by Kitehand, as a page search engines find: the
+// owner's note, the reading, and the way back to see your own.
 import type { Sample } from "../data/samples";
 import { SAMPLES } from "../data/samples";
 import type { Copy } from "../i18n/copy";
 import Base from "../layouts/Base.astro";
 import Footer from "./Footer.astro";
-import Handover from "./Handover.astro";
+import Apply from "./Apply.astro";
 import Header from "./Header.astro";
 import ResultCard from "./ResultCard.astro";
 
@@ -48,7 +48,7 @@ const alternate = `${otherBase}jobs/${sample.slug}/`;
       </div>
     </div>
     <div style="height: clamp(80px, 10vw, 140px)"></div>
-    <Handover copy={copy} />
+    <Apply copy={copy} />
   </main>
   <Footer copy={copy} alternate={alternate} />
 </Base>

@@ -1,12 +1,12 @@
 // The reader on the home page. A sample fills the result card below with what
-// Kitehand would take, read ahead of time; a job the visitor pastes is handed
-// over, with where to reach them, and the team replies with its reading.
-// Nothing is read on the site.
+// the secretary would take, read ahead of time; work the owner pastes is sent
+// as their application, with where to reach them, and the team replies with
+// its reading. Nothing is read on the site.
 import { track } from "../lib/analytics";
-import { formatHires, tally, TEXT_LIMITS, type Diagnosis } from "../lib/diagnosis";
+import { tally, TEXT_LIMITS, type Diagnosis } from "../lib/diagnosis";
 import type { ReaderConfig } from "../lib/reader-config";
+import { reachable, sendApplication } from "./apply";
 import { drawCard } from "./card";
-import { reachable, sendHandover } from "./handover";
 
 type Reading = { d: Diagnosis; slug: string; text: string };
 
@@ -56,16 +56,16 @@ form.addEventListener("submit", async (event) => {
   const value = text.value.trim();
   if (value.length < TEXT_LIMITS.min) return fail("too_short");
   if (value.length > TEXT_LIMITS.max) return fail("too_long");
-  const handover = { email: email.value.trim(), company: company.value.trim(), job: value, sample: null, lang: config.lang };
-  if (!reachable(handover)) return fail("contact");
+  const application = { email: email.value.trim(), company: company.value.trim(), name: "", size: "", job: value, sample: null, lang: config.lang };
+  if (!reachable(application)) return fail("contact");
   status.classList.remove("is-shown");
   form.classList.add("is-busy");
   working.textContent = config.words.sending;
-  const sent = await sendHandover(handover);
+  const sent = await sendApplication(application);
   form.classList.remove("is-busy");
   if (!sent) return fail("send");
   form.classList.add("is-sent");
-  track("handover_sent", { from: "reader", chars: value.length });
+  track("apply_sent", { from: "reader", chars: value.length });
 });
 
 const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -85,14 +85,14 @@ async function read(d: Diagnosis, slug: string) {
   form.classList.remove("is-busy");
   current = { d, slug, text: text.value.trim() };
   render(d, config.words.example, slug);
-  track("job_read", { slug, hires: Number(formatHires(tally(d).hires)), duties: d.duties.length });
+  track("work_read", { slug, hours: tally(d).taken, tasks: d.duties.length });
   window.dispatchEvent(new CustomEvent("kitehand:read", { detail: current }));
 }
 
 function fail(code: keyof ReaderConfig["words"]["errors"]) {
   status.textContent = config.words.errors[code];
   status.classList.add("is-shown");
-  track("job_read_failed", { code });
+  track("work_read_failed", { code });
 }
 
 function list(el: HTMLElement, items: string[]) {
@@ -107,7 +107,7 @@ function render(d: Diagnosis, label: string, slug: string) {
   r("label").textContent = label;
   r("title").textContent = d.title;
   r("summary").textContent = d.summary;
-  r("hires").textContent = formatHires(t.hires);
+  r("back").textContent = String(t.taken);
   r("taken").textContent = config.words.taken.replace("{taken}", String(t.taken)).replace("{total}", String(t.total));
   for (const s of ["kitehand", "approve", "human"]) r(`m-${s}`).style.width = `${(share(s) / t.total) * 100}%`;
 
@@ -150,8 +150,7 @@ function say(message: string) {
 const shareUrl = () => new URL(current.slug ? `${config.jobs}${current.slug}/` : config.home, location.origin).href;
 
 result.querySelector("[data-act='share']")?.addEventListener("click", async () => {
-  const t = tally(current.d);
-  const message = config.words.shareText.replace("{title}", current.d.title).replace("{hires}", formatHires(t.hires));
+  const message = config.words.shareText.replace("{title}", current.d.title).replace("{hours}", String(tally(current.d).taken));
   const url = shareUrl();
   track("result_shared", { slug: current.slug, native: "share" in navigator });
   if (navigator.share) {
@@ -164,10 +163,10 @@ result.querySelector("[data-act='share']")?.addEventListener("click", async () =
 
 result.querySelector("[data-act='save']")?.addEventListener("click", async () => {
   const blob = await drawCard(current.d, config);
-  const link = Object.assign(document.createElement("a"), { href: URL.createObjectURL(blob), download: `kitehand-${current.slug || "job"}.png` });
+  const link = Object.assign(document.createElement("a"), { href: URL.createObjectURL(blob), download: `kitehand-${current.slug || "work"}.png` });
   link.click();
   setTimeout(() => URL.revokeObjectURL(link.href), 1000);
   track("result_saved", { slug: current.slug });
 });
 
-result.querySelector("[data-act='handover']")?.addEventListener("click", () => track("handover_opened", { slug: current.slug }));
+result.querySelector("[data-act='apply']")?.addEventListener("click", () => track("apply_opened", { slug: current.slug }));

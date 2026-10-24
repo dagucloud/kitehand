@@ -331,15 +331,97 @@ textarea {
   margin-top: 32px;
 }
 
-/* The film's working day, silent, beside the promise. */
-.hero-film {
-  display: block;
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  border-radius: 16px;
-  background: var(--surface);
-  box-shadow: var(--shadow), 0 0 0 1px rgba(29, 32, 39, 0.08);
-  object-fit: cover;
+/* The owner's phone beside the promise: this morning's word from their
+   assistant, and the one thing it asked. */
+.phone {
+  justify-self: center;
+  width: min(100%, 380px);
+  padding: 12px;
+  border-radius: 46px;
+  background: var(--night);
+  box-shadow: var(--shadow), 0 0 0 1px rgba(29, 32, 39, 0.2);
+}
+
+.phone-screen {
+  padding: 34px 14px 22px;
+  border-radius: 36px;
+  background: linear-gradient(180deg, #2b3446 0%, #1b212c 100%);
+  color: var(--night-ink);
+}
+
+.phone-date {
+  margin: 0 0 18px;
+  text-align: center;
+  font: 500 13px/1 var(--mono);
+  letter-spacing: 0.06em;
+  color: var(--night-muted);
+}
+
+.phone-notes {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.phone-note {
+  padding: 12px 14px;
+  border-radius: 18px;
+  background: rgba(255, 253, 248, 0.94);
+  color: var(--ink);
+}
+
+.phone-note-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.phone-note-head strong {
+  color: var(--ink);
+  font-size: 13px;
+}
+
+.phone-note-head span {
+  margin-left: auto;
+}
+
+.phone-note p {
+  margin: 6px 0 0;
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.phone-note.is-ask {
+  box-shadow: inset 0 0 0 2px var(--shu);
+}
+
+.phone-note-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.phone-note-actions span {
+  flex: 1;
+  padding: 8px 0;
+  border-radius: 10px;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.phone-approve {
+  background: var(--shu);
+  color: #fff;
+}
+
+.phone-hold {
+  background: var(--paper-2);
+  color: var(--ink-2);
 }
 
 .read .lede {
@@ -363,7 +445,7 @@ textarea {
   transition: box-shadow 0.2s;
 }
 
-/* The badge is the way in to early access. */
+/* The badge is the way in to the application. */
 a.badge:hover {
   box-shadow: inset 0 0 0 1.5px var(--ink);
   color: var(--ink);
@@ -419,7 +501,7 @@ a.badge:hover {
   white-space: nowrap;
 }
 
-/* Beside the film, each line of the headline keeps to one line. */
+/* Beside the phone, each line of the headline keeps to one line. */
 @media (min-width: 981px) {
   .hero h1,
   :lang(ja) .hero h1 {
@@ -790,7 +872,7 @@ a.badge:hover {
   color: var(--ink-2);
 }
 
-.result-sum .hires {
+.result-sum .back {
   display: flex;
   align-items: baseline;
   gap: 12px;
@@ -798,21 +880,12 @@ a.badge:hover {
   color: var(--shu);
 }
 
-.result-sum .hires .n {
+.result-sum .back .n {
   font: 400 clamp(84px, 10vw, 128px) / 0.9 var(--display);
   letter-spacing: -0.03em;
 }
 
-.result-sum .hires .n::before {
-  content: "≈";
-  font-size: 0.42em;
-  margin-right: 0.08em;
-  vertical-align: 0.55em;
-  color: var(--shu);
-  opacity: 0.8;
-}
-
-.result-sum .hires .unit {
+.result-sum .back .unit {
   font: 600 20px var(--sans);
 }
 
@@ -1443,16 +1516,6 @@ a.badge:hover {
   }
 }
 
-.film {
-  margin-top: 40px;
-}
-
-.film video {
-  width: 100%;
-  border-radius: 14px;
-  background: #000;
-}
-
 /* How it works */
 .how .steps-3 {
   display: grid;
@@ -1671,13 +1734,139 @@ a.badge:hover {
   color: var(--ink-2);
 }
 
-/* Hand over */
-.handover {
+/* Pricing */
+.plan {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  margin-top: clamp(32px, 5vw, 56px);
+  border-radius: 22px;
+  background: var(--surface);
+  box-shadow: var(--shadow), 0 0 0 1px var(--line);
+  overflow: hidden;
+}
+
+@media (max-width: 860px) {
+  .plan {
+    grid-template-columns: 1fr;
+  }
+}
+
+.plan-price {
+  padding: clamp(26px, 4vw, 44px);
+  border-right: 1px solid var(--line);
+}
+
+@media (max-width: 860px) {
+  .plan-price {
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+}
+
+.plan-price h3 {
+  margin: 0;
+  font: 400 clamp(24px, 2.6vw, 30px) / 1.2 var(--display);
+}
+
+:lang(ja) .plan-price h3 {
+  font-weight: 800;
+}
+
+.founding-label {
+  display: inline-block;
+  margin: 22px 0 0;
+  padding: 5px 10px;
+  border-radius: 999px;
+  background: var(--shu-soft);
+  color: var(--shu-deep);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.plan .price {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 12px 0 0;
+}
+
+.plan .amount {
+  font: 400 clamp(48px, 6vw, 68px) / 1 var(--display);
+  letter-spacing: -0.02em;
+  color: var(--shu);
+}
+
+:lang(ja) .plan .amount {
+  font-weight: 800;
+}
+
+.plan .per {
+  font-size: 15px;
+  color: var(--ink-2);
+}
+
+.list-price,
+.founding-note,
+.yearly {
+  margin: 12px 0 0;
+  font-size: 14px;
+  color: var(--ink-2);
+}
+
+.list-price s {
+  margin: 0 2px 0 6px;
+  color: var(--muted);
+}
+
+.plan-price .btn {
+  margin-top: 26px;
+}
+
+.plan-body {
+  padding: clamp(26px, 4vw, 44px);
+}
+
+.includes {
+  display: grid;
+  gap: 14px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.includes li {
+  position: relative;
+  padding-left: 30px;
+  font-size: 16px;
+}
+
+.includes li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.35em;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--ai) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3.5 8.5l3 3L12.5 5' fill='none' stroke='white' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 12px no-repeat;
+}
+
+.intake {
+  margin: 26px 0 0;
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+  font-size: 14px;
+  color: var(--ink-2);
+}
+
+/* Apply */
+.apply {
   background: var(--ink);
   color: var(--paper);
 }
 
-.handover .grid {
+.apply .grid {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: clamp(32px, 6vw, 90px);
@@ -1685,29 +1874,29 @@ a.badge:hover {
 }
 
 @media (max-width: 900px) {
-  .handover .grid {
+  .apply .grid {
     grid-template-columns: 1fr;
   }
 }
 
-/* The heading shares the row with the form, so its longest phrase,
-   仕事を渡してください。, must fit half the width. */
-:lang(ja) .handover .section-title {
+/* The heading shares the row with the form, so its longest phrase must
+   fit half the width. */
+:lang(ja) .apply .section-title {
   font-size: clamp(28px, 3.4vw, 44px);
 }
 
-.handover .eyebrow {
+.apply .eyebrow {
   color: var(--night-muted);
 }
 
-.handover .lede {
+.apply .lede {
   margin: 22px 0 0;
   color: var(--night-muted);
   font-size: 18px;
   max-width: 30em;
 }
 
-.handover form {
+.apply form {
   display: grid;
   gap: 16px;
   padding: clamp(22px, 3vw, 34px);
@@ -1746,13 +1935,74 @@ a.badge:hover {
   resize: vertical;
 }
 
-.handover .note {
+.field-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 12px;
+}
+
+@media (max-width: 480px) {
+  .field-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+.sizes {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.sizes legend {
+  margin-bottom: 6px;
+  padding: 0;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.choices {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.choice {
+  position: relative;
+}
+
+.choice input {
+  position: absolute;
+  opacity: 0;
+}
+
+.choice span {
+  display: inline-block;
+  padding: 9px 14px;
+  border-radius: 999px;
+  background: var(--paper);
+  box-shadow: inset 0 0 0 1px var(--line-2);
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.choice input:checked + span {
+  background: var(--ink);
+  color: var(--paper);
+  box-shadow: none;
+}
+
+.choice input:focus-visible + span {
+  outline: 2px solid var(--ai);
+  outline-offset: 2px;
+}
+
+.apply .note {
   margin: 0;
   font-size: 14px;
   color: var(--muted);
 }
 
-.handover .done {
+.apply .done {
   display: none;
   padding: 18px;
   border-radius: 12px;
@@ -1761,12 +2011,12 @@ a.badge:hover {
   font-weight: 600;
 }
 
-.handover form.is-done .done {
+.apply form.is-done .done {
   display: block;
 }
 
-.handover form.is-done .field,
-.handover form.is-done button {
+.apply form.is-done .field,
+.apply form.is-done button {
   display: none;
 }
 

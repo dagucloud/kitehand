@@ -7,7 +7,7 @@
   * { box-sizing: border-box; }
   body { margin: 0; width: 1200px; height: 630px; background: #f6f3ec; color: #1d2027; font-family: "Hanken Grotesk", "Zen Kaku Gothic New", sans-serif; overflow: hidden; position: relative; }
   .logo { position: absolute; left: 72px; top: 60px; height: 44px; }
-  h1 { position: absolute; left: 72px; top: 150px; margin: 0; font: 400 78px/0.96 "Gloock", serif; letter-spacing: -0.02em; }
+  h1 { position: absolute; left: 72px; top: 150px; width: 620px; margin: 0; font: 400 74px/0.98 "Gloock", serif; letter-spacing: -0.02em; }
   h1 span { display: block; }
   h1 span + span { color: #c63f2a; }
   body.ja h1 { font: 800 74px/1.18 "Shippori Mincho B1", serif; letter-spacing: 0.01em; }
@@ -32,14 +32,14 @@
   <div class="card">
     <div class="label" data-t="label"></div>
     <h2 data-t="role"></h2>
-    <div class="n">≈0.7<small data-t="of"></small></div>
-    <div class="meter"><i style="width:56%;background:#2c3e63"></i><i style="width:13%;background:#c63f2a"></i><i style="width:31%;background:#c9c3b6"></i></div>
+    <div class="n">21<small data-t="unit"></small></div>
+    <div class="meter"><i style="width:75%;background:#2c3e63"></i><i style="width:12.5%;background:#c63f2a"></i><i style="width:12.5%;background:#c9c3b6"></i></div>
   </div>
   <div class="stamp" data-t="stamp"></div>
   <script>
     const T = {
-      en: { h1a: "Skip the hire.", h1b: "Hand it to AI staff.", label: "Kitehand can take", role: "Accounting clerk", of: "of a hire", stamp: "Handed over" },
-      ja: { h1a: "その仕事、", h1b: "AI の担当者に。", label: "Kitehand が引き受けられるのは", role: "経理事務", of: "人分", stamp: "引受済" },
+      en: { h1a: "Your own", h1b: "AI executive assistant.", label: "Time back to you", role: "Bookkeeping entries", unit: "h / month", stamp: "Handed over" },
+      ja: { h1a: "社長専属の、", h1b: "AI 秘書。", label: "社長に戻る時間", role: "経理の入力", unit: "時間／月", stamp: "引受済" },
     };
     const lang = location.hash.slice(1) || "en";
     document.body.classList.add(lang);

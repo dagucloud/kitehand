@@ -18,13 +18,13 @@ const to = (anchor: string) => (home ? `#${anchor}` : `${base}#${anchor}`);
   <div class="wrap bar">
     <a class="logo" href={base} aria-label="Kitehand"><img src="/lockup.svg" alt="Kitehand" width="134" height="30" /></a>
     <nav>
-      <a href={to("morning")}>{copy.nav.morning}</a>
+      <a href={to("day")}>{copy.nav.day}</a>
       <a href={to("how")}>{copy.nav.how}</a>
-      <a href={to("contrast")}>{copy.nav.contrast}</a>
+      <a href={to("pricing")}>{copy.nav.pricing}</a>
       <a href={to("faq")}>{copy.nav.faq}</a>
     </nav>
     <a class="lang" href={alternate} hreflang={copy.other.lang} lang={copy.other.lang}>{copy.other.label}</a>
-    <a class="btn btn--ink btn--small" href={to("read")}>{copy.nav.cta}</a>
+    <a class="btn btn--ink btn--small" href={to("apply")}>{copy.nav.cta}</a>
   </div>
 </header>
 

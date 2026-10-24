@@ -19,8 +19,8 @@ export type ReaderConfig = {
     copied: string;
     shares: Record<string, string>;
     hours: string;
-    of: string;
-    hire: string;
+    back: string;
+    unit: string;
     stamp: string;
   };
 };
@@ -36,15 +36,15 @@ export function readerConfig(copy: Copy): ReaderConfig {
     words: {
       working: copy.tool.working,
       errors: copy.tool.errors,
-      sending: copy.handover.sending,
+      sending: copy.apply.sending,
       example: copy.tool.example,
       taken: copy.result.taken("{taken}", "{total}"),
-      shareText: copy.result.shareText("{title}", "{hires}"),
+      shareText: copy.result.shareText("{title}", "{hours}"),
       copied: copy.result.copied,
       shares: copy.result.shares,
       hours: copy.result.hours,
-      of: copy.result.of,
-      hire: copy.result.hire,
+      back: copy.result.back,
+      unit: copy.result.unit,
       stamp: copy.result.stamp,
     },
   };

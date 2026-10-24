@@ -2,7 +2,7 @@
 import { SAMPLES } from "../data/samples";
 import type { Copy } from "../i18n/copy";
 import Base from "../layouts/Base.astro";
-import { formatHires, tally } from "../lib/diagnosis";
+import { tally } from "../lib/diagnosis";
 import Footer from "./Footer.astro";
 import Header from "./Header.astro";
 
@@ -33,7 +33,7 @@ const alternate = `${lang === "ja" ? "/" : "/ja/"}jobs/`;
                   <h3>{d.title}</h3>
                   <p>{d.summary}</p>
                   <p style="color: var(--shu); font-weight: 700">
-                    ≈ {formatHires(tally(d).hires)} {copy.result.of}
+                    {copy.result.back} {tally(d).taken} {copy.result.unit}
                   </p>
                 </a>
               );
