@@ -101,10 +101,10 @@ const base = copy.lang === "ja" ? "/ja/" : "/";
         </div>
       ) : (
         <div class="actions">
-          <a class="btn btn--shu" href={`${base}#read`}>
+          <a class="btn btn--shu" href="#apply">
             {copy.jobs.yours} <span class="arrow">→</span>
           </a>
-          <a class="btn btn--ghost" href={`${base}#apply`}>{copy.result.cta}</a>
+          <a class="btn btn--ghost" href={`${base}#read`}>{copy.jobs.others}</a>
         </div>
       )
     }

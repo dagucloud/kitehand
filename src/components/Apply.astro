@@ -69,9 +69,15 @@ const a = copy.apply;
   const button = form.querySelector<HTMLButtonElement>("button[type=submit]")!;
   let reading: { d: Diagnosis; slug: string } | null = null;
 
-  // A sample read on this page comes along with the application.
+  const job = form.querySelector<HTMLTextAreaElement>("[name=job]")!;
+  // An example read on this page comes along with the application, and the
+  // one the owner chose to hand over names the work, unless they wrote it.
   window.addEventListener("kitehand:read", (event) => {
-    reading = (event as CustomEvent<{ d: Diagnosis; slug: string; text: string }>).detail;
+    reading = (event as CustomEvent<{ d: Diagnosis; slug: string }>).detail;
+  });
+  window.addEventListener("kitehand:apply", (event) => {
+    reading = (event as CustomEvent<{ d: Diagnosis; slug: string }>).detail;
+    if (!job.value.trim()) job.value = reading.d.title;
   });
 
   form.addEventListener("submit", async (event) => {

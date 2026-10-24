@@ -35,5 +35,3 @@ export function tally(d: Diagnosis): Tally {
   const total = d.duties.reduce((sum, x) => sum + x.hours, 0) || d.hours_per_month;
   return { taken, total };
 }
-
-export const TEXT_LIMITS = { min: 12, max: 12000 };

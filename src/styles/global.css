@@ -305,8 +305,7 @@ textarea {
   padding: clamp(40px, 7vw, 96px) 0 0;
 }
 
-.hero .grid,
-.read .grid {
+.hero .grid {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
   gap: clamp(32px, 5vw, 72px);
@@ -318,8 +317,7 @@ textarea {
 }
 
 @media (max-width: 980px) {
-  .hero .grid,
-  .read .grid {
+  .hero .grid {
     grid-template-columns: 1fr;
   }
 }
@@ -542,224 +540,12 @@ a.badge:hover {
   }
 }
 
-/* The reader: a sheet of paper you paste the job onto. */
-.sheet {
-  position: relative;
-  z-index: 1;
-  background: var(--surface);
-  border-radius: 6px;
-  box-shadow: var(--shadow), 0 0 0 1px rgba(29, 32, 39, 0.06);
-  padding: 26px clamp(18px, 3vw, 30px) 24px;
-}
-
-.sheet::after {
-  content: "";
-  position: absolute;
-  inset: auto 14px -10px 14px;
-  height: 10px;
-  border-radius: 0 0 6px 6px;
-  background: var(--surface);
-  box-shadow: 0 0 0 1px rgba(29, 32, 39, 0.05);
-  z-index: -1;
-  transform: rotate(-0.6deg);
-}
-
-.sheet-head {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  padding-bottom: 16px;
-  border-bottom: 1px dashed var(--line-2);
-}
-
-.sheet-label {
-  padding: 3px 12px;
-  border: 1.5px solid var(--ink-2);
-  font: 600 12px/1.4 var(--mono);
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--ink-2);
-}
-
-:lang(ja) .sheet-label {
-  font-family: var(--sans);
-  letter-spacing: 0.3em;
-}
-
-.modes {
-  display: flex;
-  gap: 4px;
-  padding: 4px;
-  border-radius: 999px;
-  background: var(--paper);
-}
-
-.modes button {
-  white-space: nowrap;
-  border: 0;
-  background: transparent;
-  padding: 7px 12px;
-  border-radius: 999px;
-  font-size: 13px;
-  color: var(--muted);
-  cursor: pointer;
-}
-
-.modes button[aria-pressed="true"] {
-  background: var(--surface);
-  color: var(--ink);
-  box-shadow: 0 1px 2px rgba(29, 32, 39, 0.12);
-}
-
-.reader textarea {
-  display: block;
-  width: 100%;
-  min-height: 190px;
-  margin: 18px 0 0;
-  padding: 0;
-  border: 0;
-  background: transparent;
-  resize: vertical;
-  font: 400 17px/1.65 var(--sans);
-  color: var(--ink);
-  outline: none;
-  background-image: linear-gradient(transparent calc(1.65em - 1px), var(--line) calc(1.65em - 1px), var(--line) 1.65em, transparent 1.65em);
-  background-size: 100% 1.65em;
-}
-
-.reader textarea::placeholder {
-  color: #a19b8f;
-}
-
-/* Where to reach the visitor, under the job they pasted. */
-.reader .contact {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-  margin-top: 18px;
-}
-
-@media (max-width: 560px) {
-  .reader .contact {
-    grid-template-columns: 1fr;
-  }
-}
-
-.reader .field label {
-  font-size: 13px;
-}
-
-.reader .field input {
-  padding: 11px 12px;
-  font-size: 15px;
-}
-
-.reader .done {
-  display: none;
-  margin-top: 18px;
-  padding: 18px;
-  border-radius: 12px;
-  background: var(--ok-soft);
-  color: var(--ok);
-  font-weight: 600;
-}
-
-.reader.is-sent .done {
-  display: block;
-}
-
-.reader.is-sent textarea,
-.reader.is-sent .contact,
-.reader.is-sent .reader-foot,
-.reader.is-sent .status {
-  display: none;
-}
-
-.reader-foot {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 14px;
-  margin-top: 18px;
-  flex-wrap: wrap;
-}
-
-.reader-foot .count {
-  font: 500 12px var(--mono);
-  color: var(--muted);
-}
-
-.reader .privacy {
-  margin: 14px 0 0;
-  font-size: 13px;
-  color: var(--muted);
-}
-
-.reader .status {
-  display: none;
-  margin: 14px 0 0;
-  padding: 10px 14px;
-  border-radius: 10px;
-  font-size: 14px;
-  background: var(--wait-soft);
-  color: var(--wait);
-}
-
-.reader .status.is-shown {
-  display: block;
-}
-
-.reader.is-busy textarea {
-  opacity: 0.55;
-}
-
-.working {
-  display: none;
-  align-items: center;
-  gap: 12px;
-  font: 500 14px var(--mono);
-  color: var(--ai);
-}
-
-.reader.is-busy .working {
-  display: inline-flex;
-}
-
-.reader.is-busy .reader-foot .btn {
-  display: none;
-}
-
-.working .spin {
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  border: 2px solid var(--ai-soft);
-  border-top-color: var(--ai);
-  animation: spin 0.8s linear infinite;
-}
-
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-.samples {
-  margin-top: 22px;
-}
-
-.samples p {
-  margin: 0 0 10px;
-  font-size: 14px;
-  color: var(--muted);
-}
-
-.samples .chips {
+/* The examples: one chosen at a time, its reading in the card below. */
+.read .chips {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
+  margin-top: 28px;
 }
 
 .chip {
@@ -781,13 +567,21 @@ a.badge:hover {
   transform: translateY(-1px);
 }
 
-.reader-col {
-  position: relative;
+.chip[aria-pressed="true"] {
+  background: var(--ink);
+  box-shadow: none;
+  color: var(--paper);
+  transform: none;
 }
 
 /* Result */
 .result-wrap {
   padding: clamp(40px, 6vw, 72px) 0 0;
+}
+
+/* The chosen example's card sits right under the examples. */
+.read .result-wrap {
+  padding-top: 24px;
 }
 
 .result {

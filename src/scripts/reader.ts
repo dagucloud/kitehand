@@ -1,110 +1,43 @@
-// The reader on the home page. A sample fills the result card below with what
-// the secretary would take, read ahead of time; work the owner pastes is sent
-// as their application, with where to reach them, and the team replies with
-// its reading. Nothing is read on the site.
+// The examples on the home page. Choosing one fills the result card below
+// with what the secretary would take, read ahead of time; nothing is read on
+// the site. The card's way to hand the work over leads to the application,
+// which takes the example along.
 import { track } from "../lib/analytics";
-import { tally, TEXT_LIMITS, type Diagnosis } from "../lib/diagnosis";
+import { tally, type Diagnosis } from "../lib/diagnosis";
 import type { ReaderConfig } from "../lib/reader-config";
-import { reachable, sendApplication } from "./apply";
 import { drawCard } from "./card";
 
-type Reading = { d: Diagnosis; slug: string; text: string };
+type Reading = { d: Diagnosis; slug: string };
 
 const config = JSON.parse(document.getElementById("reader-config")!.textContent!) as ReaderConfig;
-const form = document.querySelector<HTMLFormElement>("[data-reader]")!;
-const text = form.querySelector<HTMLTextAreaElement>("[data-text]")!;
-const email = form.querySelector<HTMLInputElement>("[name=email]")!;
-const company = form.querySelector<HTMLInputElement>("[name=company]")!;
-const count = form.querySelector<HTMLElement>("[data-count]")!;
-const working = form.querySelector<HTMLElement>("[data-working]")!;
-const status = form.querySelector<HTMLElement>("[data-status]")!;
+const chips = [...document.querySelectorAll<HTMLButtonElement>("[data-sample]")];
 const result = document.querySelector<HTMLElement>("[data-result]")!;
 const toast = document.querySelector<HTMLElement>("[data-toast]")!;
 const r = <T extends HTMLElement = HTMLElement>(name: string) => result.querySelector<T>(`[data-r="${name}"]`)!;
 
 const first = config.samples[0];
-let current: Reading = { d: first.diagnosis, slug: first.slug, text: "" };
+let current: Reading = { d: first.diagnosis, slug: first.slug };
 
-// Modes only change the hint; the reader takes any of them.
-const placeholders = JSON.parse(text.dataset.placeholders!) as string[];
-form.querySelectorAll<HTMLButtonElement>("[data-mode]").forEach((button) => {
-  button.addEventListener("click", () => {
-    form.querySelectorAll("[data-mode]").forEach((b) => b.setAttribute("aria-pressed", String(b === button)));
-    text.placeholder = placeholders[Number(button.dataset.mode)];
-    text.focus();
+chips.forEach((chip) => {
+  chip.addEventListener("click", () => {
+    const sample = config.samples.find((s) => s.slug === chip.dataset.sample)!;
+    chips.forEach((c) => c.setAttribute("aria-pressed", String(c === chip)));
+    current = { d: sample.diagnosis, slug: sample.slug };
+    render(sample.diagnosis, sample.slug);
+    track("work_read", { slug: sample.slug, hours: tally(sample.diagnosis).taken, tasks: sample.diagnosis.duties.length });
+    window.dispatchEvent(new CustomEvent("kitehand:read", { detail: current }));
   });
 });
-
-const showCount = () => (count.textContent = `${text.value.length.toLocaleString()} / ${TEXT_LIMITS.max.toLocaleString()}`);
-text.addEventListener("input", () => {
-  showCount();
-  status.classList.remove("is-shown");
-});
-showCount();
-
-form.querySelectorAll<HTMLButtonElement>("[data-sample]").forEach((button) => {
-  button.addEventListener("click", () => {
-    const sample = config.samples.find((s) => s.slug === button.dataset.sample)!;
-    text.value = sample.posting;
-    showCount();
-    void read(sample.diagnosis, sample.slug);
-  });
-});
-
-form.addEventListener("submit", async (event) => {
-  event.preventDefault();
-  const value = text.value.trim();
-  if (value.length < TEXT_LIMITS.min) return fail("too_short");
-  if (value.length > TEXT_LIMITS.max) return fail("too_long");
-  const application = { email: email.value.trim(), company: company.value.trim(), name: "", size: "", job: value, sample: null, lang: config.lang };
-  if (!reachable(application)) return fail("contact");
-  status.classList.remove("is-shown");
-  form.classList.add("is-busy");
-  working.textContent = config.words.sending;
-  const sent = await sendApplication(application);
-  form.classList.remove("is-busy");
-  if (!sent) return fail("send");
-  form.classList.add("is-sent");
-  track("apply_sent", { from: "reader", chars: value.length });
-});
-
-const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
-
-// read shows a sample's reading, held for a beat so it reads as work.
-async function read(d: Diagnosis, slug: string) {
-  status.classList.remove("is-shown");
-  form.classList.add("is-busy");
-  let step = 0;
-  working.textContent = config.words.working[0];
-  const cycle = setInterval(() => {
-    step = Math.min(step + 1, config.words.working.length - 1);
-    working.textContent = config.words.working[step];
-  }, 1100);
-  await wait(1300);
-  clearInterval(cycle);
-  form.classList.remove("is-busy");
-  current = { d, slug, text: text.value.trim() };
-  render(d, config.words.example, slug);
-  track("work_read", { slug, hours: tally(d).taken, tasks: d.duties.length });
-  window.dispatchEvent(new CustomEvent("kitehand:read", { detail: current }));
-}
-
-function fail(code: keyof ReaderConfig["words"]["errors"]) {
-  status.textContent = config.words.errors[code];
-  status.classList.add("is-shown");
-  track("work_read_failed", { code });
-}
 
 function list(el: HTMLElement, items: string[]) {
   el.replaceChildren(...items.map((item) => Object.assign(document.createElement("li"), { textContent: item })));
 }
 
-function render(d: Diagnosis, label: string, slug: string) {
+function render(d: Diagnosis, slug: string) {
   const t = tally(d);
   const share = (s: string) => d.duties.filter((x) => x.share === s).reduce((sum, x) => sum + x.hours, 0);
   const most = Math.max(...d.duties.map((x) => x.hours));
   result.dataset.slug = slug;
-  r("label").textContent = label;
   r("title").textContent = d.title;
   r("summary").textContent = d.summary;
   r("back").textContent = String(t.taken);
@@ -138,7 +71,6 @@ function render(d: Diagnosis, label: string, slug: string) {
   result.classList.remove("is-new");
   void result.offsetWidth;
   result.classList.add("is-new");
-  result.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
 function say(message: string) {
@@ -147,7 +79,7 @@ function say(message: string) {
   setTimeout(() => toast.classList.remove("is-shown"), 2200);
 }
 
-const shareUrl = () => new URL(current.slug ? `${config.jobs}${current.slug}/` : config.home, location.origin).href;
+const shareUrl = () => new URL(`${config.jobs}${current.slug}/`, location.origin).href;
 
 result.querySelector("[data-act='share']")?.addEventListener("click", async () => {
   const message = config.words.shareText.replace("{title}", current.d.title).replace("{hours}", String(tally(current.d).taken));
@@ -163,10 +95,14 @@ result.querySelector("[data-act='share']")?.addEventListener("click", async () =
 
 result.querySelector("[data-act='save']")?.addEventListener("click", async () => {
   const blob = await drawCard(current.d, config);
-  const link = Object.assign(document.createElement("a"), { href: URL.createObjectURL(blob), download: `kitehand-${current.slug || "work"}.png` });
+  const link = Object.assign(document.createElement("a"), { href: URL.createObjectURL(blob), download: `kitehand-${current.slug}.png` });
   link.click();
   setTimeout(() => URL.revokeObjectURL(link.href), 1000);
   track("result_saved", { slug: current.slug });
 });
 
-result.querySelector("[data-act='apply']")?.addEventListener("click", () => track("apply_opened", { slug: current.slug }));
+// Handing the example over opens the application with it named as the work.
+result.querySelector("[data-act='apply']")?.addEventListener("click", () => {
+  track("apply_opened", { slug: current.slug });
+  window.dispatchEvent(new CustomEvent("kitehand:apply", { detail: current }));
+});

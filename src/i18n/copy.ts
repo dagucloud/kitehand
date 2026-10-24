@@ -17,18 +17,7 @@ export type Copy = {
     // this morning, and the one thing it asked.
     phone: { app: string; date: string; items: { time: string; text: string; ask?: boolean }[]; approve: string; hold: string };
   };
-  read: { eyebrow: string; title: string; lede: string };
-  tool: {
-    label: string;
-    modes: [string, string, string];
-    placeholders: [string, string, string];
-    submit: string;
-    working: string[];
-    samples: string;
-    privacy: string;
-    errors: Record<"too_short" | "too_long" | "contact" | "send", string>;
-    example: string;
-  };
+  read: { eyebrow: string; title: string; lede: string; pick: string; example: string };
   result: {
     back: string;
     unit: string;
@@ -93,7 +82,7 @@ export type Copy = {
     done: string;
     error: string;
   };
-  jobs: { eyebrow: string; title: (work: string) => string; lede: (work: string) => string; posting: string; yours: string; more: string };
+  jobs: { eyebrow: string; title: (work: string) => string; lede: (work: string) => string; posting: string; yours: string; others: string; more: string };
   // made is the sentence around the company's name, which links to its site.
   footer: { made: [string, string]; company: string; companyUrl: string; privacy: string };
   privacy: { title: string; body: string[] };
@@ -128,28 +117,10 @@ const en: Copy = {
     },
   },
   read: {
-    eyebrow: "See what it can take",
-    title: "Paste the work as you do it now.",
-    lede: "One line, a manual, or how you do it today. Send it with your details to apply, and we'll email you how much of it your assistant can take.",
-  },
-  tool: {
-    label: "The work",
-    modes: ["One line", "A manual", "How you do it"],
-    placeholders: [
-      "e.g. “Every morning, enter the bank and card transactions in our books and attach the receipts.”",
-      "Paste the manual or the handover notes you once gave someone…",
-      "Write down how you do it today, as it comes to mind…",
-    ],
-    submit: "Apply with this work",
-    working: ["Reading the work", "Splitting it into tasks", "Marking what needs you", "Adding up your hours"],
-    samples: "See it on work owners often do themselves:",
-    privacy: "Only the Kitehand team reads what you send.",
-    errors: {
-      too_short: "Give it a little more: a line about the work, a manual, or how you do it.",
-      too_long: "That's longer than the work needs. Paste the part you want to hand over.",
-      contact: "Add your email and company, so we can reply.",
-      send: "That didn't go through. Try again in a moment.",
-    },
+    eyebrow: "Examples",
+    title: "What your assistant would take.",
+    lede: "Pick work owners often do themselves to see what your assistant does, what it asks you first, what stays with you, and the hours you get back.",
+    pick: "Pick an example",
     example: "Example",
   },
   result: {
@@ -256,7 +227,7 @@ const en: Copy = {
   apply: {
     eyebrow: "Apply",
     title: "Hand your assistant its first piece of work.",
-    lede: "Once we accept your application, the person who sets it up with you writes to fix a date. Over the first 30 days you hand the work over together.",
+    lede: "Write the work you'd hand over, and apply. We'll email you how much of it your assistant can take, and a date to set it up. Over the first 30 days you hand it over together.",
     email: "Email",
     company: "Company",
     name: "Your name",
@@ -266,7 +237,7 @@ const en: Copy = {
     jobHint: "One line, a manual, or how you do it today",
     submit: "Apply",
     sending: "Sending…",
-    done: "Got it. We'll write to set a date for your setup.",
+    done: "Got it. We'll email you how much it can take, and a date to set it up.",
     error: "That didn't go through. Check your email and company, and try again.",
   },
   jobs: {
@@ -274,7 +245,8 @@ const en: Copy = {
     title: (work) => `${work}: what your assistant can take`,
     lede: (work) => `${work}, as owners often do it themselves, split into tasks: what your assistant does, what it asks you first, and what stays with you.`,
     posting: "The owner's note",
-    yours: "See it on your own work",
+    yours: "Hand over your own work",
+    others: "See other examples",
     more: "Other work",
   },
   footer: { made: ["Kitehand is made by ", "."], company: "Descarty", companyUrl: "https://descarty.com/en/", privacy: "Privacy" },
@@ -316,28 +288,10 @@ const ja: Copy = {
     },
   },
   read: {
-    eyebrow: "任せられる範囲を見る",
-    title: "いまの仕事を、貼ってください。",
-    lede: "ひとこと、手順書、いまのやり方。どれでも構いません。連絡先と一緒に送ると申し込みになり、秘書がどこまで引き受けられるかをメールでお返事します。",
-  },
-  tool: {
-    label: "任せたい仕事",
-    modes: ["ひとこと", "手順書", "いまのやり方"],
-    placeholders: [
-      "例：「毎朝、銀行とカードの明細を freee に入れて、領収書を添付してほしい」",
-      "前に人に頼んだときの手順書や、引き継ぎのメモを貼ってください…",
-      "いま社長が自分でやっている流れを、思いつくまま書いてください…",
-    ],
-    submit: "この仕事で申し込む",
-    working: ["仕事を読んでいます", "仕事に分けています", "社長の確認が要るものを分けています", "戻る時間を数えています"],
-    samples: "社長がよく自分でやっている仕事で、例を見られます：",
-    privacy: "送っていただいた内容は、Kitehand のチームだけが読みます。",
-    errors: {
-      too_short: "もう少し詳しく。仕事のひとこと、手順書、いまのやり方のどれかを。",
-      too_long: "長すぎます。任せたい仕事の部分だけ貼ってください。",
-      contact: "お返事のために、メールアドレスと会社名を入れてください。",
-      send: "送信できませんでした。少し待ってから、もう一度お試しください。",
-    },
+    eyebrow: "例で見る",
+    title: "任せると、どうなるか。",
+    lede: "社長がよく自分でやっている仕事を選ぶと、秘書がやること、先に社長に聞くこと、社長に残すことと、社長に戻る時間がわかります。",
+    pick: "例を選ぶ",
     example: "例",
   },
   result: {
@@ -444,7 +398,7 @@ const ja: Copy = {
   apply: {
     eyebrow: "申し込み",
     title: "最初の仕事を、秘書に。",
-    lede: "申し込みをお受けすると、立ち上げ担当から日程のご連絡をします。最初の30日で、一緒に仕事を渡していきます。",
+    lede: "任せたい仕事を書いて申し込むと、どこまで任せられるかと、立ち上げの日程をメールでお返事します。最初の30日で、一緒に仕事を渡していきます。",
     email: "メールアドレス",
     company: "会社名",
     name: "お名前",
@@ -454,7 +408,7 @@ const ja: Copy = {
     jobHint: "ひとこと、手順書、いまのやり方のどれでも",
     submit: "申し込む",
     sending: "送信中…",
-    done: "受け付けました。立ち上げ担当から、日程のご連絡をします。",
+    done: "受け付けました。どこまで任せられるかと、立ち上げの日程をメールでお返事します。",
     error: "送信できませんでした。メールアドレスと会社名を確かめて、もう一度お試しください。",
   },
   jobs: {
@@ -462,7 +416,8 @@ const ja: Copy = {
     title: (work) => `${work}：秘書に任せられること`,
     lede: (work) => `社長がよく自分でやっている「${work}」を仕事に分けました。秘書がやること、先に社長に聞くこと、社長に残すことがわかります。`,
     posting: "社長のメモ",
-    yours: "自分の仕事で見る",
+    yours: "自分の仕事を任せる",
+    others: "ほかの例を見る",
     more: "ほかの仕事",
   },
   footer: { made: ["Kitehand は ", " が開発しています。"], company: "Descarty", companyUrl: "https://descarty.com/", privacy: "プライバシー" },
