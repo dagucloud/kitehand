@@ -1,9 +1,10 @@
 ---
-// The price of a hand: the founding price for the first companies, what it
-// comes to beside a person's wage, what it includes, and why intake is
-// limited.
+// The two plans side by side: Free, which starts in the app with one hand
+// and one job, and Pro, priced per hand, applied for at the foot of the page,
+// with what Pro comes to beside a person's wage.
 import Phrases from "./Phrases.astro";
 import type { Copy } from "../i18n/copy";
+import { START } from "../lib/links";
 
 interface Props {
   copy: Copy;
@@ -17,23 +18,31 @@ const p = copy.pricing;
   <div class="wrap">
     <span class="eyebrow">{p.eyebrow}</span>
     <h2 class="section-title"><Phrases text={p.title} /></h2>
-    <div class="plan">
-      <div class="plan-price">
-        <h3>{p.plan}</h3>
-        <p class="founding-label">{p.founding.label}</p>
-        <p class="price"><span class="amount">{p.founding.price}</span><span class="per">{p.per}</span></p>
-        <p class="list-price">{p.regular} <s>{p.price}</s> {p.per}</p>
-        <p class="founding-note">{p.founding.note}</p>
-        <p class="anchor">{p.anchor}</p>
-        <p class="yearly">{p.yearly}</p>
-        <a class="btn btn--shu" href="#apply">{p.cta} <span class="arrow">→</span></a>
-      </div>
-      <div class="plan-body">
-        <ul class="includes">
-          {p.includes.map((item) => <li>{item}</li>)}
-        </ul>
-        <p class="intake">{p.intake}</p>
-      </div>
+    <div class="plans">
+      {
+        p.plans.map((plan) => (
+          <div class:list={["plan", plan.featured && "is-featured"]}>
+            <h3>{plan.name}</h3>
+            <p class="plan-lede">{plan.lede}</p>
+            <p class="price">
+              <span class="amount">{plan.price}</span>
+              <span class="per">{plan.per}</span>
+            </p>
+            {plan.featured && <p class="anchor">{p.anchor}</p>}
+            <ul class="includes">
+              {plan.includes.map((item) => (
+                <li>{item}</li>
+              ))}
+            </ul>
+            {plan.featured && <p class="yearly">{p.yearly}</p>}
+            <div class="plan-foot">
+              <a class:list={["btn", plan.featured ? "btn--shu" : "btn--ghost"]} href={plan.featured ? "#apply" : START} data-start={plan.featured ? "pro" : "free"}>
+                {plan.cta} <span class="arrow">→</span>
+              </a>
+            </div>
+          </div>
+        ))
+      }
     </div>
   </div>
 </section>
@@ -41,9 +50,10 @@ const p = copy.pricing;
 <script>
   import { track } from "../lib/analytics";
 
-  // The price counts as seen once the card is half on screen.
-  const plan = document.querySelector(".pricing .plan");
-  if (plan) {
+  // The prices count as seen once the plans are half on screen, and a start
+  // from a plan is counted by which.
+  const plans = document.querySelector(".pricing .plans");
+  if (plans) {
     const observer = new IntersectionObserver(
       (entries) => {
         if (entries.some((e) => e.isIntersecting)) {
@@ -53,6 +63,9 @@ const p = copy.pricing;
       },
       { threshold: 0.5 },
     );
-    observer.observe(plan);
+    observer.observe(plans);
   }
+  document.querySelectorAll<HTMLAnchorElement>("[data-start]").forEach((link) =>
+    link.addEventListener("click", () => track("start_clicked", { from: "pricing", plan: link.dataset.start ?? "" })),
+  );
 </script>

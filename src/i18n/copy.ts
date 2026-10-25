@@ -75,25 +75,24 @@ export type Copy = {
     notes: string[];
   };
   trust: { eyebrow: string; title: string; items: { title: string; body: string }[] };
+  // Free beside Pro; Pro is featured and priced per hand.
   pricing: {
     eyebrow: string;
     title: string;
-    plan: string;
-    regular: string;
-    price: string;
-    per: string;
-    founding: { label: string; price: string; note: string };
-    yearly: string;
+    plans: { name: string; lede: string; price: string; per: string; includes: string[]; cta: string; featured?: boolean }[];
     anchor: string;
-    includes: string[];
-    intake: string;
-    cta: string;
+    yearly: string;
   };
   faq: { eyebrow: string; title: string; items: { q: string; a: string }[] };
+  // The foot of the page: the way to start, and beside it a form to ask
+  // the team about a job first.
   apply: {
     eyebrow: string;
     title: string;
     lede: string;
+    start: string;
+    ask: string;
+    askLede: string;
     email: string;
     company: string;
     name: string;
@@ -128,16 +127,16 @@ const en: Copy = {
   other: { lang: "ja", label: "日本語", home: "/ja/" },
   meta: {
     title: "Kitehand — for the office work you're short-handed on",
-    description: "Order entry, bookkeeping, shipping, online stores. Hand Kitehand the job as a posting, a manual or one line, and it does the work the same way every day, nights and weekends included. By application, 15 companies a month.",
+    description: "Order entry, bookkeeping, shipping, online stores. Hand Kitehand the job as a posting, a manual or one line, and it does the work the same way every day, nights and weekends included. Free to start; $99 a month per hand.",
     og: "/og-en.png",
   },
-  nav: { read: "How much", how: "How it works", compare: "Compare", pricing: "Pricing", faq: "FAQ", cta: "Apply" },
+  nav: { read: "How much", how: "How it works", compare: "Compare", pricing: "Pricing", faq: "FAQ", cta: "Start free" },
   hero: {
-    badge: "Founding members · 15 companies a month",
+    badge: "Free plan · start with one hand",
     kicker: "Hand over a posting, a manual or a line",
     title: ["Short-handed?", "Hand it to Kitehand."],
     lede: "The order entry, bookkeeping and shipping your team squeezes in around everything else: Kitehand learns the job once, then does it the same way every day, nights and weekends included.",
-    actions: ["Apply", "See how much it can take"],
+    actions: ["Start free", "See how much it can take"],
     roster: {
       title: "Today's roster",
       date: "Mon, Oct 27",
@@ -221,7 +220,7 @@ const en: Copy = {
       { title: "Show it once", body: "Give it the sign-ins for the systems you use, and do the tricky part once while it watches. After that, it does it the same way." },
       { title: "Check from your phone", body: "Work you mark, such as payments or shipments, waits for your approval. So does any change to how it does the work." },
     ],
-    note: "For the first 30 days, a person from Kitehand hands the work over with you.",
+    note: "On Pro, your first job is set up with us on a call.",
   },
   compare: {
     eyebrow: "Compare",
@@ -229,7 +228,7 @@ const en: Copy = {
     lede: "There's more than one way to cover work you're short-handed on. For office work, here's how they compare.",
     pick: "Compare with",
     rows: ["Up and running", "Cost per month", "Works", "How the work gets done", "Something unusual", "A screen or process changes", "When people change"],
-    kitehand: ["In days", "$349 per hand", "Around the clock, weekends too", "The way it learned, every time", "Asks you on your phone", "Relearns it, and tells you first", "The way it works stays"],
+    kitehand: ["Today", "$99 per hand, or free for one job", "Around the clock, weekends too", "The way it learned, every time", "Asks you on your phone", "Relearns it, and tells you first", "The way it works stays"],
     options: [
       { name: "Temp or part-time help", cells: ["Weeks, once you find someone", "$3,460 full-time¹", "Their hours", "Depends on the person", "Asks on the spot", "Adapts", "Needs a handover"] },
       { name: "Virtual assistant", cells: ["One to two weeks", "$390 for 10 hours²", "The hours you buy", "Depends on who's assigned", "Asks by chat", "Adapts", "A new assistant needs a handover"] },
@@ -253,29 +252,34 @@ const en: Copy = {
   },
   pricing: {
     eyebrow: "Pricing",
-    title: "Priced per hand.",
-    plan: "Kitehand",
-    regular: "Regular price",
-    price: "$349",
-    per: "/ month",
-    founding: { label: "Founding member price", price: "$199", note: "For the first 50 companies, held for as long as you stay." },
-    yearly: "Pay yearly and get two months free.",
-    anchor: "About a tenth of a full-time office clerk's median wage.",
-    includes: [
-      "One hand, taking up to 5 jobs",
-      "No setup fee, and AI usage included",
-      "Questions and approvals on your phone",
-      "A person who hands the work over with you over the first 30 days",
-      "A full refund within 30 days",
+    title: "Start free. Pay per hand.",
+    plans: [
+      {
+        name: "Free",
+        lede: "One hand, to see it do one job.",
+        price: "$0",
+        per: "",
+        includes: ["One hand, taking one job", "Up to 30 runs a month", "Questions and approvals on your phone", "AI usage included, up to a small allowance"],
+        cta: "Start free",
+      },
+      {
+        name: "Pro",
+        lede: "For the work you're short-handed on.",
+        price: "$99",
+        per: "/ month per hand",
+        includes: ["Up to 5 jobs per hand", "No cap on runs", "No setup fee, and AI usage included", "Your first job set up with us on a call", "A full refund within 30 days"],
+        cta: "Apply for Pro",
+        featured: true,
+      },
     ],
-    intake: "By application, 15 companies a month. Each company gets an environment of its own, so we take only as many as we can set up well.",
-    cta: "Apply",
+    anchor: "About 1/35 of a full-time office clerk's median wage.",
+    yearly: "Pay yearly and get two months free.",
   },
   faq: {
     eyebrow: "FAQ",
-    title: "Before you apply.",
+    title: "Before you start.",
     items: [
-      { q: "What work can it take?", a: "Office work done on a screen with a set way of doing it: order entry, bookkeeping, invoices and payments, shipping, online store operations, property listings. When you apply, we tell you how much of yours it can take." },
+      { q: "What work can it take?", a: "Office work done on a screen with a set way of doing it: order entry, bookkeeping, invoices and payments, shipping, online store operations, property listings. Hand one job to a free hand to see, or ask us and we'll tell you how much of yours it can take." },
       { q: "What won't it do?", a: "Phone calls, visitors, negotiation, judgment calls and work done by hand. These stay with your team from the start." },
       { q: "How does it learn the job?", a: "It splits the posting, manual or line you hand over into tasks and writes down how it will do each one. You do the tricky parts once while it watches, and it uses the way it learned only after you've checked it." },
       { q: "What does it do when it's unsure?", a: "Anything off its usual way, such as a new customer, an unusual amount or changed bank details, it asks you on your phone before going ahead." },
@@ -283,15 +287,18 @@ const en: Copy = {
       { q: "What if it gets something wrong?", a: "Everything it does is recorded. Send the work back with a note, and it corrects how it does it." },
       { q: "Does it stop when our computers are off?", a: "No. Kitehand works in the cloud, nights and weekends included." },
       { q: "How is our data handled?", a: "In an environment kept apart for your company, with sign-ins kept encrypted. Nothing you hand over trains an AI model. We sign an NDA on request." },
-      { q: "Can one hand take more than 5 jobs?", a: "Talk to us. We'll add a hand, or work out with you how to split the work." },
-      { q: "Can we cancel?", a: "Any time; you're not charged again. Within the first 30 days you get a full refund." },
-      { q: "Why only 15 companies a month?", a: "Each company gets an environment of its own, and over the first 30 days a person hands the work over with you. We take as many as we can do that for." },
+      { q: "What does the free plan include?", a: "One hand taking one job, up to 30 runs a month, and questions and approvals on your phone. When the month's runs are used, its work waits for the next month, or for Pro." },
+      { q: "How is Pro billed?", a: "$99 a month for each hand, or ten months' price a year. Each hand takes up to 5 jobs with no cap on runs; for more work, add a hand." },
+      { q: "Can we cancel?", a: "Any time; you're not charged again, and the hand goes back to the free plan. Within the first 30 days of Pro you get a full refund." },
     ],
   },
   apply: {
-    eyebrow: "Apply",
+    eyebrow: "Start",
     title: "Start with one job.",
-    lede: "Write the job you'd hand over, and apply. We'll email you how much of it Kitehand can take, and a date to set it up. Over the first 30 days, you hand it over together.",
+    lede: "Sign up, and hand your first job to a free hand: a job posting, a manual or one line, as you have it.",
+    start: "Start free",
+    ask: "Apply for Pro, or ask us",
+    askLede: "Write the job and how many hands you want. We'll email you how much of it Kitehand can take, and how Pro is billed.",
     email: "Work email",
     company: "Company",
     name: "Your name",
@@ -299,9 +306,9 @@ const en: Copy = {
     sizes: ["10 or fewer", "11–50", "51–300", "301 or more"],
     job: "The job to hand over",
     jobHint: "A job posting, a manual or one line. Paste it as you have it.",
-    submit: "Apply",
+    submit: "Send",
     sending: "Sending…",
-    done: "Got it. We'll email you how much it can take, and a date to set it up.",
+    done: "Got it. We'll email you how much of it Kitehand can take.",
     error: "That didn't go through. Check your email and company, and try again.",
   },
   jobs: {
@@ -319,7 +326,7 @@ const en: Copy = {
   privacy: {
     title: "Privacy",
     body: [
-      "When you apply, your email, company, name, company size and the job you describe reach us through the form service Web3Forms. We use them to reply about your application and its setup. Ask us to delete them at any time.",
+      "When you ask us about a job, your email, company, name, company size and the job you describe reach us through the form service Web3Forms. We use them to reply to you. Ask us to delete them at any time.",
       "We use PostHog to count visits. It records the pages viewed, the referring site, and the type of device and browser, and keeps an identifier for this in your browser. It does not record the screen or keystrokes. We don't sell data.",
     ],
   },
@@ -331,16 +338,16 @@ const ja: Copy = {
   other: { lang: "en", label: "English", home: "/" },
   meta: {
     title: "Kitehand — 人手が足りない仕事を引き受ける AI の担当者",
-    description: "受注の入力、経理、出荷の手配、EC の運営。求人票・手順書・ひとことで仕事を渡せば、Kitehand の担当者が覚えて、夜も休日も毎日同じやり方でこなします。申込制・毎月15社まで。",
+    description: "受注の入力、経理、出荷の手配、EC の運営。求人票・手順書・ひとことで仕事を渡せば、Kitehand の担当者が覚えて、夜も休日も毎日同じやり方でこなします。無料で始められ、有料は担当者1人 月14,800円。",
     og: "/og-ja.png",
   },
-  nav: { read: "何人分か", how: "しくみ", compare: "比べる", pricing: "料金", faq: "よくある質問", cta: "申し込む" },
+  nav: { read: "何人分か", how: "しくみ", compare: "比べる", pricing: "料金", faq: "よくある質問", cta: "無料で始める" },
   hero: {
-    badge: "創業メンバー受付中 · 毎月15社まで",
+    badge: "無料プランあり · 担当者1人から",
     kicker: "求人票・手順書・ひとことで渡せる",
     title: ["人手が足りない仕事は、", "AI の担当者に。"],
     lede: "社長や現場が抱え込んでいる受注・経理・出荷の事務を、Kitehand の担当者が引き受けます。覚えたやり方で、夜も休日も、毎日同じように。",
-    actions: ["申し込む", "何人分を任せられるか見る"],
+    actions: ["無料で始める", "何人分を任せられるか見る"],
     roster: {
       title: "担当表",
       date: "10月27日（月）",
@@ -424,7 +431,7 @@ const ja: Copy = {
       { title: "一度やって見せる", body: "使っているシステムのアカウントを渡し、難しいところを一度だけ操作して見せます。以降は、同じやり方を繰り返します。" },
       { title: "スマホで確かめる", body: "支払いや出荷など、あなたが決めた仕事は承認してから進みます。やり方を変えるときも、先に確かめます。" },
     ],
-    note: "最初の30日は、Kitehand の立ち上げ担当が一緒に仕事を渡します。",
+    note: "プロでは、最初の仕事をオンラインで一緒に設定します。",
   },
   compare: {
     eyebrow: "比べる",
@@ -432,7 +439,7 @@ const ja: Copy = {
     lede: "足りない人手を埋める方法は、ひとつではありません。事務の仕事で比べると、こうなります。",
     pick: "比べる相手",
     rows: ["始めるまで", "月の費用（税抜）", "動く時間", "仕事のやり方", "いつもと違うとき", "画面や手順が変わったとき", "人が替わるとき"],
-    kitehand: ["数日", "49,800円（担当者1人）", "24時間、休日も", "覚えたやり方を、毎回同じに", "スマホであなたに聞く", "覚え直し、使う前に知らせる", "やり方が残る"],
+    kitehand: ["今日から", "14,800円（担当者1人）。仕事1件なら無料", "24時間、休日も", "覚えたやり方を、毎回同じに", "スマホであなたに聞く", "覚え直し、使う前に知らせる", "やり方が残る"],
     options: [
       { name: "派遣・パート", cells: ["人が見つかってから数週間", "約33万円（フルタイム）¹", "勤務時間内", "人による", "その場で聞ける", "合わせられる", "引き継ぎが要る"] },
       { name: "オンラインアシスタント", cells: ["1〜2週間", "10〜13万円（月30時間）²", "契約した時間内", "担当する人による", "チャットで聞く", "合わせられる", "担当が替わると引き継ぎ"] },
@@ -456,29 +463,34 @@ const ja: Copy = {
   },
   pricing: {
     eyebrow: "料金",
-    title: "料金は、担当者1人ごと。",
-    plan: "Kitehand の担当者",
-    regular: "通常価格",
-    price: "49,800円",
-    per: "／月（税別）",
-    founding: { label: "創業メンバー価格", price: "29,800円", note: "先着50社。続けているあいだは、ずっとこの価格です。" },
-    yearly: "年払いなら10か月分。2か月分お得です。",
-    anchor: "フルタイムの事務の派遣料金（月約33万円）の、約7分の1です。",
-    includes: [
-      "AI の担当者1人（任せる仕事は5件まで）",
-      "初期費用なし。AI の利用料も込み",
-      "確認と承認はスマホで",
-      "最初の30日は、立ち上げ担当が一緒に仕事を渡します",
-      "30日以内なら全額返金",
+    title: "無料で始めて、担当者ごとに。",
+    plans: [
+      {
+        name: "無料プラン",
+        lede: "担当者1人に、仕事を1件。",
+        price: "0円",
+        per: "",
+        includes: ["担当者1人（任せる仕事は1件）", "月30回まで", "確認と承認はスマホで", "AI の利用料込み（少量まで）"],
+        cta: "無料で始める",
+      },
+      {
+        name: "プロ",
+        lede: "人手が足りない仕事に。",
+        price: "14,800円",
+        per: "／月・担当者1人（税別）",
+        includes: ["任せる仕事は1人5件まで", "回数の上限なし", "初期費用なし。AI の利用料も込み", "最初の仕事は、オンラインで一緒に設定", "30日以内なら全額返金"],
+        cta: "プロを申し込む",
+        featured: true,
+      },
     ],
-    intake: "申込制・毎月15社まで。会社ごとに専用の環境を用意し、立ち上げまで一緒に進めるため、受け入れる数を絞っています。",
-    cta: "申し込む",
+    anchor: "フルタイムの事務の派遣料金（月約33万円）の、約22分の1です。",
+    yearly: "年払いなら10か月分。2か月分お得です。",
   },
   faq: {
     eyebrow: "よくある質問",
-    title: "申し込む前に。",
+    title: "始める前に。",
     items: [
-      { q: "どんな仕事を任せられますか？", a: "受注の入力、経理、請求と入金の確認、出荷の手配、EC の運営、物件情報の登録など、パソコンの画面で決まった流れのある事務です。申し込みのあと、どこまで任せられるかをお伝えします。" },
+      { q: "どんな仕事を任せられますか？", a: "受注の入力、経理、請求と入金の確認、出荷の手配、EC の運営、物件情報の登録など、パソコンの画面で決まった流れのある事務です。無料プランで1件任せて確かめるか、ご相談いただければ、どこまで任せられるかをお伝えします。" },
       { q: "任せられない仕事は？", a: "電話、来客、交渉、判断の要る仕事、手を動かす仕事です。最初から人の仕事として分けておきます。" },
       { q: "どうやって仕事を覚えますか？", a: "渡された求人票や手順書を仕事に分け、毎回のやり方を書き出します。難しいところは、あなたが一度操作して見せます。覚えたやり方は、あなたが確かめてから使います。" },
       { q: "迷ったときはどうしますか？", a: "初めての取引先、いつもと違う金額、変わった振込先など、決まったやり方から外れるものは、進める前にスマホであなたに聞きます。" },
@@ -486,15 +498,18 @@ const ja: Copy = {
       { q: "間違えたらどうなりますか？", a: "すべての作業が記録に残ります。ひとこと添えて差し戻すと、そのやり方を直します。" },
       { q: "パソコンを閉じたら止まりますか？", a: "止まりません。担当者はクラウドで働くので、夜も休日も進みます。" },
       { q: "データはどう扱われますか？", a: "会社ごとに分かれた環境で扱い、サインイン情報は暗号化して保管します。預かったデータで AI モデルを学習させることはありません。ご希望があれば秘密保持契約（NDA）を結びます。" },
-      { q: "6件目の仕事を任せたいときは？", a: "ご相談ください。担当者を増やすか、仕事の分け方を一緒に考えます。" },
-      { q: "解約はできますか？", a: "いつでも解約でき、次の請求からはかかりません。最初の30日以内なら、全額を返金します。" },
-      { q: "なぜ毎月15社までなのですか？", a: "会社ごとに専用の環境を用意し、最初の30日は立ち上げ担当が一緒に仕事を渡すためです。それができる数だけ、毎月お受けしています。" },
+      { q: "無料プランでは何ができますか？", a: "担当者1人に仕事を1件、月30回まで任せられます。確認と承認はスマホで受けられます。その月の回数を使い切ると、翌月かプロに切り替えるまで仕事は止まって待ちます。" },
+      { q: "プロの料金はどうかかりますか？", a: "担当者1人につき月14,800円（税別）、年払いなら10か月分です。1人に仕事を5件まで、回数の上限なく任せられます。仕事が増えたら、担当者を増やします。" },
+      { q: "解約はできますか？", a: "いつでも解約でき、次の請求からはかかりません。担当者は無料プランに戻ります。プロの最初の30日以内なら、全額を返金します。" },
     ],
   },
   apply: {
-    eyebrow: "申し込み",
+    eyebrow: "はじめる",
     title: "まず、仕事をひとつ。",
-    lede: "任せたい仕事を書いて申し込むと、何人分を任せられるかと、立ち上げの日程をメールでお返事します。最初の30日で、一緒に仕事を渡していきます。",
+    lede: "登録して、無料の担当者に最初の仕事を渡してください。求人票・手順書・ひとこと、いまある形のままで。",
+    start: "無料で始める",
+    ask: "プロの申し込み・ご相談",
+    askLede: "任せたい仕事と、担当者の人数を書いて送ってください。どこまで任せられるかと、プロのご請求の流れをメールでお返事します。",
     email: "メールアドレス",
     company: "会社名",
     name: "お名前",
@@ -502,9 +517,9 @@ const ja: Copy = {
     sizes: ["10人以下", "11〜50人", "51〜300人", "301人以上"],
     job: "任せたい仕事",
     jobHint: "求人票・手順書・ひとこと、どれでも。いまある形のまま貼り付けてください。",
-    submit: "申し込む",
+    submit: "送る",
     sending: "送信中…",
-    done: "受け付けました。何人分を任せられるかと、立ち上げの日程をメールでお返事します。",
+    done: "受け付けました。どこまで任せられるかをメールでお返事します。",
     error: "送信できませんでした。メールアドレスと会社名を確かめて、もう一度お試しください。",
   },
   jobs: {
@@ -522,7 +537,7 @@ const ja: Copy = {
   privacy: {
     title: "プライバシー",
     body: [
-      "申し込みの際は、メールアドレス・会社名・お名前・会社の人数・任せたい仕事を、フォームサービス Web3Forms を通じて受け取り、申し込みと立ち上げのご連絡に使います。いつでも削除をご依頼いただけます。",
+      "ご相談の際は、メールアドレス・会社名・お名前・会社の人数・任せたい仕事を、フォームサービス Web3Forms を通じて受け取り、お返事に使います。いつでも削除をご依頼いただけます。",
       "訪問数を把握するため、PostHog を利用しています。PostHog は、閲覧したページ、参照元のサイト、端末とブラウザの種類を記録し、そのための識別子をブラウザに保存します。画面の録画やキー入力の記録は行いません。データを販売することはありません。",
     ],
   },

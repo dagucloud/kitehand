@@ -2037,53 +2037,48 @@ a.badge:hover {
   color: var(--ink-2);
 }
 
-/* Pricing */
-.plan {
+/* Pricing: Free beside Pro, Pro raised like Kitehand's column in the
+   comparison. */
+.plans {
   display: grid;
-  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  gap: 20px;
+  align-items: stretch;
   margin-top: clamp(32px, 5vw, 56px);
-  border-radius: 22px;
-  background: var(--surface);
-  box-shadow: var(--shadow), 0 0 0 1px var(--line);
-  overflow: hidden;
 }
 
 @media (max-width: 860px) {
-  .plan {
+  .plans {
     grid-template-columns: 1fr;
   }
 }
 
-.plan-price {
-  padding: clamp(26px, 4vw, 44px);
-  border-right: 1px solid var(--line);
+.plan {
+  display: flex;
+  flex-direction: column;
+  padding: clamp(26px, 4vw, 40px);
+  border-radius: 22px;
+  background: var(--surface);
+  box-shadow: 0 0 0 1px var(--line);
 }
 
-@media (max-width: 860px) {
-  .plan-price {
-    border-right: 0;
-    border-bottom: 1px solid var(--line);
-  }
+.plan.is-featured {
+  box-shadow: var(--shadow), 0 0 0 1px var(--line), inset 0 4px 0 var(--ai);
 }
 
-.plan-price h3 {
+.plan h3 {
   margin: 0;
   font: 400 clamp(24px, 2.6vw, 30px) / 1.2 var(--display);
 }
 
-:lang(ja) .plan-price h3 {
+:lang(ja) .plan h3 {
   font-weight: 800;
 }
 
-.founding-label {
-  display: inline-block;
-  margin: 22px 0 0;
-  padding: 5px 10px;
-  border-radius: 999px;
-  background: var(--shu-soft);
-  color: var(--shu-deep);
-  font-size: 13px;
-  font-weight: 700;
+.plan-lede {
+  margin: 8px 0 0;
+  font-size: 15px;
+  color: var(--ink-2);
 }
 
 .plan .price {
@@ -2091,12 +2086,16 @@ a.badge:hover {
   align-items: baseline;
   flex-wrap: wrap;
   gap: 6px;
-  margin: 12px 0 0;
+  margin: 18px 0 0;
 }
 
 .plan .amount {
   font: 400 clamp(48px, 6vw, 68px) / 1 var(--display);
   letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+.plan.is-featured .amount {
   color: var(--shu);
 }
 
@@ -2110,7 +2109,7 @@ a.badge:hover {
 }
 
 .anchor {
-  margin: 16px 0 0;
+  margin: 14px 0 0;
   padding: 10px 14px;
   border-radius: 10px;
   background: var(--ai-soft);
@@ -2119,31 +2118,10 @@ a.badge:hover {
   font-weight: 700;
 }
 
-.list-price,
-.founding-note,
-.yearly {
-  margin: 12px 0 0;
-  font-size: 14px;
-  color: var(--ink-2);
-}
-
-.list-price s {
-  margin: 0 2px 0 6px;
-  color: var(--muted);
-}
-
-.plan-price .btn {
-  margin-top: 26px;
-}
-
-.plan-body {
-  padding: clamp(26px, 4vw, 44px);
-}
-
 .includes {
   display: grid;
-  gap: 14px;
-  margin: 0;
+  gap: 12px;
+  margin: 24px 0 0;
   padding: 0;
   list-style: none;
 }
@@ -2151,26 +2129,30 @@ a.badge:hover {
 .includes li {
   position: relative;
   padding-left: 30px;
-  font-size: 16px;
+  font-size: 15px;
 }
 
 .includes li::before {
   content: "";
   position: absolute;
   left: 0;
-  top: 0.35em;
+  top: 0.3em;
   width: 18px;
   height: 18px;
   border-radius: 50%;
   background: var(--ai) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3.5 8.5l3 3L12.5 5' fill='none' stroke='white' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 12px no-repeat;
 }
 
-.intake {
-  margin: 26px 0 0;
-  padding-top: 20px;
-  border-top: 1px solid var(--line);
+.yearly {
+  margin: 18px 0 0;
   font-size: 14px;
   color: var(--ink-2);
+}
+
+/* The way in sits at the foot of each plan, level across both. */
+.plan-foot {
+  margin-top: auto;
+  padding-top: 28px;
 }
 
 /* Apply */
@@ -2209,6 +2191,14 @@ a.badge:hover {
   max-width: 30em;
 }
 
+.apply .btn--large {
+  height: 60px;
+  margin-top: 32px;
+  padding: 0 30px;
+  font-size: 17px;
+}
+
+/* Asking first is the quieter way, beside starting. */
 .apply form {
   display: grid;
   gap: 16px;
@@ -2216,6 +2206,22 @@ a.badge:hover {
   border-radius: 18px;
   background: var(--surface);
   color: var(--ink);
+}
+
+.apply .form-title {
+  margin: 0;
+  font: 400 24px/1.2 var(--display);
+}
+
+:lang(ja) .apply .form-title {
+  font-weight: 800;
+  font-size: 21px;
+}
+
+.apply .form-lede {
+  margin: -8px 0 4px;
+  font-size: 14px;
+  color: var(--ink-2);
 }
 
 .field label {

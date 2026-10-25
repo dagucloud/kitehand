@@ -4,6 +4,7 @@
 // for, people keep theirs, and the one exception waits on the manager's
 // phone until they approve it.
 import type { Copy } from "../i18n/copy";
+import { START } from "../lib/links";
 
 interface Props {
   copy: Copy;
@@ -18,12 +19,12 @@ const p = h.phone;
 <section class="hero">
   <div class="wrap grid">
     <div>
-      <a class="badge rise rise-1" href="#apply"><span class="dot"></span>{h.badge} <span class="arrow">→</span></a>
+      <a class="badge rise rise-1" href="#pricing"><span class="dot"></span>{h.badge} <span class="arrow">→</span></a>
       <p class="kicker rise rise-2">{h.kicker}</p>
       <h1 class="rise rise-3"><span>{h.title[0]}</span><span>{h.title[1]}</span></h1>
       <p class="lede rise rise-4">{h.lede}</p>
       <div class="actions rise rise-5">
-        <a class="btn btn--shu" href="#apply">{h.actions[0]} <span class="arrow">→</span></a>
+        <a class="btn btn--shu" href={START} data-start="hero">{h.actions[0]} <span class="arrow">→</span></a>
         <a class="btn btn--ghost" href="#read">{h.actions[1]}</a>
       </div>
     </div>

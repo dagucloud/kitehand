@@ -1,8 +1,10 @@
 ---
-// The application at the foot of the page: a company applies with the first
-// job to hand over, and any example the visitor read comes along.
+// The foot of the page: the way to start in the app, and beside it a form
+// to ask the team about a job first, which takes along any example the
+// visitor read.
 import Phrases from "./Phrases.astro";
 import type { Copy } from "../i18n/copy";
+import { START } from "../lib/links";
 
 interface Props {
   copy: Copy;
@@ -18,8 +20,11 @@ const a = copy.apply;
       <span class="eyebrow">{a.eyebrow}</span>
       <h2 class="section-title"><Phrases text={a.title} /></h2>
       <p class="lede">{a.lede}</p>
+      <a class="btn btn--shu btn--large" href={START} data-start="foot">{a.start} <span class="arrow">→</span></a>
     </div>
     <form data-apply data-lang={copy.lang} data-sending={a.sending} data-error={a.error} novalidate>
+      <p class="form-title">{a.ask}</p>
+      <p class="form-lede">{a.askLede}</p>
       <div class="field-row">
         <div class="field">
           <label for="ap-name">{a.name}</label>
@@ -52,7 +57,7 @@ const a = copy.apply;
         <textarea id="ap-job" name="job" placeholder={a.jobHint}></textarea>
       </div>
       <p class="note" data-note aria-live="polite"></p>
-      <button class="btn btn--shu" type="submit">{a.submit} <span class="arrow">→</span></button>
+      <button class="btn btn--ink" type="submit">{a.submit} <span class="arrow">→</span></button>
       <div class="done" role="status">{a.done}</div>
     </form>
   </div>
