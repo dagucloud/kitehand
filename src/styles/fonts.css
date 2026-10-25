@@ -22,7 +22,7 @@
   font-style: normal;
   font-weight: 500;
   font-display: swap;
-  src: url("/fonts/hanken-grotesk-500-99a2e62efe.woff2") format("woff2");
+  src: url("/fonts/hanken-grotesk-500-3edc8e54e3.woff2") format("woff2");
 }
 
 @font-face {
@@ -70,7 +70,7 @@
   font-style: normal;
   font-weight: 800;
   font-display: swap;
-  src: url("/fonts/shippori-mincho-b1-800-6c31a11047.woff2") format("woff2");
+  src: url("/fonts/shippori-mincho-b1-800-75ec6d78c3.woff2") format("woff2");
 }
 
 @font-face {
@@ -78,7 +78,7 @@
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url("/fonts/zen-kaku-gothic-new-400-84529ac3c0.woff2") format("woff2");
+  src: url("/fonts/zen-kaku-gothic-new-400-102ee2fa5e.woff2") format("woff2");
 }
 
 @font-face {
@@ -86,7 +86,7 @@
   font-style: normal;
   font-weight: 500;
   font-display: swap;
-  src: url("/fonts/zen-kaku-gothic-new-500-a774617bfa.woff2") format("woff2");
+  src: url("/fonts/zen-kaku-gothic-new-500-bdac67c315.woff2") format("woff2");
 }
 
 @font-face {
@@ -94,5 +94,5 @@
   font-style: normal;
   font-weight: 700;
   font-display: swap;
-  src: url("/fonts/zen-kaku-gothic-new-700-48ea167ffe.woff2") format("woff2");
+  src: url("/fonts/zen-kaku-gothic-new-700-ac9b26b3df.woff2") format("woff2");
 }
