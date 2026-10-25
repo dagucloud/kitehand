@@ -34,6 +34,9 @@ const ALWAYS = "0123456789.,:;!?%()/-–—·… ";
 const ASCII = Array.from({ length: 95 }, (_, i) => String.fromCharCode(32 + i)).join("");
 const KANA = Array.from({ length: 0x3097 - 0x3041 }, (_, i) => String.fromCharCode(0x3041 + i)).join("") + Array.from({ length: 0x30fb - 0x30a1 }, (_, i) => String.fromCharCode(0x30a1 + i)).join("") + "ー、。「」・（）！？";
 const TYPED = { "Hanken Grotesk|400": ASCII, "Zen Kaku Gothic New|400": ASCII + KANA };
+// The Latin families keep all of ASCII in every face: it costs little, and
+// keeps a word the scripts write later whole.
+const LATIN = new Set(["Gloock", "Hanken Grotesk", "IBM Plex Mono"]);
 
 const slug = (family) => family.toLowerCase().replace(/\s+/g, "-");
 
@@ -89,11 +92,13 @@ function serve() {
 // scripts show later, and what the share card paints.
 function shown() {
   const seen = {};
+  // A face draws text as its style transforms it, as in capitals.
   const add = (style, text) => {
     if (!text) return;
     const family = style.fontFamily.split(",")[0].trim().replace(/^["']|["']$/g, "");
     const key = `${family}|${style.fontWeight}`;
-    seen[key] = (seen[key] ?? "") + text;
+    const drawn = { uppercase: text.toUpperCase(), lowercase: text.toLowerCase(), capitalize: text + text.toUpperCase() }[style.textTransform] ?? text;
+    seen[key] = (seen[key] ?? "") + drawn;
   };
   const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
   for (let node = walker.nextNode(); node; node = walker.nextNode()) {
@@ -184,7 +189,7 @@ const made = [];
 const manifest = {};
 for (const [key, text] of [...faces].sort(([a], [b]) => a.localeCompare(b))) {
   const [family, weight] = key.split("|");
-  const chars = [...new Set([...text, ...ALWAYS, ...(TYPED[key] ?? "")])].filter((c) => c.trim()).sort().join("");
+  const chars = [...new Set([...text, ...ALWAYS, ...(TYPED[key] ?? ""), ...(LATIN.has(family) ? ASCII : "")])].filter((c) => c.trim()).sort().join("");
   const bytes = await subsetFont(await source(family, Number(weight)), chars, { targetFormat: "woff2" });
   const name = `${slug(family)}-${weight}-${createHash("sha256").update(bytes).digest("hex").slice(0, 10)}.woff2`;
   writeFileSync(join(out, name), bytes);

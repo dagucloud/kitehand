@@ -64,8 +64,10 @@ for (const page of built) {
     assert.equal(words.match(BUILDERS)?.[0], undefined);
   });
 
+  // A style may show text in capitals, so both cases count.
   test(`${name} shows only characters the site's fonts hold`, () => {
-    const missing = [...new Set(shown(html))].filter((c) => c.trim() && !held.has(c));
+    const text = shown(html);
+    const missing = [...new Set(text + text.toUpperCase())].filter((c) => c.trim() && !held.has(c));
     assert.deepEqual(missing, [], "run npm run fonts");
   });
 

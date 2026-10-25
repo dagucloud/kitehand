@@ -1,31 +1,31 @@
 {
   "Gloock|400": {
-    "file": "/fonts/gloock-400-ab577888c2.woff2",
-    "chars": "!$%'(),-./0123456789:;?ABCDEFHIJKNOPRSTVWYabcdefghijklmnoprstuvwy·–—…"
+    "file": "/fonts/gloock-400-e8a097bfd4.woff2",
+    "chars": "!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~·–—…"
   },
   "Hanken Grotesk|400": {
     "file": "/fonts/hanken-grotesk-400-4ace5c0524.woff2",
     "chars": "!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~²·¹–—“”…●。こしせのはまんジペー在存日本語"
   },
   "Hanken Grotesk|500": {
-    "file": "/fonts/hanken-grotesk-500-3edc8e54e3.woff2",
-    "chars": "!%(),-./0123456789:;?FKOWYabdefhijklmnorstuwy·–—…→"
+    "file": "/fonts/hanken-grotesk-500-2e8847bca9.woff2",
+    "chars": "!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~·–—…→"
   },
   "Hanken Grotesk|600": {
-    "file": "/fonts/hanken-grotesk-600-39da685978.woff2",
-    "chars": "!$%'(),-./0123456789:;?ABCEGHIKLMNOPQRSTUVWYabcdefghijklmnopqrstuvwxyz·–—…→にる戻"
+    "file": "/fonts/hanken-grotesk-600-41c9c1d1e0.woff2",
+    "chars": "!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~·–—…→にる戻"
   },
   "Hanken Grotesk|700": {
-    "file": "/fonts/hanken-grotesk-700-83a578ed5d.woff2",
-    "chars": "!%'(),-./0123456789:;?AHKMOSabcdefghijklmnoprstuvwy·–—…✓"
+    "file": "/fonts/hanken-grotesk-700-cd01cc1503.woff2",
+    "chars": "!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~·–—…✓"
   },
   "IBM Plex Mono|300": {
-    "file": "/fonts/ibm-plex-mono-300-247e71cab0.woff2",
-    "chars": "!%(),-./0123456789:;?·–—…"
+    "file": "/fonts/ibm-plex-mono-300-ead5a9e6ec.woff2",
+    "chars": "!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~·–—…"
   },
   "IBM Plex Mono|500": {
-    "file": "/fonts/ibm-plex-mono-500-8fd69ffa9c.woff2",
-    "chars": "!%'(),-./0123456789:;?ABCDEFHIJKLMNOPQRSTUWXYZabcdefghijklmnoprstuvwxyz·–—…のアイォカサジスセダットドフマメヤルレンー一件佐価便共在場売天客川市庫急文料日明時月有本格楽注物理社管細自行表覧語販資輸運銀間顧（）"
+    "file": "/fonts/ibm-plex-mono-500-ac368dc5be.woff2",
+    "chars": "!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~·–—…のアイォカサジスセダットドフマメヤルレンー一件佐価便共在場売天客川市庫急文料日明時月有本格楽注物理社管細自行表覧語販資輸運銀間顧（）"
   },
   "Shippori Mincho B1|600": {
     "file": "/fonts/shippori-mincho-b1-600-cc534bbcc1.woff2",
