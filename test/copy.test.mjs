@@ -1,5 +1,6 @@
 // Checks the built site, as a visitor reads it: no employment words, none of
-// the builders' words, and every link inside the site leads somewhere.
+// the builders' words, every link inside the site leads somewhere, and the
+// site's own fonts hold every character a page shows.
 import assert from "node:assert/strict";
 import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { join, relative } from "node:path";
@@ -32,6 +33,18 @@ function visible(html) {
   return `${text} ${seen.join(" ")}`.replace(/&amp;/g, "&").replace(/&quot;/g, '"').replace(/&#39;/g, "'");
 }
 
+// shown is the text a page draws: its body, without scripts, styles or
+// markup, and the placeholders of its fields.
+function shown(html) {
+  const body = html.slice(html.indexOf("<body"), html.lastIndexOf("</body>"));
+  const placeholders = [...body.matchAll(/\bplaceholder="([^"]*)"/g)].map((m) => m[1]);
+  return `${body.replace(/<script[\s\S]*?<\/script>/g, " ").replace(/<style[\s\S]*?<\/style>/g, " ").replace(/<[^>]+>/g, " ")} ${placeholders.join(" ")}`
+    .replace(/&amp;/g, "&").replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/&lt;/g, "<").replace(/&gt;/g, ">");
+}
+
+// Every character the site's fonts hold (scripts/make-fonts.mjs).
+const held = new Set(Object.values(JSON.parse(readFileSync(new URL("../src/data/fonts.json", import.meta.url), "utf8"))).flatMap((f) => [...f.chars]));
+
 const built = pages(dist);
 
 test("the site is built", () => {
@@ -49,6 +62,11 @@ for (const page of built) {
 
   test(`${name} uses none of the builders' words`, () => {
     assert.equal(words.match(BUILDERS)?.[0], undefined);
+  });
+
+  test(`${name} shows only characters the site's fonts hold`, () => {
+    const missing = [...new Set(shown(html))].filter((c) => c.trim() && !held.has(c));
+    assert.deepEqual(missing, [], "run npm run fonts");
   });
 
   test(`${name} links only to pages and places that exist`, () => {

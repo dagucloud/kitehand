@@ -1,0 +1,6 @@
+# Fonts and built assets are named by their content, so a browser keeps them
+# for a year and never asks again.
+/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
+/_astro/*
+  Cache-Control: public, max-age=31536000, immutable

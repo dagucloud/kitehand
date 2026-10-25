@@ -11,6 +11,7 @@
     "check": "astro check",
     "serve": "astro build && wrangler dev",
     "deploy": "astro build && wrangler deploy",
+    "fonts": "astro build && node scripts/make-fonts.mjs && astro build",
     "test": "astro build && node --test test/*.test.mjs"
   },
   "dependencies": {
@@ -21,6 +22,7 @@
   "devDependencies": {
     "@astrojs/check": "^0.9.10",
     "playwright-core": "^1.63.0",
+    "subset-font": "2.9.0",
     "typescript": "^5.9.3",
     "wrangler": "^4.149.0"
   }

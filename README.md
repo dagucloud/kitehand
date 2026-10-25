@@ -40,6 +40,14 @@ npm test        # builds, then checks the words and links visitors see
 
 `npm run deploy` builds the site and publishes it.
 
+## Fonts
+
+The pages load their own fonts, each cut down to the characters the site
+shows in it, from `public/fonts` (`src/styles/fonts.css`, `src/data/fonts.json`).
+After changing any words, run `npm run fonts`, which builds the site, cuts
+the fonts from Google Fonts' files and builds again; `npm test` fails when a
+page shows a character the fonts lack.
+
 ## Assets
 
 The logo files come from `marketing/brand/kitehand/` in the Kitewell source.

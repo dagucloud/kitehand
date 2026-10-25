@@ -5,7 +5,7 @@ import type { ReaderConfig } from "../lib/reader-config";
 
 const W = 1200;
 const H = 630;
-const COLOR = { paper: "#f6f3ec", ink: "#1d2027", ink2: "#3d424c", muted: "#6e727b", line: "#e2dcd0", shu: "#c63f2a", ai: "#2c3e63", human: "#c9c3b6" };
+const COLOR = { paper: "#f6f3ec", ink: "#1d2027", ink2: "#3d424c", muted: "#63676f", line: "#e2dcd0", shu: "#c63f2a", ai: "#2c3e63", human: "#c9c3b6" };
 const SHARE_COLOR: Record<string, string> = { kitehand: COLOR.ai, approve: COLOR.shu, human: COLOR.human };
 
 function image(src: string): Promise<HTMLImageElement> {

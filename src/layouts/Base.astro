@@ -2,8 +2,17 @@
 // The page shell: meta tags for search and sharing, the fonts each language
 // needs, and visit statistics on kitehand.ai.
 import Analytics from "../components/Analytics.astro";
+import fonts from "../data/fonts.json";
+import "../styles/fonts.css";
 import "../styles/global.css";
 import type { Copy } from "../i18n/copy";
+
+// The faces the first screen is drawn in, fetched before the stylesheet asks
+// for them: the headline's and the body's.
+const FIRST: Record<string, string[]> = {
+  en: ["Gloock|400", "Hanken Grotesk|400"],
+  ja: ["Shippori Mincho B1|800", "Zen Kaku Gothic New|400"],
+};
 
 interface Props {
   copy: Copy;
@@ -19,10 +28,7 @@ const site = Astro.site!;
 const canonical = new URL(path, site).href;
 const en = copy.lang === "en" ? path : alternate;
 const ja = copy.lang === "ja" ? path : alternate;
-const fonts =
-  copy.lang === "ja"
-    ? "family=Gloock&family=Shippori+Mincho+B1:wght@600;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Hanken+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@300;400;500"
-    : "family=Gloock&family=Hanken+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@300;400;500";
+const preload = FIRST[copy.lang].map((key) => (fonts as Record<string, { file: string }>)[key]?.file).filter(Boolean);
 ---
 
 <!doctype html>
@@ -48,9 +54,7 @@ const fonts =
     <meta property="og:image" content={new URL(copy.meta.og, site).href} />
     <meta property="og:locale" content={copy.lang === "ja" ? "ja_JP" : "en_US"} />
     <meta name="twitter:card" content="summary_large_image" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="stylesheet" href={`https://fonts.googleapis.com/css2?${fonts}&display=swap`} />
+    {preload.map((file) => <link rel="preload" href={file} as="font" type="font/woff2" crossorigin />)}
     <slot name="head" />
   </head>
   <body>
