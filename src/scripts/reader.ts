@@ -1,6 +1,6 @@
 // The examples on the home page. Choosing one fills the result card below
-// with what the secretary would take, read ahead of time; nothing is read on
-// the site. The card's way to hand the work over leads to the application,
+// with what Kitehand would take, read ahead of time; nothing is read on the
+// site. The card's way to hand the work over leads to the application,
 // which takes the example along.
 import { track } from "../lib/analytics";
 import { tally, type Diagnosis } from "../lib/diagnosis";
@@ -24,7 +24,8 @@ chips.forEach((chip) => {
     chips.forEach((c) => c.setAttribute("aria-pressed", String(c === chip)));
     current = { d: sample.diagnosis, slug: sample.slug };
     render(sample.diagnosis, sample.slug);
-    track("work_read", { slug: sample.slug, hours: tally(sample.diagnosis).taken, tasks: sample.diagnosis.duties.length });
+    const t = tally(sample.diagnosis);
+    track("work_read", { slug: sample.slug, hours: t.taken, people: t.people, tasks: sample.diagnosis.duties.length });
     window.dispatchEvent(new CustomEvent("kitehand:read", { detail: current }));
   });
 });
@@ -40,7 +41,8 @@ function render(d: Diagnosis, slug: string) {
   result.dataset.slug = slug;
   r("title").textContent = d.title;
   r("summary").textContent = d.summary;
-  r("back").textContent = String(t.taken);
+  r("people").textContent = String(t.people);
+  r("unit").textContent = config.words.units[t.people > 1 ? 1 : 0];
   r("taken").textContent = config.words.taken.replace("{taken}", String(t.taken)).replace("{total}", String(t.total));
   for (const s of ["kitehand", "approve", "human"]) r(`m-${s}`).style.width = `${(share(s) / t.total) * 100}%`;
 
@@ -82,7 +84,7 @@ function say(message: string) {
 const shareUrl = () => new URL(`${config.jobs}${current.slug}/`, location.origin).href;
 
 result.querySelector("[data-act='share']")?.addEventListener("click", async () => {
-  const message = config.words.shareText.replace("{title}", current.d.title).replace("{hours}", String(tally(current.d).taken));
+  const message = config.words.shareText.replace("{title}", current.d.title).replace("{people}", String(tally(current.d).people));
   const url = shareUrl();
   track("result_shared", { slug: current.slug, native: "share" in navigator });
   if (navigator.share) {

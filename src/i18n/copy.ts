@@ -1,27 +1,39 @@
 // Every word on kitehand.ai, in English and Japanese. Pages pick the copy for
 // their language; the shape is the same so nothing is missing in either.
+import type { Kind } from "../data/samples";
 import type { Lang, Share } from "../lib/diagnosis";
 
 export type Copy = {
   lang: Lang;
   other: { lang: Lang; label: string; home: string };
   meta: { title: string; description: string; og: string };
-  nav: { day: string; how: string; pricing: string; faq: string; cta: string };
+  nav: { read: string; how: string; compare: string; pricing: string; faq: string; cta: string };
   hero: {
     badge: string;
     kicker: string;
     title: [string, string];
     lede: string;
     actions: [string, string];
-    // The owner's phone beside the promise: what their assistant told them
-    // this morning, and the one thing it asked.
-    phone: { app: string; date: string; items: { time: string; text: string; ask?: boolean }[]; approve: string; hold: string };
+    // The day's roster beside the promise: Kitehand on the work nobody is
+    // free for, a person on theirs, and one exception waiting on the phone.
+    roster: {
+      title: string;
+      date: string;
+      columns: [string, string, string];
+      rows: { work: string; who: string; now: string; cleared?: string; state: "kitehand" | "ask" | "person" }[];
+      total: { label: string; value: string; unit: string };
+    };
+    phone: { from: string; time: string; text: string; approve: string; hold: string; approved: string };
   };
+  // The shortage, in numbers a manager recognizes, each with its source.
+  facts: { eyebrow: string; title: string; items: { value: string; unit: string; label: string; source: string; url: string }[] };
   read: { eyebrow: string; title: string; lede: string; pick: string; example: string };
   result: {
-    back: string;
-    unit: string;
+    takes: string;
+    // How a share of a full-time job reads: up to one, and more than one.
+    units: [string, string];
     taken: (taken: number | string, total: number | string) => string;
+    basis: string;
     shares: Record<Share, string>;
     columns: [string, string, string];
     hours: string;
@@ -31,7 +43,7 @@ export type Copy = {
     estimate: string;
     cta: string;
     share: string;
-    shareText: (title: string, hours: string) => string;
+    shareText: (title: string, people: string) => string;
     copied: string;
     save: string;
     stamp: string;
@@ -43,14 +55,25 @@ export type Copy = {
     desk: string;
     handed: string;
     working: string;
-    // The work the assistant holds; a moment of the day names its work by
-    // index.
+    // The hands at work, in the order the work flows; a moment of the day
+    // names its hand by index.
     work: string[];
     moments: { time: string; who?: number; title: string; body: string; mark?: "ask" | "stamp" }[];
     approved: string;
   };
-  how: { eyebrow: string; title: string; parts: { title: string; body: string }[] };
-  contrast: { eyebrow: string; title: string; left: string; right: string; rows: [string, string][] };
+  how: { eyebrow: string; title: string; parts: { title: string; body: string }[]; note: string };
+  // Kitehand beside the other ways a company covers work it is short-handed
+  // on; a mark in a cell names its source in the notes.
+  compare: {
+    eyebrow: string;
+    title: string;
+    lede: string;
+    pick: string;
+    rows: string[];
+    kitehand: string[];
+    options: { name: string; cells: string[] }[];
+    notes: string[];
+  };
   trust: { eyebrow: string; title: string; items: { title: string; body: string }[] };
   pricing: {
     eyebrow: string;
@@ -61,6 +84,7 @@ export type Copy = {
     per: string;
     founding: { label: string; price: string; note: string };
     yearly: string;
+    anchor: string;
     includes: string[];
     intake: string;
     cta: string;
@@ -74,7 +98,7 @@ export type Copy = {
     company: string;
     name: string;
     size: string;
-    sizes: [string, string, string];
+    sizes: [string, string, string, string];
     job: string;
     jobHint: string;
     submit: string;
@@ -82,7 +106,17 @@ export type Copy = {
     done: string;
     error: string;
   };
-  jobs: { eyebrow: string; title: (work: string) => string; lede: (work: string) => string; posting: string; yours: string; others: string; more: string };
+  jobs: {
+    eyebrow: string;
+    title: (work: string) => string;
+    lede: (work: string) => string;
+    posting: string;
+    kinds: Record<Kind, string>;
+    yours: string;
+    others: string;
+    more: string;
+    index: string;
+  };
   // made is the sentence around the company's name, which links to its site.
   footer: { made: [string, string]; company: string; companyUrl: string; privacy: string };
   privacy: { title: string; body: string[] };
@@ -93,69 +127,89 @@ const en: Copy = {
   lang: "en",
   other: { lang: "ja", label: "日本語", home: "/ja/" },
   meta: {
-    title: "Kitehand — your own AI executive assistant",
-    description: "Bookkeeping entries, invoices, orders, the daily report. Kitehand takes on the office work small-business owners do after hours, the same way every day. By application, 15 owners a month.",
+    title: "Kitehand — for the office work you're short-handed on",
+    description: "Order entry, bookkeeping, shipping, online stores. Hand Kitehand the job as a posting, a manual or one line, and it does the work the same way every day, nights and weekends included. By application, 15 companies a month.",
     og: "/og-en.png",
   },
-  nav: { day: "Your day", how: "How it works", pricing: "Pricing", faq: "FAQ", cta: "Apply" },
+  nav: { read: "How much", how: "How it works", compare: "Compare", pricing: "Pricing", faq: "FAQ", cta: "Apply" },
   hero: {
-    badge: "Founding members · 15 owners a month",
-    kicker: "For owners of small businesses",
-    title: ["Your own", "AI executive assistant."],
-    lede: "Bookkeeping entries, invoices, orders, the daily report. Kitehand takes on the office work you do after hours, and does it the same way every day.",
-    actions: ["Apply for membership", "See pricing"],
-    phone: {
-      app: "Kitehand",
-      date: "Tuesday 7:01",
-      items: [
-        { time: "7:00", text: "Good morning. Yesterday's 38 bank and card transactions are in your books, receipts attached." },
-        { time: "7:01", text: "One to check: $1,280 to Hill & Co. Their bank account changed since last month.", ask: true },
-        { time: "Yesterday 18:00", text: "Today's 12 invoices are sent, and the payments they expect are booked." },
+    badge: "Founding members · 15 companies a month",
+    kicker: "Hand over a posting, a manual or a line",
+    title: ["Short-handed?", "Hand it to Kitehand."],
+    lede: "The order entry, bookkeeping and shipping your team squeezes in around everything else: Kitehand learns the job once, then does it the same way every day, nights and weekends included.",
+    actions: ["Apply", "See how much it can take"],
+    roster: {
+      title: "Today's roster",
+      date: "Mon, Oct 27",
+      columns: ["Work", "Who", "Now"],
+      rows: [
+        { work: "Order entry", who: "Kitehand", now: "38 entered", state: "kitehand" },
+        { work: "Invoices", who: "Kitehand", now: "12 sent", state: "kitehand" },
+        { work: "Shipping", who: "Kitehand", now: "1 waiting for you", cleared: "Booking pickups", state: "ask" },
+        { work: "Bookkeeping", who: "Kitehand", now: "54 entered", state: "kitehand" },
+        { work: "Phones, visitors", who: "Maria", now: "On a call", state: "person" },
       ],
+      total: { label: "Kitehand is covering", value: "1.6", unit: "full-time jobs" },
+    },
+    phone: {
+      from: "Kitehand · Shipping",
+      time: "now",
+      text: "Hill & Co.'s order is $6,400 over their credit limit. Ship it anyway?",
       approve: "Approve",
       hold: "Hold",
+      approved: "Approved",
     },
+  },
+  facts: {
+    eyebrow: "Short-handed",
+    title: "Being short-handed lands on whoever's left.",
+    items: [
+      { value: "32", unit: "%", label: "of small-business owners have openings they can't fill.", source: "NFIB Jobs Report, September 2026", url: "https://www.nfib.com/wp-content/uploads/2026/10/NFIB-September-2026-Jobs-Report.pdf" },
+      { value: "45", unit: "%", label: "found few or no qualified applicants for the positions they were trying to fill.", source: "NFIB Jobs Report, September 2026", url: "https://www.nfib.com/wp-content/uploads/2026/10/NFIB-September-2026-Jobs-Report.pdf" },
+      { value: "26", unit: "%", label: "name the quality or availability of labor as their single most important problem.", source: "NFIB Jobs Report, September 2026", url: "https://www.nfib.com/wp-content/uploads/2026/10/NFIB-September-2026-Jobs-Report.pdf" },
+    ],
   },
   read: {
     eyebrow: "Examples",
-    title: "What your assistant would take.",
-    lede: "Pick work owners often do themselves to see what your assistant does, what it asks you first, what stays with you, and the hours you get back.",
+    title: "How much it can take.",
+    lede: "Pick a job short-handed companies often hand over to see what Kitehand does, what it asks you first, what stays with your team, and how much of a full-time job that is.",
     pick: "Pick an example",
     example: "Example",
   },
   result: {
-    back: "Time back to you",
-    unit: "h / month",
-    taken: (taken, total) => `Of the ${total} hours a month you spend on it, your assistant takes ${taken}.`,
-    shares: { kitehand: "Your assistant", approve: "With your OK", human: "Stays with you" },
+    takes: "Kitehand takes",
+    units: ["of a full-time job", "full-time jobs"],
+    taken: (taken, total) => `Of the ${total} hours a month this job takes, Kitehand takes ${taken}.`,
+    basis: "Counting 160 hours a month as one full-time job.",
+    shares: { kitehand: "Kitehand", approve: "With your OK", human: "Your team" },
     columns: ["Task", "Who", "Hours / month"],
     hours: "h",
     schedule: "When",
     asks: "Asks you before",
     week: "First week",
-    estimate: "An estimate from a typical case. After a week of real work, your assistant replaces it with the hours it measured.",
-    cta: "Hand this over",
+    estimate: "An estimate from a typical case. After a week of real work, Kitehand replaces it with the hours it measured.",
+    cta: "Hand this job over",
     share: "Share",
-    shareText: (title, hours) => `Handing “${title}” to a Kitehand assistant gives me back ${hours} hours a month. See yours:`,
+    shareText: (title, people) => `Kitehand can take ${people} of a full-time job from our “${title}” work. See how much of yours:`,
     copied: "Link copied",
     save: "Save card",
     stamp: "Handed over",
   },
   day: {
-    eyebrow: "Your day",
-    title: "Your only part: one tap on your phone.",
-    lede: "Books, invoices, orders, the evening report. Your assistant keeps them moving, nights included, the same way every day.",
-    desk: "Your desk",
-    handed: "Office work handed over",
-    working: "Your assistant at work",
-    work: ["Bookkeeping", "Invoices", "Orders"],
+    eyebrow: "A day",
+    title: "Three empty seats, one day of orders.",
+    lede: "Order entry, shipping and accounting, run by three Kitehand hands that pass each order along. The manager approved one order, from a phone.",
+    desk: "Order entry, shipping, accounting",
+    handed: "3 empty seats",
+    working: "Kitehand at work",
+    work: ["Order entry", "Shipping", "Accounting"],
     moments: [
-      { time: "7:00", who: 0, title: "The morning report reaches your phone", body: "Yesterday's 38 bank and card transactions are in the books, each with its receipt. Nothing is stuck." },
-      { time: "9:30", who: 2, title: "An order comes in, and is entered", body: "It reads the purchase order from email, enters it in the order sheet, and replies to confirm the delivery date." },
-      { time: "11:40", who: 1, title: "A bank account that changed", body: "A supplier's bank account differs from last month. Your assistant stops there and asks you.", mark: "ask" },
-      { time: "11:42", title: "Checked between meetings", body: "You confirm it with the supplier by phone and tap approve. Only then does the payment get prepared.", mark: "stamp" },
-      { time: "18:00", who: 1, title: "Invoices sent", body: "It makes and sends today's 12 invoices, and books the payments they expect." },
-      { time: "23:00", title: "The day, done", body: "Everything handed over is finished. Waiting for you: nothing." },
+      { time: "8:02", who: 0, title: "An order arrives, and is keyed in", body: "Reads the customer's purchase order, enters it in the order system, sends the confirmation, and passes the order to shipping." },
+      { time: "8:15", who: 1, title: "Pickup booked", body: "Books the pickup on the carrier's site, takes the tracking number, and passes the order to accounting." },
+      { time: "8:21", who: 2, title: "Invoice sent", body: "Makes the invoice, emails it, and books the payment it expects. The day's first order is done." },
+      { time: "11:45", who: 0, title: "An order over its credit limit", body: "One customer's order runs $6,400 over its credit limit. Order entry stops there and asks before anything ships.", mark: "ask" },
+      { time: "11:52", title: "Approved from a phone", body: "The manager approves between meetings. Only then does the order go on to shipping.", mark: "stamp" },
+      { time: "17:00", title: "42 orders, all invoiced", body: "The roster shows where every order is. Stuck: none." },
     ],
     approved: "Approved",
   },
@@ -163,78 +217,88 @@ const en: Copy = {
     eyebrow: "How it works",
     title: "Teach it once.",
     parts: [
-      { title: "Hand over the work", body: "One line, a manual, or how you do it today. Your assistant splits it into tasks, says which it can take, and shows how it will do them each time." },
-      { title: "Show it once", body: "Give it the sign-ins for your accounting software or bank, and do the tricky part once while it watches. After that it does it the same way." },
-      { title: "Check from your phone", body: "Work you mark, such as payments, waits for your approval. So does any change to how it does the work." },
+      { title: "Hand over the job", body: "A job posting, a manual or one line, as you have it; there's nothing to break down first. Kitehand makes a hand for it, splits the job into tasks, says which it can take, and shows how it will do each one every time." },
+      { title: "Show it once", body: "Give it the sign-ins for the systems you use, and do the tricky part once while it watches. After that, it does it the same way." },
+      { title: "Check from your phone", body: "Work you mark, such as payments or shipments, waits for your approval. So does any change to how it does the work." },
     ],
+    note: "For the first 30 days, a person from Kitehand hands the work over with you.",
   },
-  contrast: {
-    eyebrow: "Not a chat AI",
-    title: "It doesn't advise. It gets the work done.",
-    left: "A typical AI assistant",
-    right: "Kitehand",
-    rows: [
-      ["Drafts and suggests; the doing is still yours.", "Works your accounting software and bank on screen, and finishes the work."],
-      ["Works it out anew each time, so results drift.", "Does the work the way it learned, the same way every day."],
-      ["Works only while you have it open.", "Works in the cloud, nights and weekends included."],
-      ["Changes how it works when a screen changes, without telling you.", "Tells you when it relearns how to do something, before it does it that way."],
+  compare: {
+    eyebrow: "Compare",
+    title: "Other ways to cover the work, compared.",
+    lede: "There's more than one way to cover work you're short-handed on. For office work, here's how they compare.",
+    pick: "Compare with",
+    rows: ["Up and running", "Cost per month", "Works", "How the work gets done", "Something unusual", "A screen or process changes", "When people change"],
+    kitehand: ["In days", "$349 per hand", "Around the clock, weekends too", "The way it learned, every time", "Asks you on your phone", "Relearns it, and tells you first", "The way it works stays"],
+    options: [
+      { name: "Temp or part-time help", cells: ["Weeks, once you find someone", "$3,460 full-time¹", "Their hours", "Depends on the person", "Asks on the spot", "Adapts", "Needs a handover"] },
+      { name: "Virtual assistant", cells: ["One to two weeks", "$390 for 10 hours²", "The hours you buy", "Depends on who's assigned", "Asks by chat", "Adapts", "A new assistant needs a handover"] },
+      { name: "RPA", cells: ["Months, with someone to build it", "Licenses, plus the builder", "Around the clock", "Exactly as built", "Stops", "Breaks until someone fixes it", "Only its builder can fix it"] },
+      { name: "AI agents", cells: ["Right away", "$20–200, by usage", "When asked", "Works it out anew, so it drifts", "May go ahead on its own", "Works it out again", "Nothing to hand over"] },
+    ],
+    notes: [
+      "¹ Median wage for general office clerks, $21.64 an hour, times 160 hours, before payroll costs. U.S. Bureau of Labor Statistics, May 2025.",
+      "² Time Etc's smallest plan, October 2026.",
     ],
   },
   trust: {
     eyebrow: "Confidential",
     title: "Your company's business stays with your company.",
     items: [
-      { title: "An environment of your own", body: "Your assistant works in an environment kept apart for your company, and shares nothing with anyone else's." },
-      { title: "Sign-ins", body: "Sign-ins for your accounting software and bank are kept encrypted, and used only for your assistant's work." },
+      { title: "An environment of your own", body: "Kitehand works in an environment kept apart for your company, and shares nothing with anyone else's." },
+      { title: "Sign-ins", body: "Sign-ins for the systems you use are kept encrypted, and used only for Kitehand's work." },
       { title: "Not used for training", body: "Nothing you hand over is used to train an AI model." },
       { title: "A record", body: "What it did, when, with which data, and who approved it." },
     ],
   },
   pricing: {
     eyebrow: "Pricing",
-    title: "One membership.",
-    plan: "Kitehand Membership",
+    title: "Priced per hand.",
+    plan: "Kitehand",
     regular: "Regular price",
     price: "$349",
     per: "/ month",
-    founding: { label: "Founding member price", price: "$199", note: "For the first 50 members, held for as long as you stay." },
+    founding: { label: "Founding member price", price: "$199", note: "For the first 50 companies, held for as long as you stay." },
     yearly: "Pay yearly and get two months free.",
+    anchor: "About a tenth of a full-time office clerk's median wage.",
     includes: [
-      "An AI executive assistant of your own",
-      "Up to 5 pieces of work handed over (talk to us for more)",
+      "One hand, taking up to 5 jobs",
+      "No setup fee, and AI usage included",
       "Questions and approvals on your phone",
-      "A person who sets it up with you over the first 30 days",
+      "A person who hands the work over with you over the first 30 days",
       "A full refund within 30 days",
     ],
-    intake: "By application, 15 owners a month. Each owner gets an environment of their own, so we take only as many as we can set up well.",
-    cta: "Apply for membership",
+    intake: "By application, 15 companies a month. Each company gets an environment of its own, so we take only as many as we can set up well.",
+    cta: "Apply",
   },
   faq: {
     eyebrow: "FAQ",
     title: "Before you apply.",
     items: [
-      { q: "What work can it take on?", a: "Office work with a set way of doing it: bookkeeping entries, invoices and payments, order entry, expenses and receipts, first replies to inquiries, the daily sales report. When you apply, we tell you how much of yours it can take." },
-      { q: "What won't it do?", a: "Phone calls, visitors, negotiation and judgment calls. These stay with you from the start." },
-      { q: "What does it do when it's unsure?", a: "Anything off its usual way, such as a new vendor or an unusual amount, it asks you on your phone before going ahead." },
+      { q: "What work can it take?", a: "Office work done on a screen with a set way of doing it: order entry, bookkeeping, invoices and payments, shipping, online store operations, property listings. When you apply, we tell you how much of yours it can take." },
+      { q: "What won't it do?", a: "Phone calls, visitors, negotiation, judgment calls and work done by hand. These stay with your team from the start." },
+      { q: "How does it learn the job?", a: "It splits the posting, manual or line you hand over into tasks and writes down how it will do each one. You do the tricky parts once while it watches, and it uses the way it learned only after you've checked it." },
+      { q: "What does it do when it's unsure?", a: "Anything off its usual way, such as a new customer, an unusual amount or changed bank details, it asks you on your phone before going ahead." },
+      { q: "What if a screen changes?", a: "It relearns that part, and tells you before it does the work the new way." },
       { q: "What if it gets something wrong?", a: "Everything it does is recorded. Send the work back with a note, and it corrects how it does it." },
-      { q: "Does it stop when my computer is off?", a: "No. Your assistant works in the cloud, nights and weekends included." },
-      { q: "How is my data handled?", a: "In an environment kept apart for your company, with sign-ins kept encrypted. Nothing you hand over trains an AI model. We sign an NDA on request." },
-      { q: "Can I hand over more than 5 pieces of work?", a: "Talk to us. We'll add to your assistant's work or set up another, as the work needs." },
-      { q: "Can I cancel?", a: "Any time; you're not charged again. Within the first 30 days you get a full refund." },
-      { q: "Why only 15 owners a month?", a: "Each owner gets an environment of their own, and over the first 30 days a person sets it up with you. We take as many as we can do that for." },
+      { q: "Does it stop when our computers are off?", a: "No. Kitehand works in the cloud, nights and weekends included." },
+      { q: "How is our data handled?", a: "In an environment kept apart for your company, with sign-ins kept encrypted. Nothing you hand over trains an AI model. We sign an NDA on request." },
+      { q: "Can one hand take more than 5 jobs?", a: "Talk to us. We'll add a hand, or work out with you how to split the work." },
+      { q: "Can we cancel?", a: "Any time; you're not charged again. Within the first 30 days you get a full refund." },
+      { q: "Why only 15 companies a month?", a: "Each company gets an environment of its own, and over the first 30 days a person hands the work over with you. We take as many as we can do that for." },
     ],
   },
   apply: {
     eyebrow: "Apply",
-    title: "Hand your assistant its first piece of work.",
-    lede: "Write the work you'd hand over, and apply. We'll email you how much of it your assistant can take, and a date to set it up. Over the first 30 days you hand it over together.",
-    email: "Email",
+    title: "Start with one job.",
+    lede: "Write the job you'd hand over, and apply. We'll email you how much of it Kitehand can take, and a date to set it up. Over the first 30 days, you hand it over together.",
+    email: "Work email",
     company: "Company",
     name: "Your name",
     size: "People in your company",
-    sizes: ["5 or fewer", "6–20", "21 or more"],
-    job: "The work to hand over",
-    jobHint: "One line, a manual, or how you do it today",
+    sizes: ["10 or fewer", "11–50", "51–300", "301 or more"],
+    job: "The job to hand over",
+    jobHint: "A job posting, a manual or one line. Paste it as you have it.",
     submit: "Apply",
     sending: "Sending…",
     done: "Got it. We'll email you how much it can take, and a date to set it up.",
@@ -242,18 +306,20 @@ const en: Copy = {
   },
   jobs: {
     eyebrow: "Read by Kitehand",
-    title: (work) => `${work}: what your assistant can take`,
-    lede: (work) => `${work}, as owners often do it themselves, split into tasks: what your assistant does, what it asks you first, and what stays with you.`,
-    posting: "The owner's note",
-    yours: "Hand over your own work",
+    title: (work) => `${work}: what Kitehand can take`,
+    lede: (work) => `A typical ${work.toLowerCase()} job, split into what Kitehand does, what it asks you first and what stays with your team, with how much of a full-time job it takes.`,
+    posting: "The job as handed over",
+    kinds: { posting: "A job posting", manual: "A manual", line: "One line" },
+    yours: "Hand over your own job",
     others: "See other examples",
-    more: "Other work",
+    more: "Other jobs",
+    index: "Jobs short-handed companies hand over",
   },
   footer: { made: ["Kitehand is made by ", "."], company: "Descarty", companyUrl: "https://descarty.com/en/", privacy: "Privacy" },
   privacy: {
     title: "Privacy",
     body: [
-      "When you apply, your email, company, name, company size and the work you describe reach us through the form service Web3Forms. We use them to reply about your membership and its setup. Ask us to delete them at any time.",
+      "When you apply, your email, company, name, company size and the job you describe reach us through the form service Web3Forms. We use them to reply about your application and its setup. Ask us to delete them at any time.",
       "We use PostHog to count visits. It records the pages viewed, the referring site, and the type of device and browser, and keeps an identifier for this in your browser. It does not record the screen or keystrokes. We don't sell data.",
     ],
   },
@@ -264,69 +330,89 @@ const ja: Copy = {
   lang: "ja",
   other: { lang: "en", label: "English", home: "/" },
   meta: {
-    title: "Kitehand — 社長専属の AI 秘書",
-    description: "経理の入力、請求書、受注、毎日の報告。小さな会社の社長が自分で片づけている事務を、Kitehand の秘書が毎日同じやり方で引き受けます。申込制・毎月15名まで。",
+    title: "Kitehand — 人手が足りない仕事を引き受ける AI の担当者",
+    description: "受注の入力、経理、出荷の手配、EC の運営。求人票・手順書・ひとことで仕事を渡せば、Kitehand の担当者が覚えて、夜も休日も毎日同じやり方でこなします。申込制・毎月15社まで。",
     og: "/og-ja.png",
   },
-  nav: { day: "社長の一日", how: "しくみ", pricing: "料金", faq: "よくある質問", cta: "申し込む" },
+  nav: { read: "何人分か", how: "しくみ", compare: "比べる", pricing: "料金", faq: "よくある質問", cta: "申し込む" },
   hero: {
-    badge: "創業メンバー受付中 · 毎月15名まで",
-    kicker: "小さな会社の社長へ",
-    title: ["社長専属の、", "AI 秘書。"],
-    lede: "経理の入力、請求書、受注、毎日の報告。社長が夜に片づけている事務を、Kitehand の秘書が引き受けます。決まったやり方で、毎日同じように。",
-    actions: ["メンバーに申し込む", "料金を見る"],
-    phone: {
-      app: "Kitehand",
-      date: "火曜日 7:01",
-      items: [
-        { time: "7:00", text: "おはようございます。昨日の入出金38件を freee に入力し、領収書も添付しました。" },
-        { time: "7:01", text: "1件だけ確認させてください。山田商事への振込 128,000円。先月と振込先の口座が変わっています。", ask: true },
-        { time: "昨日 18:00", text: "今日の請求書12件を送り、入金予定を登録しました。" },
+    badge: "創業メンバー受付中 · 毎月15社まで",
+    kicker: "求人票・手順書・ひとことで渡せる",
+    title: ["人手が足りない仕事は、", "AI の担当者に。"],
+    lede: "社長や現場が抱え込んでいる受注・経理・出荷の事務を、Kitehand の担当者が引き受けます。覚えたやり方で、夜も休日も、毎日同じように。",
+    actions: ["申し込む", "何人分を任せられるか見る"],
+    roster: {
+      title: "担当表",
+      date: "10月27日（月）",
+      columns: ["仕事", "担当", "いま"],
+      rows: [
+        { work: "受注の入力", who: "Kitehand", now: "38件 入力済", state: "kitehand" },
+        { work: "請求書の発行", who: "Kitehand", now: "12件 送付済", state: "kitehand" },
+        { work: "出荷の手配", who: "Kitehand", now: "確認待ち 1件", cleared: "集荷を予約中", state: "ask" },
+        { work: "経理の入力", who: "Kitehand", now: "54件 記帳済", state: "kitehand" },
+        { work: "電話・来客", who: "佐藤", now: "対応中", state: "person" },
       ],
+      total: { label: "Kitehand が引き受けている仕事", value: "1.6", unit: "人分" },
+    },
+    phone: {
+      from: "Kitehand · 出荷の手配",
+      time: "いま",
+      text: "山田商事さまの注文が、与信枠を64万円超えています。出荷を進めてよいですか？",
       approve: "承認する",
       hold: "保留",
+      approved: "承認しました",
     },
+  },
+  facts: {
+    eyebrow: "人手不足",
+    title: "人手不足のしわ寄せは、残った人に来る。",
+    items: [
+      { value: "427", unit: "件", label: "人手不足による倒産。3年連続で過去最多を更新しました（2025年）。", source: "帝国データバンク「人手不足倒産の動向調査（2025年）」", url: "https://www.tdb.co.jp/report/economic/20260108-laborshortage-br2025/" },
+      { value: "60.0", unit: "%", label: "人手が不足していると答えた企業（2,654社、2026年7〜8月）。", source: "日本商工会議所「多様な人材の活躍等に関する調査」", url: "https://www.jcci.or.jp/news/research/2026/0915140001.html" },
+      { value: "1.5", unit: "倍", label: "従業員の退職がきっかけの人手不足倒産。前の年の1.5倍、110件に増えました（2025年）。", source: "東京商工リサーチ「2025年の人手不足倒産」", url: "https://www.tsr-net.co.jp/data/detail/1202275_1527.html" },
+    ],
   },
   read: {
     eyebrow: "例で見る",
-    title: "任せると、どうなるか。",
-    lede: "社長がよく自分でやっている仕事を選ぶと、秘書がやること、先に社長に聞くこと、社長に残すことと、社長に戻る時間がわかります。",
+    title: "何人分を、任せられるか。",
+    lede: "人が足りない仕事を選ぶと、担当者がやること、先にあなたに聞くこと、人に残すことと、引き受けるのが何人分かがわかります。",
     pick: "例を選ぶ",
     example: "例",
   },
   result: {
-    back: "社長に戻る時間",
-    unit: "時間／月",
-    taken: (taken, total) => `社長が月 ${total} 時間かけている仕事のうち、${taken} 時間を秘書が引き受けます。`,
-    shares: { kitehand: "秘書がやる", approve: "社長の承認つき", human: "社長に残す" },
+    takes: "担当者が引き受ける仕事",
+    units: ["人分", "人分"],
+    taken: (taken, total) => `この仕事にかかる月 ${total} 時間のうち、${taken} 時間を担当者が引き受けます。`,
+    basis: "1人分＝月160時間で計算しています。",
+    shares: { kitehand: "担当者がやる", approve: "承認してから", human: "人に残す" },
     columns: ["仕事", "担当", "時間／月"],
     hours: "時間",
     schedule: "いつ",
-    asks: "先に社長に聞くこと",
+    asks: "先にあなたに聞くこと",
     week: "最初の1週間",
     estimate: "よくある例からの見込みです。1週間働いたあと、実際に測った時間に置き換えます。",
     cta: "この仕事を任せる",
     share: "共有",
-    shareText: (title, hours) => `「${title}」を Kitehand の秘書に任せると、月 ${hours} 時間が戻るらしい。あなたの仕事も見てみて：`,
+    shareText: (title, people) => `「${title}」を Kitehand の担当者に任せると、${people}人分の仕事を引き受けてくれるらしい。あなたの会社の仕事も見てみて：`,
     copied: "リンクをコピーしました",
     save: "カードを保存",
     stamp: "引受済",
   },
   day: {
-    eyebrow: "社長の一日",
-    title: "社長がやるのは、スマホで確認を1回だけ。",
-    lede: "経理の入力、請求書、受注、夜の報告。社長が商談や現場にいるあいだも、夜のあいだも、秘書が同じやり方で進めます。",
-    desk: "社長の机",
-    handed: "事務は秘書に",
-    working: "秘書が対応中",
-    work: ["経理の入力", "請求書", "受注"],
+    eyebrow: "ある一日",
+    title: "空いた3つの席で、1日の注文を回す。",
+    lede: "受注・出荷・経理を、Kitehand の担当者3人が順に引き継いで回します。人がしたのは、スマホでの承認1回だけ。",
+    desk: "受注・出荷・経理",
+    handed: "空席 3",
+    working: "Kitehand が対応中",
+    work: ["受注", "出荷", "経理"],
     moments: [
-      { time: "7:00", who: 0, title: "朝の報告がスマホに届く", body: "昨日の入出金38件を freee に入力し、領収書も添付しました。止まっているものはありません。" },
-      { time: "9:30", who: 2, title: "注文が届き、入力する", body: "メールで届いた注文書を読んで受注表に入れ、納期を添えて取引先に返信します。" },
-      { time: "11:40", who: 1, title: "いつもと違う振込先", body: "仕入先の振込先の口座が、先月と違います。秘書はそこで止まり、社長に聞きます。", mark: "ask" },
-      { time: "11:42", title: "移動の合間に、スマホで確認", body: "社長が仕入先に電話で確かめて承認。そこで初めて、振込の準備に進みます。", mark: "stamp" },
-      { time: "18:00", who: 1, title: "請求書を送る", body: "今日の請求書12件を作って送り、入金予定を登録しました。" },
-      { time: "23:00", title: "今日の事務、すべて完了", body: "渡した仕事はすべて終わりました。社長の確認待ちは0件です。" },
+      { time: "8:02", who: 0, title: "注文が届き、入力する", body: "取引先の注文書を読んで販売管理に入力し、注文請書を送って、出荷に回します。" },
+      { time: "8:15", who: 1, title: "集荷を予約する", body: "運送会社のサイトで集荷を予約し、追跡番号を控えて、経理に回します。" },
+      { time: "8:21", who: 2, title: "請求書を送る", body: "請求書を作ってメールで送り、入金予定を登録します。今日1件目の注文が、ここまで終わりました。" },
+      { time: "11:45", who: 0, title: "与信枠を超える注文", body: "ある取引先の注文が、与信枠を64万円超えています。受注の担当者はそこで止まり、出荷の前に聞きます。", mark: "ask" },
+      { time: "11:52", title: "移動の合間に、スマホで承認", body: "部長が承認。そこで初めて、注文は出荷に進みます。", mark: "stamp" },
+      { time: "17:00", title: "42件、すべて請求まで", body: "どの注文がどこまで進んだか、担当表に残っています。止まっている注文は0件です。" },
     ],
     approved: "承認",
   },
@@ -334,97 +420,109 @@ const ja: Copy = {
     eyebrow: "しくみ",
     title: "教えるのは、一度だけ。",
     parts: [
-      { title: "仕事を渡す", body: "ひとこと、手順書、いまのやり方を渡すと、秘書が仕事に分け、引き受ける範囲と、毎回のやり方を示します。" },
-      { title: "一度やって見せる", body: "会計ソフトや銀行のアカウントを渡し、難しいところを一度だけ操作して見せます。以降は同じやり方を繰り返します。" },
-      { title: "スマホで確認するだけ", body: "支払いなど、社長が指定した仕事は、承認してから進みます。やり方を変えるときも、先に社長に確かめます。" },
+      { title: "仕事を渡す", body: "求人票、手順書、ひとこと。仕事を切り分けてから渡す必要はありません。担当者が仕事に分け、引き受ける範囲と、毎回のやり方を示します。" },
+      { title: "一度やって見せる", body: "使っているシステムのアカウントを渡し、難しいところを一度だけ操作して見せます。以降は、同じやり方を繰り返します。" },
+      { title: "スマホで確かめる", body: "支払いや出荷など、あなたが決めた仕事は承認してから進みます。やり方を変えるときも、先に確かめます。" },
     ],
+    note: "最初の30日は、Kitehand の立ち上げ担当が一緒に仕事を渡します。",
   },
-  contrast: {
-    eyebrow: "チャット AI との違い",
-    title: "相談に乗るのではなく、仕事を終わらせる。",
-    left: "よくある AI アシスタント",
-    right: "Kitehand",
-    rows: [
-      ["文章の下書きや提案までで、作業は社長がする。", "会計ソフトや銀行の画面を自分で操作し、仕事を最後まで終わらせる。"],
-      ["毎回その場で考えるので、やり方がぶれる。", "覚えたやり方を、毎日同じように繰り返す。"],
-      ["開いているあいだしか動かない。", "クラウドで、夜も休日も動く。"],
-      ["画面が変わると、黙ってやり方を変える。", "やり方を覚え直したら、そのやり方で進める前に知らせる。"],
+  compare: {
+    eyebrow: "比べる",
+    title: "人手を足す、ほかの方法と比べて。",
+    lede: "足りない人手を埋める方法は、ひとつではありません。事務の仕事で比べると、こうなります。",
+    pick: "比べる相手",
+    rows: ["始めるまで", "月の費用（税抜）", "動く時間", "仕事のやり方", "いつもと違うとき", "画面や手順が変わったとき", "人が替わるとき"],
+    kitehand: ["数日", "49,800円（担当者1人）", "24時間、休日も", "覚えたやり方を、毎回同じに", "スマホであなたに聞く", "覚え直し、使う前に知らせる", "やり方が残る"],
+    options: [
+      { name: "派遣・パート", cells: ["人が見つかってから数週間", "約33万円（フルタイム）¹", "勤務時間内", "人による", "その場で聞ける", "合わせられる", "引き継ぎが要る"] },
+      { name: "オンラインアシスタント", cells: ["1〜2週間", "10〜13万円（月30時間）²", "契約した時間内", "担当する人による", "チャットで聞く", "合わせられる", "担当が替わると引き継ぎ"] },
+      { name: "RPA", cells: ["作る人がいて数か月", "ツール代＋作る人", "24時間", "作ったとおりに", "止まる", "止まり、直す人が要る", "作った人がいないと直せない"] },
+      { name: "AI エージェント", cells: ["すぐ", "数千円〜（使った分）", "頼んだときだけ", "その都度考えるので、ぶれる", "そのまま進めることがある", "その場で考え直す", "引き継ぐものがない"] },
+    ],
+    notes: [
+      "¹ 一般事務の派遣料金（8時間あたり18,112円・税込）を税抜にし、20日分で計算。厚生労働省「令和6年度 労働者派遣事業報告書の集計結果」。",
+      "² CASTER BIZ と HELP YOU の月30時間プラン（税抜、2026年10月時点）。",
     ],
   },
   trust: {
     eyebrow: "秘密を守る",
     title: "会社のことは、会社の中に。",
     items: [
-      { title: "専用の環境", body: "秘書は会社ごとに分かれた環境で働き、ほかの会社の秘書とは何も共有しません。" },
-      { title: "アカウント情報", body: "会計ソフトや銀行のサインイン情報は暗号化して保管し、秘書の仕事のときだけ使います。" },
+      { title: "専用の環境", body: "担当者は会社ごとに分かれた環境で働き、ほかの会社とは何も共有しません。" },
+      { title: "アカウント情報", body: "使っているシステムのサインイン情報は暗号化して保管し、担当者の仕事のときだけ使います。" },
       { title: "学習に使わない", body: "預かった書類やデータで、AI モデルを学習させることはありません。" },
       { title: "記録", body: "何を、いつ、どのデータで行い、誰が承認したかが残ります。" },
     ],
   },
   pricing: {
     eyebrow: "料金",
-    title: "メンバーシップは、ひとつだけ。",
-    plan: "Kitehand メンバーシップ",
+    title: "料金は、担当者1人ごと。",
+    plan: "Kitehand の担当者",
     regular: "通常価格",
     price: "49,800円",
     per: "／月（税別）",
-    founding: { label: "創業メンバー価格", price: "29,800円", note: "先着50名。メンバーでいるあいだは、ずっとこの価格です。" },
+    founding: { label: "創業メンバー価格", price: "29,800円", note: "先着50社。続けているあいだは、ずっとこの価格です。" },
     yearly: "年払いなら10か月分。2か月分お得です。",
+    anchor: "フルタイムの事務の派遣料金（月約33万円）の、約7分の1です。",
     includes: [
-      "社長専属の AI 秘書",
-      "任せる仕事は5件まで（6件目からはご相談）",
+      "AI の担当者1人（任せる仕事は5件まで）",
+      "初期費用なし。AI の利用料も込み",
       "確認と承認はスマホで",
       "最初の30日は、立ち上げ担当が一緒に仕事を渡します",
       "30日以内なら全額返金",
     ],
-    intake: "申込制・毎月15名まで。社長ごとに専用の環境を用意し、立ち上げまで一緒に進めるため、受け入れる人数を絞っています。",
-    cta: "メンバーに申し込む",
+    intake: "申込制・毎月15社まで。会社ごとに専用の環境を用意し、立ち上げまで一緒に進めるため、受け入れる数を絞っています。",
+    cta: "申し込む",
   },
   faq: {
     eyebrow: "よくある質問",
     title: "申し込む前に。",
     items: [
-      { q: "どんな仕事を任せられますか？", a: "経理の入力、請求書と入金の確認、受注の入力、経費と領収書、問い合わせの一次対応、毎日の売上報告など、決まった流れのある事務です。申し込みのあと、どこまで任せられるかをお伝えします。" },
-      { q: "任せられない仕事は？", a: "電話、来客、交渉、判断の要る仕事です。最初から社長の仕事として分けておきます。" },
-      { q: "迷ったときはどうしますか？", a: "初めての取引先、いつもと違う金額など、決まったやり方から外れるものは、進める前にスマホで社長に聞きます。" },
+      { q: "どんな仕事を任せられますか？", a: "受注の入力、経理、請求と入金の確認、出荷の手配、EC の運営、物件情報の登録など、パソコンの画面で決まった流れのある事務です。申し込みのあと、どこまで任せられるかをお伝えします。" },
+      { q: "任せられない仕事は？", a: "電話、来客、交渉、判断の要る仕事、手を動かす仕事です。最初から人の仕事として分けておきます。" },
+      { q: "どうやって仕事を覚えますか？", a: "渡された求人票や手順書を仕事に分け、毎回のやり方を書き出します。難しいところは、あなたが一度操作して見せます。覚えたやり方は、あなたが確かめてから使います。" },
+      { q: "迷ったときはどうしますか？", a: "初めての取引先、いつもと違う金額、変わった振込先など、決まったやり方から外れるものは、進める前にスマホであなたに聞きます。" },
+      { q: "システムの画面が変わったら？", a: "そこのやり方を覚え直し、新しいやり方で進める前に、あなたに知らせます。" },
       { q: "間違えたらどうなりますか？", a: "すべての作業が記録に残ります。ひとこと添えて差し戻すと、そのやり方を直します。" },
-      { q: "パソコンを閉じたら止まりますか？", a: "止まりません。秘書はクラウドで働くので、夜も休日も進みます。" },
+      { q: "パソコンを閉じたら止まりますか？", a: "止まりません。担当者はクラウドで働くので、夜も休日も進みます。" },
       { q: "データはどう扱われますか？", a: "会社ごとに分かれた環境で扱い、サインイン情報は暗号化して保管します。預かったデータで AI モデルを学習させることはありません。ご希望があれば秘密保持契約（NDA）を結びます。" },
-      { q: "6件目の仕事を任せたいときは？", a: "ご相談ください。仕事の量に合わせて、秘書の仕事を増やすか、もう一人用意します。" },
+      { q: "6件目の仕事を任せたいときは？", a: "ご相談ください。担当者を増やすか、仕事の分け方を一緒に考えます。" },
       { q: "解約はできますか？", a: "いつでも解約でき、次の請求からはかかりません。最初の30日以内なら、全額を返金します。" },
-      { q: "なぜ毎月15名までなのですか？", a: "社長ごとに専用の環境を用意し、最初の30日は立ち上げ担当が一緒に仕事を渡すためです。それができる人数だけ、毎月お受けしています。" },
+      { q: "なぜ毎月15社までなのですか？", a: "会社ごとに専用の環境を用意し、最初の30日は立ち上げ担当が一緒に仕事を渡すためです。それができる数だけ、毎月お受けしています。" },
     ],
   },
   apply: {
     eyebrow: "申し込み",
-    title: "最初の仕事を、秘書に。",
-    lede: "任せたい仕事を書いて申し込むと、どこまで任せられるかと、立ち上げの日程をメールでお返事します。最初の30日で、一緒に仕事を渡していきます。",
+    title: "まず、仕事をひとつ。",
+    lede: "任せたい仕事を書いて申し込むと、何人分を任せられるかと、立ち上げの日程をメールでお返事します。最初の30日で、一緒に仕事を渡していきます。",
     email: "メールアドレス",
     company: "会社名",
     name: "お名前",
     size: "会社の人数",
-    sizes: ["5人以下", "6〜20人", "21人以上"],
+    sizes: ["10人以下", "11〜50人", "51〜300人", "301人以上"],
     job: "任せたい仕事",
-    jobHint: "ひとこと、手順書、いまのやり方のどれでも",
+    jobHint: "求人票・手順書・ひとこと、どれでも。いまある形のまま貼り付けてください。",
     submit: "申し込む",
     sending: "送信中…",
-    done: "受け付けました。どこまで任せられるかと、立ち上げの日程をメールでお返事します。",
+    done: "受け付けました。何人分を任せられるかと、立ち上げの日程をメールでお返事します。",
     error: "送信できませんでした。メールアドレスと会社名を確かめて、もう一度お試しください。",
   },
   jobs: {
-    eyebrow: "秘書が読んだ仕事",
-    title: (work) => `${work}：秘書に任せられること`,
-    lede: (work) => `社長がよく自分でやっている「${work}」を仕事に分けました。秘書がやること、先に社長に聞くこと、社長に残すことがわかります。`,
-    posting: "社長のメモ",
-    yours: "自分の仕事を任せる",
+    eyebrow: "Kitehand が読んだ仕事",
+    title: (work) => `${work}：Kitehand に任せられること`,
+    lede: (work) => `よくある「${work}」の仕事を、担当者がやること、先に聞くこと、人に残すことに分けました。引き受けるのが何人分かもわかります。`,
+    posting: "渡した仕事",
+    kinds: { posting: "求人票", manual: "手順書", line: "ひとこと" },
+    yours: "自分の会社の仕事を任せる",
     others: "ほかの例を見る",
     more: "ほかの仕事",
+    index: "人手が足りない会社が任せる仕事",
   },
   footer: { made: ["Kitehand は ", " が開発しています。"], company: "Descarty", companyUrl: "https://descarty.com/", privacy: "プライバシー" },
   privacy: {
     title: "プライバシー",
     body: [
-      "申し込みの際は、メールアドレス・会社名・お名前・会社の人数・任せたい仕事を、フォームサービス Web3Forms を通じて受け取り、メンバーシップと立ち上げのご連絡に使います。いつでも削除をご依頼いただけます。",
+      "申し込みの際は、メールアドレス・会社名・お名前・会社の人数・任せたい仕事を、フォームサービス Web3Forms を通じて受け取り、申し込みと立ち上げのご連絡に使います。いつでも削除をご依頼いただけます。",
       "訪問数を把握するため、PostHog を利用しています。PostHog は、閲覧したページ、参照元のサイト、端末とブラウザの種類を記録し、そのための識別子をブラウザに保存します。画面の録画やキー入力の記録は行いません。データを販売することはありません。",
     ],
   },

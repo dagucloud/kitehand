@@ -1,0 +1,78 @@
+---
+// Kitehand beside the other ways a company covers work it is short-handed
+// on. A wide screen shows every way at once; a narrow one shows Kitehand
+// beside the one the visitor picks.
+import Phrases from "./Phrases.astro";
+import type { Copy } from "../i18n/copy";
+
+interface Props {
+  copy: Copy;
+}
+
+const { copy } = Astro.props;
+const c = copy.compare;
+---
+
+<section class="section compare" id="compare">
+  <div class="wrap">
+    <span class="eyebrow">{c.eyebrow}</span>
+    <h2 class="section-title"><Phrases text={c.title} /></h2>
+    <p class="lede">{c.lede}</p>
+    <div class="compare-pick" role="group" aria-label={c.pick}>
+      {
+        c.options.map((option, i) => (
+          <button type="button" class="chip" data-pick={i} aria-pressed={i === 0 ? "true" : "false"}>
+            {option.name}
+          </button>
+        ))
+      }
+    </div>
+    <div class="compare-table" data-compare data-show="0">
+      <table>
+        <thead>
+          <tr>
+            <td></td>
+            <th scope="col" class="is-us">
+              <img src="/icon-small.svg" alt="" width="22" height="22" />
+              Kitehand
+            </th>
+            {
+              c.options.map((option, i) => (
+                <th scope="col" data-col={i}>
+                  {option.name}
+                </th>
+              ))
+            }
+          </tr>
+        </thead>
+        <tbody>
+          {
+            c.rows.map((row, r) => (
+              <tr>
+                <th scope="row">{row}</th>
+                <td class="is-us">{c.kitehand[r]}</td>
+                {c.options.map((option, i) => (
+                  <td data-col={i}>{option.cells[r]}</td>
+                ))}
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </div>
+    <div class="compare-notes">
+      {c.notes.map((note) => <p>{note}</p>)}
+    </div>
+  </div>
+</section>
+
+<script>
+  const table = document.querySelector<HTMLElement>("[data-compare]");
+  const picks = [...document.querySelectorAll<HTMLButtonElement>("[data-pick]")];
+  picks.forEach((pick) =>
+    pick.addEventListener("click", () => {
+      picks.forEach((p) => p.setAttribute("aria-pressed", String(p === pick)));
+      if (table) table.dataset.show = pick.dataset.pick ?? "0";
+    }),
+  );
+</script>

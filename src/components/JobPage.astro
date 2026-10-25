@@ -1,6 +1,6 @@
 ---
-// A piece of owner work read by Kitehand, as a page search engines find: the
-// owner's note, the reading, and the way back to see your own.
+// A job read by Kitehand, as a page search engines find: the job as it was
+// handed over, the reading, and the way to hand over your own.
 import type { Sample } from "../data/samples";
 import { SAMPLES } from "../data/samples";
 import type { Copy } from "../i18n/copy";
@@ -33,7 +33,7 @@ const alternate = `${otherBase}jobs/${sample.slug}/`;
         <h1>{copy.jobs.title(d.title)}</h1>
         <p class="lede">{copy.jobs.lede(d.title)}</p>
         <div class="posting">
-          <span class="eyebrow">{copy.jobs.posting}</span>
+          <span class="eyebrow">{copy.jobs.posting} · {copy.jobs.kinds[sample.kind]}</span>
           <blockquote>{sample.posting[lang]}</blockquote>
         </div>
       </div>

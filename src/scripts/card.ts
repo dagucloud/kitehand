@@ -1,5 +1,5 @@
-// drawCard paints a reading as a 1200×630 image to save or post: the work,
-// the hours it gives back to the owner each month, and its biggest tasks.
+// drawCard paints a reading as a 1200×630 image to save or post: the job,
+// how much of a full-time job Kitehand takes, and its biggest tasks.
 import { tally, type Diagnosis } from "../lib/diagnosis";
 import type { ReaderConfig } from "../lib/reader-config";
 
@@ -25,6 +25,24 @@ function fit(ctx: CanvasRenderingContext2D, text: string, width: number): string
   return `${t}…`;
 }
 
+// lines breaks text into lines no wider than width: Japanese after its
+// commas and periods, so a number keeps its unit, and English between words.
+function lines(ctx: CanvasRenderingContext2D, text: string, width: number): string[] {
+  const pieces = text.split(/[、。]/.test(text) ? /(?<=[、。])/ : /(?<=\s)/);
+  const out: string[] = [];
+  let line = "";
+  for (const piece of pieces) {
+    if (line && ctx.measureText(line + piece).width > width) {
+      out.push(line.trimEnd());
+      line = piece.trimStart();
+    } else {
+      line += piece;
+    }
+  }
+  if (line) out.push(line);
+  return out;
+}
+
 export async function drawCard(d: Diagnosis, config: ReaderConfig): Promise<Blob> {
   await document.fonts.ready;
   const ja = config.lang === "ja";
@@ -48,19 +66,22 @@ export async function drawCard(d: Diagnosis, config: ReaderConfig): Promise<Blob
 
   ctx.fillStyle = COLOR.ink2;
   ctx.font = `500 24px ${sans}`;
-  ctx.fillText(config.words.back, 64, 250);
+  ctx.fillText(config.words.takes, 64, 250);
 
   ctx.fillStyle = COLOR.shu;
   ctx.font = `${ja ? 800 : 400} 196px ${display}`;
-  const n = String(t.taken);
+  const n = String(t.people);
   ctx.fillText(n, 56, 430);
   const nw = ctx.measureText(n).width;
   ctx.font = `700 34px ${sans}`;
-  ctx.fillText(config.words.unit, 56 + nw + 14, 430);
+  ctx.fillText(fit(ctx, config.words.units[t.people > 1 ? 1 : 0], 600 - nw - 70), 56 + nw + 14, 430);
 
   ctx.fillStyle = COLOR.muted;
   ctx.font = `500 22px ${sans}`;
-  ctx.fillText(config.words.taken.replace("{taken}", String(t.taken)).replace("{total}", String(t.total)), 64, 486);
+  const taken = config.words.taken.replace("{taken}", String(t.taken)).replace("{total}", String(t.total));
+  lines(ctx, taken, 540)
+    .slice(0, 2)
+    .forEach((line, i) => ctx.fillText(line, 64, 486 + i * 32));
 
   // The biggest tasks, each with who does it.
   const duties = [...d.duties].sort((a, b) => b.hours - a.hours).slice(0, 6);

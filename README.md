@@ -1,16 +1,17 @@
 # kitehand.ai
 
-The website for Kitehand, an AI secretary of their own for owners of small
-businesses (AI秘書; "AI executive assistant" in English). It takes on the
-office work the owner does after hours, the same way every day. Membership is
-by application, at one price with a founding price for the first members
-(`runstead-source3/marketing/sales/pricing/kitehand.md`).
+The website for Kitehand: AI hands (担当者 in Japanese) for small companies
+short-handed on office work. A company hands over a job as a job posting, a
+manual or one line; a hand learns it, does it the same way every day in the
+cloud, and asks a person before anything out of the ordinary. Kitehand is
+priced per hand, by application, with a founding price for the first
+companies (`runstead-source3/marketing/sales/pricing/kitehand.md`).
 
-Its centre is the reader: an owner picks a sample piece of work and sees which
-parts their assistant would do, which it would ask them about first, which
-stay with them, and how many hours a month that gives back. Work the owner
-pastes goes to the application inbox instead; the team replies with its
-reading. No AI runs on the site.
+Its centre is the reader: a visitor picks a sample job and sees which parts
+Kitehand would do, which it would ask about first, which stay with people,
+and how much of a full-time job that is. A job the visitor writes goes to
+the application inbox instead; the team replies with its reading. No AI runs
+on the site. Every figure the page quotes links to its source.
 
 - `src/` is an Astro site in English (`/`) and Japanese (`/ja/`), built static.
   Every word is in `src/i18n/copy.ts`; the six samples, read ahead of time,

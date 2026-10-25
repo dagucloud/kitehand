@@ -15,8 +15,8 @@ export type ReaderConfig = {
     copied: string;
     shares: Record<string, string>;
     hours: string;
-    back: string;
-    unit: string;
+    takes: string;
+    units: [string, string];
     stamp: string;
   };
 };
@@ -31,12 +31,12 @@ export function readerConfig(copy: Copy): ReaderConfig {
     samples: SAMPLES.map((s) => ({ slug: s.slug, posting: s.posting[lang], diagnosis: s.diagnosis[lang] })),
     words: {
       taken: copy.result.taken("{taken}", "{total}"),
-      shareText: copy.result.shareText("{title}", "{hours}"),
+      shareText: copy.result.shareText("{title}", "{people}"),
       copied: copy.result.copied,
       shares: copy.result.shares,
       hours: copy.result.hours,
-      back: copy.result.back,
-      unit: copy.result.unit,
+      takes: copy.result.takes,
+      units: copy.result.units,
       stamp: copy.result.stamp,
     },
   };

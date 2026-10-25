@@ -1,7 +1,6 @@
 ---
-// The application at the foot of the page: an owner applies for membership
-// with the first piece of work to hand over, and any sample they read comes
-// along, through the same inbox as the reader.
+// The application at the foot of the page: a company applies with the first
+// job to hand over, and any example the visitor read comes along.
 import Phrases from "./Phrases.astro";
 import type { Copy } from "../i18n/copy";
 
@@ -71,7 +70,7 @@ const a = copy.apply;
 
   const job = form.querySelector<HTMLTextAreaElement>("[name=job]")!;
   // An example read on this page comes along with the application, and the
-  // one the owner chose to hand over names the work, unless they wrote it.
+  // one the visitor chose to hand over names the job, unless they wrote it.
   window.addEventListener("kitehand:read", (event) => {
     reading = (event as CustomEvent<{ d: Diagnosis; slug: string }>).detail;
   });

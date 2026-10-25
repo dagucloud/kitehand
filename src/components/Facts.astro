@@ -1,0 +1,38 @@
+---
+// The shortage in three numbers a manager recognizes, each linked to the
+// survey it comes from.
+import Phrases from "./Phrases.astro";
+import type { Copy } from "../i18n/copy";
+
+interface Props {
+  copy: Copy;
+}
+
+const { copy } = Astro.props;
+const f = copy.facts;
+---
+
+<section class="facts" id="facts">
+  <div class="wrap">
+    <div class="facts-head">
+      <span class="eyebrow">{f.eyebrow}</span>
+      <h2 class="facts-title"><Phrases text={f.title} /></h2>
+    </div>
+    <ul class="facts-items">
+      {
+        f.items.map((item) => (
+          <li>
+            <p class="facts-value">
+              {item.value}
+              <span>{item.unit}</span>
+            </p>
+            <p class="facts-label">{item.label}</p>
+            <a class="facts-source" href={item.url} rel="noopener">
+              {item.source}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>

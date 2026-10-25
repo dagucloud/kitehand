@@ -66,6 +66,7 @@ body {
   font-size: 16px;
   line-height: 1.85;
   font-feature-settings: "palt";
+  word-break: auto-phrase;
 }
 
 /* Paper grain over everything, too faint to see as texture up close. */
@@ -134,6 +135,7 @@ textarea {
   font-weight: 700;
   letter-spacing: 0.12em;
   font-size: 13px;
+  text-transform: none;
 }
 
 /* A heading breaks only between its phrases (components/Phrases.astro). */
@@ -307,7 +309,7 @@ textarea {
 
 .hero .grid {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
   gap: clamp(32px, 5vw, 72px);
   align-items: start;
 }
@@ -318,7 +320,7 @@ textarea {
 
 @media (max-width: 980px) {
   .hero .grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 
@@ -329,97 +331,417 @@ textarea {
   margin-top: 32px;
 }
 
-/* The owner's phone beside the promise: this morning's word from their
-   assistant, and the one thing it asked. */
-.phone {
-  justify-self: center;
-  width: min(100%, 380px);
-  padding: 12px;
-  border-radius: 46px;
-  background: var(--night);
-  box-shadow: var(--shadow), 0 0 0 1px rgba(29, 32, 39, 0.2);
+/* The day's roster beside the promise: Kitehand covers the work nobody is
+   free for, a person keeps theirs, and the one exception waits on the
+   manager's phone. It plays once: the manager approves, and the work goes on. */
+.roster {
+  position: relative;
+  justify-self: end;
+  width: min(100%, 540px);
+  padding-bottom: 168px;
 }
 
-.phone-screen {
-  padding: 34px 14px 22px;
-  border-radius: 36px;
-  background: linear-gradient(180deg, #2b3446 0%, #1b212c 100%);
-  color: var(--night-ink);
+@media (max-width: 980px) {
+  .roster {
+    justify-self: stretch;
+    width: 100%;
+    max-width: 600px;
+    margin-top: 8px;
+  }
 }
 
-.phone-date {
-  margin: 0 0 18px;
-  text-align: center;
-  font: 500 13px/1 var(--mono);
+.roster-card {
+  position: relative;
+  padding: 22px 24px 0;
+  border-radius: 20px;
+  background: var(--surface);
+  box-shadow: var(--shadow), 0 0 0 1px rgba(29, 32, 39, 0.06);
+  overflow: hidden;
+}
+
+.roster-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1.5px solid var(--ink);
+}
+
+.roster-head strong {
+  font: 400 26px/1 var(--display);
+  letter-spacing: -0.01em;
+}
+
+:lang(ja) .roster-head strong {
+  font-weight: 800;
+  font-size: 22px;
   letter-spacing: 0.06em;
-  color: var(--night-muted);
 }
 
-.phone-notes {
+.roster-head span {
+  font: 500 13px/1 var(--mono);
+  color: var(--muted);
+}
+
+.roster-cols,
+.roster-row {
   display: grid;
-  gap: 10px;
-  margin: 0;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr) minmax(0, 1.2fr);
+  gap: 12px;
+  align-items: center;
+}
+
+.roster-cols {
+  padding: 12px 0 8px;
+  font: 500 11px/1 var(--mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+:lang(ja) .roster-cols {
+  font-family: var(--sans);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+}
+
+.roster-rows {
+  margin: 0 -24px;
   padding: 0;
   list-style: none;
 }
 
-.phone-note {
-  padding: 12px 14px;
-  border-radius: 18px;
-  background: rgba(255, 253, 248, 0.94);
-  color: var(--ink);
+.roster-row {
+  min-height: 54px;
+  padding: 10px 24px;
+  border-top: 1px dashed var(--line-2);
+  font-size: 15px;
+  animation: roster-in 0.7s var(--ease) both;
 }
 
-.phone-note-head {
+.roster-row:nth-child(1) { animation-delay: 0.55s; }
+.roster-row:nth-child(2) { animation-delay: 0.65s; }
+.roster-row:nth-child(3) { animation-delay: 0.75s; }
+.roster-row:nth-child(4) { animation-delay: 0.85s; }
+.roster-row:nth-child(5) { animation-delay: 0.95s; }
+
+@keyframes roster-in {
+  from {
+    opacity: 0;
+    transform: translateX(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.roster-work {
+  font-weight: 600;
+}
+
+.roster-who {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--ai);
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.roster-who img {
+  flex: none;
+  border-radius: 5px;
+}
+
+.roster-person {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--paper-2);
+  font: 700 11px/1 var(--sans);
+  font-style: normal;
+  color: var(--ink-2);
+}
+
+.roster-now {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: var(--ink-2);
+}
+
+.roster-now::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--ai);
+}
+
+.roster-now em {
+  grid-column: 2;
+  grid-row: 1;
+  font-style: normal;
+}
+
+.roster-row.is-person .roster-who {
+  color: var(--ink-2);
+}
+
+.roster-row.is-person .roster-now {
+  color: var(--muted);
+}
+
+.roster-row.is-person .roster-now::before {
+  background: var(--line-2);
+}
+
+/* The one exception: vermilion until the manager approves it. */
+.roster-row.is-ask {
+  background: var(--shu-soft);
+  animation:
+    roster-in 0.7s 0.75s var(--ease) both,
+    roster-settle 0.8s 4.4s var(--ease) forwards;
+}
+
+.roster-row.is-ask .roster-now {
+  color: var(--shu-deep);
+  font-weight: 700;
+}
+
+.roster-row.is-ask .roster-now::before {
+  background: var(--shu);
+  box-shadow: 0 0 0 0 rgba(198, 63, 42, 0.5);
+  animation:
+    roster-pulse 1.6s 1s infinite,
+    roster-dot 0.4s 4.4s forwards;
+}
+
+.roster-cleared {
+  opacity: 0;
+  color: var(--ink-2);
+  font-weight: 400;
+  animation: roster-show 0.5s 4.5s var(--ease) forwards;
+}
+
+.roster-asked {
+  animation: roster-hide 0.35s 4.4s forwards;
+}
+
+@keyframes roster-settle {
+  to {
+    background: transparent;
+  }
+}
+
+@keyframes roster-pulse {
+  70% {
+    box-shadow: 0 0 0 7px rgba(198, 63, 42, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(198, 63, 42, 0);
+  }
+}
+
+@keyframes roster-dot {
+  to {
+    background: var(--ai);
+    box-shadow: none;
+  }
+}
+
+@keyframes roster-show {
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes roster-hide {
+  to {
+    opacity: 0;
+  }
+}
+
+.roster-total {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 0 -24px;
+  padding: 16px 24px 18px;
+  border-top: 1.5px solid var(--ink);
+  background: linear-gradient(180deg, var(--surface), var(--paper));
+  font-size: 14px;
+  color: var(--ink-2);
+}
+
+.roster-total strong {
+  font: 400 40px/1 var(--display);
+  letter-spacing: -0.02em;
+  color: var(--ai);
+  white-space: nowrap;
+}
+
+:lang(ja) .roster-total strong {
+  font-weight: 800;
+  font-size: 34px;
+}
+
+.roster-total small {
+  margin-left: 4px;
+  font: 700 15px var(--sans);
+  letter-spacing: 0;
+}
+
+/* The manager's phone: the exception, and their approval. */
+.roster-phone {
+  position: absolute;
+  left: -28px;
+  bottom: 0;
+  width: 318px;
+  padding: 14px 16px 16px;
+  border-radius: 22px;
+  background: rgba(18, 22, 30, 0.96);
+  color: var(--night-ink);
+  box-shadow: 0 30px 60px -20px rgba(18, 22, 30, 0.55), 0 0 0 1px rgba(236, 232, 223, 0.08);
+  animation: roster-phone-in 0.8s 1.5s var(--ease) both;
+}
+
+@media (max-width: 1240px) {
+  .roster-phone {
+    left: 16px;
+  }
+}
+
+@media (max-width: 980px) {
+  .roster-phone {
+    left: auto;
+    right: 12px;
+  }
+}
+
+@media (max-width: 560px) {
+  .roster {
+    padding-bottom: 0;
+  }
+  .roster-total {
+    padding-bottom: 34px;
+  }
+  .roster-phone {
+    position: relative;
+    right: auto;
+    width: auto;
+    margin: -16px 10px 0;
+  }
+}
+
+@keyframes roster-phone-in {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.roster-phone-head {
   display: flex;
   align-items: center;
   gap: 8px;
   font-size: 12px;
-  color: var(--muted);
+  color: var(--night-muted);
 }
 
-.phone-note-head strong {
-  color: var(--ink);
+.roster-phone-head img {
+  border-radius: 5px;
+}
+
+.roster-phone-head strong {
+  color: var(--night-ink);
   font-size: 13px;
 }
 
-.phone-note-head span {
+.roster-phone-head span {
   margin-left: auto;
 }
 
-.phone-note p {
-  margin: 6px 0 0;
+.roster-phone p {
+  margin: 8px 0 0;
   font-size: 14px;
   line-height: 1.55;
 }
 
-.phone-note.is-ask {
-  box-shadow: inset 0 0 0 2px var(--shu);
-}
-
-.phone-note-actions {
+.roster-phone-actions {
   display: flex;
   gap: 8px;
-  margin-top: 10px;
+  margin-top: 12px;
 }
 
-.phone-note-actions span {
+.roster-phone-actions span {
   flex: 1;
-  padding: 8px 0;
-  border-radius: 10px;
+  padding: 9px 0;
+  border-radius: 11px;
   text-align: center;
   font-size: 13px;
   font-weight: 700;
 }
 
-.phone-approve {
+/* The approval: pressed, then shown done. */
+.roster-approve {
+  display: grid;
   background: var(--shu);
   color: #fff;
+  animation:
+    roster-press 0.4s 4s var(--ease),
+    roster-approved 0.4s 4.3s var(--ease) forwards;
 }
 
-.phone-hold {
-  background: var(--paper-2);
-  color: var(--ink-2);
+.roster-approve em {
+  grid-area: 1 / 1;
+  font-style: normal;
+}
+
+.roster-approve-ask {
+  animation: roster-hide 0.25s 4.25s forwards;
+}
+
+.roster-approve-done {
+  opacity: 0;
+  animation: roster-show 0.35s 4.35s forwards;
+}
+
+@keyframes roster-approved {
+  to {
+    background: var(--ok);
+  }
+}
+
+.roster-hold {
+  background: rgba(236, 232, 223, 0.1);
+  color: var(--night-ink);
+  animation: roster-dim 0.4s 4.3s forwards;
+}
+
+@keyframes roster-dim {
+  to {
+    opacity: 0.35;
+  }
+}
+
+@keyframes roster-press {
+  50% {
+    transform: scale(0.94);
+    background: var(--shu-deep);
+  }
 }
 
 .read .lede {
@@ -491,7 +813,7 @@ a.badge:hover {
   font-weight: 800;
   letter-spacing: 0.01em;
   line-height: 1.14;
-  font-size: clamp(40px, 5.4vw, 80px);
+  font-size: clamp(26px, 8vw, 64px);
 }
 
 /* Each half of the Japanese headline stays on one line. */
@@ -499,11 +821,13 @@ a.badge:hover {
   white-space: nowrap;
 }
 
-/* Beside the phone, each line of the headline keeps to one line. */
+/* Beside the roster, each line of the headline keeps to one line. */
 @media (min-width: 981px) {
-  .hero h1,
-  :lang(ja) .hero h1 {
+  .hero h1 {
     font-size: clamp(40px, 4.8vw, 70px);
+  }
+  :lang(ja) .hero h1 {
+    font-size: clamp(34px, 3.7vw, 54px);
   }
   .hero h1 span {
     white-space: nowrap;
@@ -538,6 +862,110 @@ a.badge:hover {
     opacity: 1;
     transform: none;
   }
+}
+
+/* The shortage in three numbers, under the hero. */
+.facts + .read {
+  padding-top: clamp(40px, 5vw, 72px);
+}
+
+.facts {
+  padding: clamp(72px, 9vw, 120px) 0 clamp(56px, 7vw, 96px);
+}
+
+.facts-head {
+  max-width: 760px;
+}
+
+.facts-title {
+  margin: 18px 0 0;
+  font: 400 clamp(30px, 3.8vw, 46px) / 1.12 var(--display);
+  letter-spacing: -0.01em;
+}
+
+.facts-title .phrase {
+  display: inline-block;
+}
+
+:lang(ja) .facts-title {
+  font-weight: 800;
+  font-size: clamp(26px, 3.2vw, 40px);
+  line-height: 1.4;
+  letter-spacing: 0.01em;
+}
+
+.facts-items {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin: clamp(32px, 5vw, 56px) 0 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--ink);
+}
+
+.facts-items li {
+  display: flex;
+  flex-direction: column;
+  padding: 26px 28px 0 0;
+}
+
+.facts-items li + li {
+  padding-left: 28px;
+  border-left: 1px solid var(--line-2);
+}
+
+@media (max-width: 860px) {
+  .facts-items {
+    grid-template-columns: 1fr;
+  }
+  .facts-items li,
+  .facts-items li + li {
+    padding: 22px 0;
+    border-left: 0;
+    border-bottom: 1px solid var(--line-2);
+  }
+}
+
+.facts-value {
+  margin: 0;
+  font: 400 clamp(64px, 7vw, 92px) / 0.95 var(--display);
+  letter-spacing: -0.03em;
+  color: var(--shu);
+}
+
+:lang(ja) .facts-value {
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+.facts-value span {
+  margin-left: 4px;
+  font: 700 24px var(--sans);
+  letter-spacing: 0;
+}
+
+.facts-label {
+  margin: 14px 0 0;
+  max-width: 24em;
+  font-size: 16px;
+  color: var(--ink);
+}
+
+.facts-source {
+  margin-top: auto;
+  padding-top: 14px;
+  font: 500 12px/1.4 var(--mono);
+  color: var(--muted);
+  text-decoration: none;
+}
+
+:lang(ja) .facts-source {
+  font-family: var(--sans);
+}
+
+.facts-source:hover {
+  color: var(--ink);
+  text-decoration: underline;
 }
 
 /* The examples: one chosen at a time, its reading in the card below. */
@@ -717,6 +1145,12 @@ a.badge:hover {
 .meter .human,
 .share-dot.human {
   background: #c9c3b6;
+}
+
+.result-sum .basis {
+  margin: 10px 0 0;
+  font-size: 12px;
+  color: var(--muted);
 }
 
 .stamp {
@@ -1345,95 +1779,169 @@ a.badge:hover {
   line-height: 1.4;
 }
 
+.how .how-note {
+  margin: 40px 0 0;
+  padding: 16px 20px;
+  border-radius: 12px;
+  background: var(--surface);
+  box-shadow: inset 0 0 0 1px var(--line);
+  font-size: 15px;
+  color: var(--ink-2);
+  max-width: max-content;
+}
+
 .how p {
   margin: 12px 0 0;
   color: var(--ink-2);
   max-width: 30em;
 }
 
-/* Contrast */
-.contrast {
+/* Compare: Kitehand beside the other ways to cover the work. Kitehand's
+   column is raised; a narrow screen shows it beside one picked way. */
+.compare {
   background: var(--paper-2);
 }
 
-.contrast table {
-  width: 100%;
-  margin-top: clamp(36px, 5vw, 60px);
-  border-collapse: collapse;
+.compare .lede {
+  margin: 22px 0 0;
+  max-width: 34em;
+  font-size: 18px;
+  color: var(--ink-2);
 }
 
-.contrast th {
-  padding: 0 0 16px;
+.compare-pick {
+  display: none;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 28px;
+}
+
+.compare-table {
+  margin-top: clamp(32px, 5vw, 56px);
+}
+
+.compare table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  table-layout: fixed;
+}
+
+.compare th,
+.compare td {
+  padding: 16px 14px;
+  border-bottom: 1px solid var(--line-2);
   text-align: left;
-  font: 500 13px var(--mono);
-  letter-spacing: 0.1em;
+  vertical-align: top;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.compare thead th {
+  padding-top: 0;
+  padding-bottom: 14px;
+  border-bottom: 1.5px solid var(--ink);
+  font: 600 14px/1.35 var(--sans);
+  color: var(--ink-2);
+  vertical-align: bottom;
+}
+
+.compare thead td {
+  border-bottom: 1.5px solid var(--ink);
+}
+
+.compare tbody th {
+  width: 15%;
+  font: 500 12px/1.5 var(--mono);
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--muted);
-  border-bottom: 1px solid var(--line-2);
-  width: 50%;
 }
 
-.contrast th:last-child {
-  color: var(--shu);
+:lang(ja) .compare tbody th {
+  font: 700 13px/1.5 var(--sans);
+  letter-spacing: 0.04em;
+  text-transform: none;
 }
 
-:lang(ja) .contrast th {
-  font-family: var(--sans);
-  letter-spacing: 0.06em;
+.compare td {
+  color: var(--ink-2);
 }
 
-.contrast td {
-  padding: 22px 24px 22px 0;
-  border-bottom: 1px solid var(--line-2);
-  vertical-align: top;
-  font-size: 17px;
+/* Kitehand's column, raised above the rest. */
+.compare .is-us {
+  position: relative;
+  background: var(--surface);
+  color: var(--ink);
+  font-weight: 600;
+  box-shadow: inset 1px 0 0 var(--line), inset -1px 0 0 var(--line);
 }
 
-.contrast td:first-child {
+.compare thead .is-us {
+  padding-top: 18px;
+  border-radius: 14px 14px 0 0;
+  border-bottom-color: var(--ai);
+  color: var(--ai);
+  font: 400 24px/1 var(--display);
+  box-shadow: inset 1px 0 0 var(--line), inset -1px 0 0 var(--line), inset 0 3px 0 var(--ai);
+}
+
+.compare thead .is-us img {
+  display: inline-block;
+  vertical-align: -3px;
+  margin-right: 6px;
+  border-radius: 5px;
+}
+
+.compare tbody tr:last-child .is-us {
+  border-radius: 0 0 14px 14px;
+  box-shadow: inset 1px 0 0 var(--line), inset -1px 0 0 var(--line), inset 0 -1px 0 var(--line);
+}
+
+.compare tbody tr:last-child th,
+.compare tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.compare-notes {
+  margin-top: 22px;
+}
+
+.compare-notes p {
+  margin: 4px 0 0;
+  font-size: 12px;
   color: var(--muted);
 }
 
-.contrast td:last-child {
-  font-weight: 600;
-  padding-left: 34px;
-  position: relative;
-}
-
-.contrast td:last-child::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 27px;
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  background: var(--shu) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 8.5l2.6 2.5L12 5.5' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 12px no-repeat;
-}
-
-@media (max-width: 700px) {
-  .contrast thead {
+@media (max-width: 1000px) {
+  .compare-pick {
+    display: flex;
+  }
+  .compare tbody th {
+    width: 28%;
+  }
+  .compare [data-col] {
     display: none;
   }
-  .contrast tr {
-    display: block;
-    padding: 18px 0;
-    border-bottom: 1px solid var(--line-2);
+  .compare [data-show="0"] [data-col="0"],
+  .compare [data-show="1"] [data-col="1"],
+  .compare [data-show="2"] [data-col="2"],
+  .compare [data-show="3"] [data-col="3"] {
+    display: table-cell;
   }
-  .contrast td {
-    display: block;
-    padding: 0;
-    border: 0;
+}
+
+@media (max-width: 480px) {
+  .compare th,
+  .compare td {
+    padding: 14px 10px;
+    font-size: 13px;
   }
-  .contrast td:first-child {
-    text-decoration: line-through;
-    text-decoration-color: rgba(110, 114, 123, 0.5);
-    font-size: 15px;
+  .compare tbody th {
+    width: 30%;
   }
-  .contrast td:last-child {
-    margin-top: 8px;
-  }
-  .contrast td:last-child::before {
-    top: 4px;
+  .compare thead .is-us {
+    font-size: 19px;
   }
 }
 
@@ -1598,6 +2106,16 @@ a.badge:hover {
 .plan .per {
   font-size: 15px;
   color: var(--ink-2);
+}
+
+.anchor {
+  margin: 16px 0 0;
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: var(--ai-soft);
+  color: var(--ai);
+  font-size: 14px;
+  font-weight: 700;
 }
 
 .list-price,
@@ -1922,5 +2440,8 @@ a.badge:hover {
   }
   .step {
     opacity: 1;
+  }
+  .roster-row.is-ask .roster-now::before {
+    animation: roster-dot 0s forwards !important;
   }
 }

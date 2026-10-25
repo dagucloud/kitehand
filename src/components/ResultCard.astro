@@ -1,5 +1,5 @@
 ---
-// A piece of work read into tasks: the hours it gives back to the owner, each
+// A job read into tasks: how much of a full-time job Kitehand takes, each
 // task and who does it, and how the work would run. The reader fills this
 // same markup in place when a sample is chosen (scripts/reader.ts).
 import type { Copy } from "../i18n/copy";
@@ -19,6 +19,7 @@ const t = tally(d);
 const share = (s: "kitehand" | "approve" | "human") => d.duties.filter((x) => x.share === s).reduce((sum, x) => sum + x.hours, 0);
 const pct = (n: number) => `${(n / t.total) * 100}%`;
 const most = Math.max(...d.duties.map((x) => x.hours));
+const unit = copy.result.units[t.people > 1 ? 1 : 0];
 const base = copy.lang === "ja" ? "/ja/" : "/";
 ---
 
@@ -29,14 +30,15 @@ const base = copy.lang === "ja" ? "/ja/" : "/";
       <div class="label" data-r="label">{label}</div>
       <h3 data-r="title">{d.title}</h3>
       <p class="summary" data-r="summary">{d.summary}</p>
-      <div class="take">{copy.result.back}</div>
-      <div class="back"><span class="n" data-r="back">{t.taken}</span><span class="unit">{copy.result.unit}</span></div>
+      <div class="take">{copy.result.takes}</div>
+      <div class="back"><span class="n" data-r="people">{t.people}</span><span class="unit" data-r="unit">{unit}</span></div>
       <p class="taken" data-r="taken">{copy.result.taken(t.taken, t.total)}</p>
       <div class="meter" aria-hidden="true">
         <i class="kitehand" data-r="m-kitehand" style={`width:${pct(share("kitehand"))}`}></i>
         <i class="approve" data-r="m-approve" style={`width:${pct(share("approve"))}`}></i>
         <i class="human" data-r="m-human" style={`width:${pct(share("human"))}`}></i>
       </div>
+      <p class="basis">{copy.result.basis}</p>
       <div class="stamp" aria-hidden="true">{copy.result.stamp}</div>
       </div>
     </div>

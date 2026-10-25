@@ -1,6 +1,7 @@
 ---
-// The one membership: its price, the founding price for the first members,
-// what it includes, and why intake is limited.
+// The price of a hand: the founding price for the first companies, what it
+// comes to beside a person's wage, what it includes, and why intake is
+// limited.
 import Phrases from "./Phrases.astro";
 import type { Copy } from "../i18n/copy";
 
@@ -23,6 +24,7 @@ const p = copy.pricing;
         <p class="price"><span class="amount">{p.founding.price}</span><span class="per">{p.per}</span></p>
         <p class="list-price">{p.regular} <s>{p.price}</s> {p.per}</p>
         <p class="founding-note">{p.founding.note}</p>
+        <p class="anchor">{p.anchor}</p>
         <p class="yearly">{p.yearly}</p>
         <a class="btn btn--shu" href="#apply">{p.cta} <span class="arrow">→</span></a>
       </div>

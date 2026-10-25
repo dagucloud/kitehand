@@ -7,7 +7,7 @@ import test from "node:test";
 
 const dist = new URL("../dist/", import.meta.url).pathname;
 
-// A Kitehand secretary is handed work; it is never an employee.
+// A Kitehand hand is handed a job; it is never an employee.
 const EMPLOYMENT = /\b(hire|hires|hired|hiring|employ\w*)\b|雇|採用/i;
 // The words of the builders of what Kitehand runs on, as the app's screens
 // are checked for them (runstead-source3/web/kitehand-words.json).
