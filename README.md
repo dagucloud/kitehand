@@ -1,8 +1,8 @@
 # kitehand.ai
 
 The website for Kitehand: AI hands (担当者 in Japanese) for small companies
-short-handed on office work. A company hands over a job as a job posting, a
-manual or one line; a hand learns it, does it the same way every day in the
+short-handed on office work. A company hands over a job as a job description,
+a manual or one line; a hand learns it, does it the same way every day in the
 cloud, and asks a person before anything out of the ordinary. Kitehand is
 priced per hand, by application, with a founding price for the first
 companies (`runstead-source3/marketing/sales/pricing/kitehand.md`).

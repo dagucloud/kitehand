@@ -1,5 +1,5 @@
 // Six jobs short-handed small businesses often hand over, read the way
-// Kitehand reads one: as a job posting, a manual, or one line. They fill the
+// Kitehand reads one: as a job description, a manual, or one line. They fill the
 // examples a visitor can try without writing their own and the pages search
 // engines find. Hours are the whole job's, in a month.
 import type { Diagnosis, Lang } from "../lib/diagnosis";
