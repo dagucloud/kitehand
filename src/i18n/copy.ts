@@ -218,7 +218,7 @@ const en: Copy = {
     parts: [
       { title: "Hand over the job", body: "A job description, a manual or one line, as you have it; there's nothing to break down first. Kitehand makes a hand for it, splits the job into tasks, says which it can take, and shows how it will do each one every time." },
       { title: "Show it once", body: "Give it the sign-ins for the systems you use, and do the tricky part once while it watches. After that, it does it the same way." },
-      { title: "Check from your phone", body: "Work you mark, such as payments or shipments, waits for your approval. So does any change to how it does the work." },
+      { title: "Check from your phone", body: "Work you mark, such as payments or shipments, waits for your approval. When it changes how it does the work, it tells you what changed." },
     ],
     note: "On Pro, your first job is set up with us on a call.",
   },
@@ -228,7 +228,7 @@ const en: Copy = {
     lede: "There's more than one way to cover work you're short-handed on. For office work, here's how they compare.",
     pick: "Compare with",
     rows: ["Up and running", "Cost per month", "Works", "How the work gets done", "Something unusual", "A screen or process changes", "When people change"],
-    kitehand: ["Today", "$99 per hand, after a free trial", "Around the clock, weekends too", "The way it learned, every time", "Asks you on your phone", "Relearns it, and tells you first", "The way it works stays"],
+    kitehand: ["Today", "$99 per hand, after a free trial", "Around the clock, weekends too", "The way it learned, every time", "Asks you on your phone", "Relearns it, and tells you", "The way it works stays"],
     options: [
       { name: "Temp or part-time help", cells: ["Weeks, once you find someone", "$3,460 full-time¹", "Their hours", "Depends on the person", "Asks on the spot", "Adapts", "Needs a handover"] },
       { name: "Virtual assistant", cells: ["One to two weeks", "$390 for 10 hours²", "The hours you buy", "Depends on who's assigned", "Asks by chat", "Adapts", "A new assistant needs a handover"] },
@@ -429,7 +429,7 @@ const ja: Copy = {
     parts: [
       { title: "仕事を渡す", body: "職務記述書、手順書、ひとこと。仕事を切り分けてから渡す必要はありません。担当者が仕事に分け、引き受ける範囲と、毎回のやり方を示します。" },
       { title: "一度やって見せる", body: "使っているシステムのアカウントを渡し、難しいところを一度だけ操作して見せます。以降は、同じやり方を繰り返します。" },
-      { title: "スマホで確かめる", body: "支払いや出荷など、あなたが決めた仕事は承認してから進みます。やり方を変えるときも、先に確かめます。" },
+      { title: "スマホで確かめる", body: "支払いや出荷など、あなたが決めた仕事は承認してから進みます。やり方を変えたときは、何を変えたかを伝えます。" },
     ],
     note: "プロでは、最初の仕事をオンラインで一緒に設定します。",
   },
@@ -439,7 +439,7 @@ const ja: Copy = {
     lede: "足りない人手を埋める方法は、ひとつではありません。事務の仕事で比べると、こうなります。",
     pick: "比べる相手",
     rows: ["始めるまで", "月の費用（税抜）", "動く時間", "仕事のやり方", "いつもと違うとき", "画面や手順が変わったとき", "人が替わるとき"],
-    kitehand: ["今日から", "14,800円（担当者1人）。無料体験あり", "24時間、休日も", "覚えたやり方を、毎回同じに", "スマホであなたに聞く", "覚え直し、使う前に知らせる", "やり方が残る"],
+    kitehand: ["今日から", "14,800円（担当者1人）。無料体験あり", "24時間、休日も", "覚えたやり方を、毎回同じに", "スマホであなたに聞く", "覚え直して、知らせる", "やり方が残る"],
     options: [
       { name: "派遣・パート", cells: ["人が見つかってから数週間", "約33万円（フルタイム）¹", "勤務時間内", "人による", "その場で聞ける", "合わせられる", "引き継ぎが要る"] },
       { name: "オンラインアシスタント", cells: ["1〜2週間", "10〜13万円（月30時間）²", "契約した時間内", "担当する人による", "チャットで聞く", "合わせられる", "担当が替わると引き継ぎ"] },
