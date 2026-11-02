@@ -19,7 +19,7 @@ on the site. Every figure the page quotes links to its source.
 - Applications go to Web3Forms, with the Dagu website's access key, from
   `src/scripts/apply.ts`.
 - Visits and the page's events (`work_read`, `apply_sent`, `pricing_viewed`,
-  `result_shared`, …) go to the PostHog project kitewell.app uses, from
+  `result_shared`, …) go to the PostHog project kitewell.com uses, from
   `src/lib/analytics.ts`, and only on kitehand.ai.
 - Cloudflare serves `dist/` as a Worker's static assets, with `kitehand.ai` as
   its custom domain (`wrangler.jsonc`); `public/_redirects` keeps old work

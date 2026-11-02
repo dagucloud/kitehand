@@ -1,5 +1,5 @@
 // Visit statistics for kitehand.ai, kept in the same PostHog project as
-// kitewell.app. PostHog loads only after the page has finished loading, so it
+// kitewell.com. PostHog loads only after the page has finished loading, so it
 // never competes with what a visitor came to read, and it records page views
 // and the events named here, never clicks at large. Elsewhere, such as a
 // local build, nothing loads or is sent.
