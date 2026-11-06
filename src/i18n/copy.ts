@@ -120,7 +120,7 @@ export type Copy = {
     index: string;
   };
   // made is the sentence around the company's name, which links to its site.
-  footer: { made: [string, string]; company: string; companyUrl: string; privacy: string };
+  footer: { made: [string, string]; company: string; companyUrl: string; privacy: string; legal: string; legalUrl: string };
   privacy: { title: string; body: string[] };
   notFound: { title: string; body: string; home: string };
 };
@@ -130,7 +130,7 @@ const en: Copy = {
   other: { lang: "ja", label: "日本語", home: "/ja/" },
   meta: {
     title: "Kitehand — for the office work you're short-handed on",
-    description: "Order entry, bookkeeping, shipping, online stores. Hand Kitehand the job as a job description, a manual or one line, and it does the work the same way every day, nights and weekends included. Try it free; $99 a month per hand.",
+    description: "Order entry, bookkeeping, shipping, online stores. Hand Kitehand the job as a job description, a manual or one line, and it does the work the same way every day, nights and weekends included. Try it free; paid plans from $49 a month per hand.",
     og: "/og-en.png",
   },
   nav: { read: "How much", how: "How it works", compare: "Compare", pricing: "Pricing", faq: "FAQ", cta: "Try free" },
@@ -231,7 +231,7 @@ const en: Copy = {
     lede: "There's more than one way to cover work you're short-handed on. For office work, here's how they compare.",
     pick: "Compare with",
     rows: ["Up and running", "Cost per month", "Works", "How the work gets done", "Something unusual", "A screen or process changes", "When people change"],
-    kitehand: ["Today", "$99 per hand, after a free trial", "Around the clock, weekends too", "The way it learned, every time", "Asks you on your phone", "Relearns it, and tells you", "The way it works stays"],
+    kitehand: ["Today", "$99 per hand with AI included, or $49 with your own key; free trial first", "Around the clock, weekends too", "The way it learned, every time", "Asks you on your phone", "Relearns it, and tells you", "The way it works stays"],
     options: [
       { name: "Temp or part-time help", cells: ["Weeks, once you find someone", "$3,460 full-time¹", "Their hours", "Depends on the person", "Asks on the spot", "Adapts", "Needs a handover"] },
       { name: "Virtual assistant", cells: ["One to two weeks", "$390 for 10 hours²", "The hours you buy", "Depends on who's assigned", "Asks by chat", "Adapts", "A new assistant needs a handover"] },
@@ -289,7 +289,7 @@ const en: Copy = {
       },
     ],
     anchor: "About 1/35 of a full-time office clerk's median wage.",
-    yearly: "Pay yearly and get two months free.",
+    yearly: "Pay yearly and get two months free. Prices exclude tax.",
   },
   faq: {
     eyebrow: "FAQ",
@@ -303,11 +303,11 @@ const en: Copy = {
       { q: "What if it gets something wrong?", a: "Everything it does is recorded. Send the work back with a note, and it corrects how it does it." },
       { q: "Does it stop when our computers are off?", a: "No. Kitehand works in the cloud, nights and weekends included." },
       { q: "How is our data handled?", a: "In an environment kept apart for your company, with sign-ins kept encrypted. Nothing you hand over trains an AI model. We sign an NDA on request." },
-      { q: "What does the free trial include?", a: "One hand taking one job for up to 30 runs, with questions and approvals on your phone and AI usage for the trial. Once its runs are used, its work waits until you move to Pro." },
-      { q: "How is Pro billed?", a: "$99 a month for each hand, or ten months' price a year. Each hand takes up to 5 jobs with no cap on runs; for more work, add a hand." },
+      { q: "What does the free trial include?", a: "One hand taking one job for up to 30 runs, with questions and approvals on your phone and AI usage for the trial. Once its runs are used, its work waits until you move to a paid plan." },
+      { q: "How are the paid plans billed?", a: "Per hand: Own Key is $49 a month or $490 a year, and Pro is $99 a month or $990 a year, so a year costs ten months' price. You pay by card through Stripe, and prices exclude tax. Each hand takes up to 5 jobs with no cap on runs; for more work, add a hand." },
       { q: "Can we use our own AI model?", a: "Yes, on any plan. From a hand's menu, choose a model from Anthropic, OpenAI, Google Gemini or OpenRouter and enter your API key. Kitehand checks the model can do the work before saving it, and it stays the same until you change it. Your provider bills you for usage, and what the hand reads goes to that provider under its terms." },
       { q: "How is Own Key different from Pro?", a: "Both give each hand up to 5 jobs with no cap on runs. Pro includes AI usage and sets up your first job with you on a call. Own Key is half the price: you bring your own model and key, pay your provider for usage, and set it up yourself." },
-      { q: "Can we cancel?", a: "Any time; you're not charged again, and the hand goes back to the free trial with the runs it has left. Within the first 30 days of a paid plan you get a full refund." },
+      { q: "Can we cancel?", a: "Any time. You keep the plan to the end of the period you've paid for and aren't charged again; then the hand goes back to the free trial with the runs it has left. Within the first 30 days of a paid plan you get a full refund." },
     ],
   },
   apply: {
@@ -342,7 +342,7 @@ const en: Copy = {
     more: "Other jobs",
     index: "Jobs short-handed companies hand over",
   },
-  footer: { made: ["Kitehand is made by ", "."], company: "Descarty", companyUrl: "https://descarty.com/en/", privacy: "Privacy" },
+  footer: { made: ["Kitehand is made by ", "."], company: "Descarty", companyUrl: "https://descarty.com/en/", privacy: "Privacy", legal: "Commercial disclosure", legalUrl: "https://descarty.com/en/legal/tokushoho/" },
   privacy: {
     title: "Privacy",
     body: [
@@ -358,7 +358,7 @@ const ja: Copy = {
   other: { lang: "en", label: "English", home: "/" },
   meta: {
     title: "Kitehand — 人手が足りない仕事を引き受ける AI の担当者",
-    description: "受注の入力、経理、出荷の手配、EC の運営。職務記述書・手順書・ひとことで仕事を渡せば、Kitehand の担当者が覚えて、夜も休日も毎日同じやり方でこなします。無料で試せて、有料は担当者1人 月14,800円。",
+    description: "受注の入力、経理、出荷の手配、EC の運営。職務記述書・手順書・ひとことで仕事を渡せば、Kitehand の担当者が覚えて、夜も休日も毎日同じやり方でこなします。無料で試せて、有料は担当者1人 月7,400円（税別）から。",
     og: "/og-ja.png",
   },
   nav: { read: "何人分か", how: "しくみ", compare: "比べる", pricing: "料金", faq: "よくある質問", cta: "無料で試す" },
@@ -459,7 +459,7 @@ const ja: Copy = {
     lede: "足りない人手を埋める方法は、ひとつではありません。事務の仕事で比べると、こうなります。",
     pick: "比べる相手",
     rows: ["始めるまで", "月の費用（税抜）", "動く時間", "仕事のやり方", "いつもと違うとき", "画面や手順が変わったとき", "人が替わるとき"],
-    kitehand: ["今日から", "14,800円（担当者1人）。無料体験あり", "24時間、休日も", "覚えたやり方を、毎回同じに", "スマホであなたに聞く", "覚え直して、知らせる", "やり方が残る"],
+    kitehand: ["今日から", "担当者1人 14,800円（AI 込み）、自前キーは7,400円。無料体験あり", "24時間、休日も", "覚えたやり方を、毎回同じに", "スマホであなたに聞く", "覚え直して、知らせる", "やり方が残る"],
     options: [
       { name: "派遣・パート", cells: ["人が見つかってから数週間", "約33万円（フルタイム）¹", "勤務時間内", "人による", "その場で聞ける", "合わせられる", "引き継ぎが要る"] },
       { name: "オンラインアシスタント", cells: ["1〜2週間", "10〜13万円（月30時間）²", "契約した時間内", "担当する人による", "チャットで聞く", "合わせられる", "担当が替わると引き継ぎ"] },
@@ -531,11 +531,11 @@ const ja: Copy = {
       { q: "間違えたらどうなりますか？", a: "すべての作業が記録に残ります。ひとこと添えて差し戻すと、そのやり方を直します。" },
       { q: "パソコンを閉じたら止まりますか？", a: "止まりません。担当者はクラウドで働くので、夜も休日も進みます。" },
       { q: "データはどう扱われますか？", a: "会社ごとに分かれた環境で扱い、サインイン情報は暗号化して保管します。預かったデータで AI モデルを学習させることはありません。ご希望があれば秘密保持契約（NDA）を結びます。" },
-      { q: "無料体験では何ができますか？", a: "担当者1人に仕事を1件、30回まで任せられます。確認と承認はスマホで受けられ、AI の利用料も体験分は込みです。30回を使い切ると、プロに切り替えるまで仕事は止まって待ちます。" },
-      { q: "プロの料金はどうかかりますか？", a: "担当者1人につき月14,800円（税別）、年払いなら10か月分です。1人に仕事を5件まで、回数の上限なく任せられます。仕事が増えたら、担当者を増やします。" },
+      { q: "無料体験では何ができますか？", a: "担当者1人に仕事を1件、30回まで任せられます。確認と承認はスマホで受けられ、AI の利用料も体験分は込みです。30回を使い切ると、有料プランに切り替えるまで仕事は止まって待ちます。" },
+      { q: "有料プランの料金はどうかかりますか？", a: "担当者1人につき、自前キーは月7,400円か年74,000円、プロは月14,800円か年148,000円です（いずれも税別）。年払いは10か月分です。お支払いは Stripe によるクレジットカード決済です。1人に仕事を5件まで、回数の上限なく任せられます。仕事が増えたら、担当者を増やします。" },
       { q: "自分で選んだ AI モデルを使えますか？", a: "はい、どのプランでも使えます。担当者のメニューから、Anthropic・OpenAI・Google Gemini・OpenRouter のモデルを選び、API キーを入れてください。保存する前に、仕事ができるモデルかを確かめます。モデルは変えるまで同じままです。利用料はプロバイダから直接請求され、担当者が読む内容はそのプロバイダの規約のもとで送られます。" },
       { q: "自前キーとプロの違いは？", a: "どちらも1人に仕事を5件まで、回数の上限なく任せられます。プロは AI の利用料込みで、最初の仕事をオンラインで一緒に設定します。自前キーは料金が半額で、ご自分のモデルとキーを使い、利用料をプロバイダに直接払い、設定もご自身で行います。" },
-      { q: "解約はできますか？", a: "いつでも解約でき、次の請求からはかかりません。担当者は、残りの回数の無料体験に戻ります。有料プランの最初の30日以内なら、全額を返金します。" },
+      { q: "解約はできますか？", a: "いつでも解約でき、お支払い済みの期間の終わりまで使えて、次の請求からはかかりません。その後、担当者は残りの回数の無料体験に戻ります。有料プランの最初の30日以内なら、全額を返金します。" },
     ],
   },
   apply: {
@@ -570,7 +570,7 @@ const ja: Copy = {
     more: "ほかの仕事",
     index: "人手が足りない会社が任せる仕事",
   },
-  footer: { made: ["Kitehand は ", " が開発しています。"], company: "Descarty", companyUrl: "https://descarty.com/", privacy: "プライバシー" },
+  footer: { made: ["Kitehand は ", " が開発しています。"], company: "Descarty", companyUrl: "https://descarty.com/", privacy: "プライバシー", legal: "特定商取引法に基づく表記", legalUrl: "https://descarty.com/legal/tokushoho/" },
   privacy: {
     title: "プライバシー",
     body: [
