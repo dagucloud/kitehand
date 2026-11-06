@@ -21,6 +21,7 @@ const a = copy.apply;
       <h2 class="section-title"><Phrases text={a.title} /></h2>
       <p class="lede">{a.lede}</p>
       <a class="btn btn--shu btn--large" href={START} data-start="foot">{a.start} <span class="arrow">→</span></a>
+      <p class="agree">{a.agree[0]}<a href={`${copy.lang === "ja" ? "/ja/" : "/"}terms/`}>{a.agree[1]}</a>{a.agree[2]}</p>
     </div>
     <form data-apply data-lang={copy.lang} data-sending={a.sending} data-error={a.error} novalidate>
       <p class="form-title">{a.ask}</p>

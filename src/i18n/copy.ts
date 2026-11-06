@@ -104,6 +104,7 @@ export type Copy = {
     job: string;
     jobHint: string;
     submit: string;
+    agree: [string, string, string];
     sending: string;
     done: string;
     error: string;
@@ -120,7 +121,7 @@ export type Copy = {
     index: string;
   };
   // made is the sentence around the company's name, which links to its site.
-  footer: { made: [string, string]; company: string; companyUrl: string; privacy: string; legal: string; legalUrl: string };
+  footer: { made: [string, string]; company: string; companyUrl: string; privacy: string; terms: string; legal: string; legalUrl: string };
   privacy: { title: string; body: string[] };
   notFound: { title: string; body: string; home: string };
 };
@@ -327,6 +328,7 @@ const en: Copy = {
     job: "The job to hand over",
     jobHint: "A job description, a manual or one line. Paste it as you have it.",
     submit: "Send",
+    agree: ["Starting the free trial or applying for a plan means you agree to the ", "Terms of Service", "."],
     sending: "Sending…",
     done: "Got it. We'll email you how much of it Kitehand can take.",
     error: "That didn't go through. Check your email and company, and try again.",
@@ -342,7 +344,7 @@ const en: Copy = {
     more: "Other jobs",
     index: "Jobs short-handed companies hand over",
   },
-  footer: { made: ["Kitehand is made by ", "."], company: "Descarty", companyUrl: "https://descarty.com/en/", privacy: "Privacy", legal: "Commercial disclosure", legalUrl: "https://descarty.com/en/legal/tokushoho/" },
+  footer: { made: ["Kitehand is made by ", "."], company: "Descarty", companyUrl: "https://descarty.com/en/", privacy: "Privacy", terms: "Terms", legal: "Commercial disclosure", legalUrl: "https://descarty.com/en/legal/tokushoho/" },
   privacy: {
     title: "Privacy",
     body: [
@@ -555,6 +557,7 @@ const ja: Copy = {
     job: "任せたい仕事",
     jobHint: "職務記述書・手順書・ひとこと、どれでも。いまある形のまま貼り付けてください。",
     submit: "送る",
+    agree: ["無料体験の開始とプランのお申し込みには、", "利用規約", "が適用されます。"],
     sending: "送信中…",
     done: "受け付けました。どこまで任せられるかをメールでお返事します。",
     error: "送信できませんでした。メールアドレスと会社名を確かめて、もう一度お試しください。",
@@ -570,7 +573,7 @@ const ja: Copy = {
     more: "ほかの仕事",
     index: "人手が足りない会社が任せる仕事",
   },
-  footer: { made: ["Kitehand は ", " が開発しています。"], company: "Descarty", companyUrl: "https://descarty.com/", privacy: "プライバシー", legal: "特定商取引法に基づく表記", legalUrl: "https://descarty.com/legal/tokushoho/" },
+  footer: { made: ["Kitehand は ", " が開発しています。"], company: "Descarty", companyUrl: "https://descarty.com/", privacy: "プライバシー", terms: "利用規約", legal: "特定商取引法に基づく表記", legalUrl: "https://descarty.com/legal/tokushoho/" },
   privacy: {
     title: "プライバシー",
     body: [

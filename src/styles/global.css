@@ -2433,6 +2433,35 @@ a.badge:hover {
   color: var(--ink-2);
 }
 
+.prose h2 {
+  margin-top: 2em;
+  font-size: 1.15em;
+}
+
+.prose ul {
+  padding-left: 1.4em;
+  color: var(--ink-2);
+  list-style: disc;
+}
+
+.prose li + li {
+  margin-top: 0.4em;
+}
+
+.prose a {
+  text-decoration: underline;
+}
+
+.apply .agree {
+  margin-top: 14px;
+  color: var(--night-muted);
+  font-size: 13px;
+}
+
+.apply .agree a {
+  text-decoration: underline;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
