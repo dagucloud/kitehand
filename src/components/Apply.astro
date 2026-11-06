@@ -40,6 +40,19 @@ const a = copy.apply;
         <input id="ap-email" name="email" type="email" autocomplete="email" required />
       </div>
       <fieldset class="field sizes">
+        <legend>{a.plan}</legend>
+        <div class="choices">
+          {
+            a.plans.map((plan, i) => (
+              <label class="choice">
+                <input type="radio" name="plan" value={plan} checked={i === a.plans.length - 1} />
+                <span>{plan}</span>
+              </label>
+            ))
+          }
+        </div>
+      </fieldset>
+      <fieldset class="field sizes">
         <legend>{a.size}</legend>
         <div class="choices">
           {
@@ -91,6 +104,7 @@ const a = copy.apply;
       email: String(data.get("email") ?? "").trim(),
       company: String(data.get("company") ?? "").trim(),
       name: String(data.get("name") ?? "").trim(),
+      plan: String(data.get("plan") ?? ""),
       size: String(data.get("size") ?? ""),
       job: String(data.get("job") ?? "").trim(),
       sample: reading?.d ?? null,
@@ -112,6 +126,6 @@ const a = copy.apply;
       return;
     }
     form.classList.add("is-done");
-    track("apply_sent", { from: "foot", slug: reading?.slug ?? "", read: reading !== null, size: application.size });
+    track("apply_sent", { from: "foot", slug: reading?.slug ?? "", read: reading !== null, size: application.size, plan: application.plan });
   });
 </script>

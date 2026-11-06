@@ -9,8 +9,9 @@ export type Application = {
   email: string;
   company: string;
   name: string;
-  // How many people the company has, as the form offers it; "" when the
-  // reader sent it.
+  // The plan chosen and how many people the company has, as the form offers
+  // them; "" when the reader sent it.
+  plan: string;
   size: string;
   job: string;
   // The sample the visitor read before applying, if any.
@@ -33,6 +34,7 @@ export async function sendApplication(a: Application): Promise<boolean> {
         email: a.email,
         company: a.company,
         name: a.name,
+        plan: a.plan,
         size: a.size,
         job: a.job,
         sample: a.sample ? `${a.sample.title} (${tally(a.sample).taken} h, ${tally(a.sample).people} FTE)` : "",

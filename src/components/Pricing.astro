@@ -1,7 +1,7 @@
 ---
-// The two plans side by side: Free, which starts in the app with one hand
-// and one job, and Pro, priced per hand, applied for at the foot of the page,
-// with what Pro comes to beside a person's wage.
+// The plans side by side: Free, which starts in the app with one hand and one
+// job, and Own Key and Pro, priced per hand and applied for at the foot of the
+// page, with what Pro comes to beside a person's wage.
 import Phrases from "./Phrases.astro";
 import type { Copy } from "../i18n/copy";
 import { START } from "../lib/links";
@@ -34,9 +34,9 @@ const p = copy.pricing;
                 <li>{item}</li>
               ))}
             </ul>
-            {plan.featured && <p class="yearly">{p.yearly}</p>}
+            {plan.apply && <p class="yearly">{p.yearly}</p>}
             <div class="plan-foot">
-              <a class:list={["btn", plan.featured ? "btn--shu" : "btn--ghost"]} href={plan.featured ? "#apply" : START} data-start={plan.featured ? "pro" : "free"}>
+              <a class:list={["btn", plan.featured ? "btn--shu" : "btn--ghost"]} href={plan.apply ? "#apply" : START} data-start={plan.id} data-plan={plan.apply ? plan.name : undefined}>
                 {plan.cta} <span class="arrow">→</span>
               </a>
             </div>
@@ -67,5 +67,12 @@ const p = copy.pricing;
   }
   document.querySelectorAll<HTMLAnchorElement>("[data-start]").forEach((link) =>
     link.addEventListener("click", () => track("start_clicked", { from: "pricing", plan: link.dataset.start ?? "" })),
+  );
+  // Applying for a plan chooses it in the form at the foot of the page.
+  document.querySelectorAll<HTMLAnchorElement>(".pricing [data-plan]").forEach((link) =>
+    link.addEventListener("click", () => {
+      const choice = document.querySelector<HTMLInputElement>(`[data-apply] [name=plan][value="${link.dataset.plan}"]`);
+      if (choice) choice.checked = true;
+    }),
   );
 </script>
