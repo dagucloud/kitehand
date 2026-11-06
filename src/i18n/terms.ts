@@ -3,14 +3,14 @@
 // disclosure, and the two link here rather than repeat each other. The body's
 // strings are trusted markup for their links; an array is a bulleted list.
 
-export type Terms = {
+export type LegalDoc = {
   title: string;
   updated: string;
   intro: string[];
   sections: { title: string; body: (string | string[])[] }[];
 };
 
-const en: Terms = {
+const en: LegalDoc = {
   title: "Terms of Service",
   updated: "Last updated: November 6, 2026",
   intro: [
@@ -65,7 +65,7 @@ const en: Terms = {
         "<strong>Where it is kept.</strong> Your account and everything a hand keeps are kept in the United States, on Google Cloud, with sign-ins encrypted. To provide the Service we use Google Cloud (hosting), Cloudflare (network), Okta through Auth0 (sign-in), OpenRouter and the hosts it uses (the included AI model), Stripe (payment), and browser makers' push services (notifications, encrypted).",
         "<strong>How long.</strong> A hand's record of its work is kept for 30 days. Deleting a hand deletes what it kept. To delete a whole workspace, contact us. Data may stay in backups for a time after it is deleted.",
         "<strong>Who can reach it.</strong> We reach your data only as needed to provide the Service, to investigate and fix faults, to keep the Service secure, or as the law requires, and we do not disclose it to third parties beyond the providers above and what the law requires. We sign an NDA on request.",
-        "How we handle visits to the site and enquiries through it is on the <a href=\"/privacy/\">Privacy</a> page.",
+        "How we handle personal information is in our <a href=\"/privacy/\">Privacy Policy</a>.",
       ],
     },
     {
@@ -146,7 +146,7 @@ const en: Terms = {
   ],
 };
 
-const ja: Terms = {
+const ja: LegalDoc = {
   title: "利用規約",
   updated: "最終更新日：2026年11月6日",
   intro: [
@@ -201,7 +201,7 @@ const ja: Terms = {
         "<strong>保管場所。</strong>アカウントと担当者が保管するものは、米国の Google Cloud に保管し、サインイン情報は暗号化します。本サービスの提供のため、Google Cloud（基盤）、Cloudflare（通信）、Okta の Auth0（サインイン）、OpenRouter とその提供先（本サービスに含まれる AI モデル）、Stripe（決済）、ブラウザ提供各社のプッシュ配信（通知、暗号化済み）を利用します。",
         "<strong>保存期間。</strong>担当者の作業の記録は30日間保存します。担当者を削除すると、その担当者が保管していたものを削除します。ワークスペース全体の削除はお問い合わせください。削除後も、バックアップに一定期間残ることがあります。",
         "<strong>アクセス。</strong>当社は、本サービスの提供、障害の調査と対応、安全の確保、法令への対応に必要な範囲でのみ、お客様のデータにアクセスします。上記の提供先と法令に基づく場合を除き、第三者に開示しません。ご希望があれば秘密保持契約（NDA）を結びます。",
-        "サイトの訪問とサイトからのご相談の扱いは<a href=\"/ja/privacy/\">プライバシー</a>に掲載しています。",
+        "個人情報の扱いは<a href=\"/ja/privacy/\">プライバシーポリシー</a>に掲載しています。",
       ],
     },
     {

@@ -1,29 +1,31 @@
 ---
+// A legal page: its title, the date it last changed, and its numbered sections.
 import type { Copy } from "../i18n/copy";
-import { TERMS } from "../i18n/terms";
+import type { LegalDoc } from "../i18n/terms";
 import Base from "../layouts/Base.astro";
 import Footer from "./Footer.astro";
 import Header from "./Header.astro";
 
 interface Props {
   copy: Copy;
+  doc: LegalDoc;
+  slug: string;
 }
 
-const { copy } = Astro.props;
-const terms = TERMS[copy.lang];
+const { copy, doc, slug } = Astro.props;
 const base = copy.lang === "ja" ? "/ja/" : "/";
-const alternate = `${copy.lang === "ja" ? "/" : "/ja/"}terms/`;
+const alternate = `${copy.lang === "ja" ? "/" : "/ja/"}${slug}/`;
 ---
 
-<Base copy={copy} path={`${base}terms/`} alternate={alternate} title={`${terms.title} · Kitehand`}>
+<Base copy={copy} path={`${base}${slug}/`} alternate={alternate} title={`${doc.title} · Kitehand`}>
   <Header copy={copy} alternate={alternate} home={false} />
   <main class="job-hero" style="padding-bottom: 120px">
     <div class="wrap prose">
-      <h1>{terms.title}</h1>
-      <p>{terms.updated}</p>
-      {terms.intro.map((p) => <p>{p}</p>)}
+      <h1>{doc.title}</h1>
+      <p>{doc.updated}</p>
+      {doc.intro.map((p) => <p>{p}</p>)}
       {
-        terms.sections.map((section) => (
+        doc.sections.map((section) => (
           <section>
             <h2>{section.title}</h2>
             {section.body.map((part) =>

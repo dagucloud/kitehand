@@ -122,7 +122,6 @@ export type Copy = {
   };
   // made is the sentence around the company's name, which links to its site.
   footer: { made: [string, string]; company: string; companyUrl: string; privacy: string; terms: string; legal: string; legalUrl: string };
-  privacy: { title: string; body: string[] };
   notFound: { title: string; body: string; home: string };
 };
 
@@ -345,13 +344,6 @@ const en: Copy = {
     index: "Jobs short-handed companies hand over",
   },
   footer: { made: ["Kitehand is made by ", "."], company: "Descarty", companyUrl: "https://descarty.com/en/", privacy: "Privacy", terms: "Terms", legal: "Commercial disclosure", legalUrl: "https://descarty.com/en/legal/tokushoho/" },
-  privacy: {
-    title: "Privacy",
-    body: [
-      "When you ask us about a job, your email, company, name, company size and the job you describe reach us through the form service Web3Forms. We use them to reply to you. Ask us to delete them at any time.",
-      "We use PostHog to count visits. It records the pages viewed, the referring site, and the type of device and browser, and keeps an identifier for this in your browser. It does not record the screen or keystrokes. We don't sell data.",
-    ],
-  },
   notFound: { title: "Nothing here.", body: "That page doesn't exist.", home: "Back to Kitehand" },
 };
 
@@ -574,13 +566,6 @@ const ja: Copy = {
     index: "人手が足りない会社が任せる仕事",
   },
   footer: { made: ["Kitehand は ", " が開発しています。"], company: "Descarty", companyUrl: "https://descarty.com/", privacy: "プライバシー", terms: "利用規約", legal: "特定商取引法に基づく表記", legalUrl: "https://descarty.com/legal/tokushoho/" },
-  privacy: {
-    title: "プライバシー",
-    body: [
-      "ご相談の際は、メールアドレス・会社名・お名前・会社の人数・任せたい仕事を、フォームサービス Web3Forms を通じて受け取り、お返事に使います。いつでも削除をご依頼いただけます。",
-      "訪問数を把握するため、PostHog を利用しています。PostHog は、閲覧したページ、参照元のサイト、端末とブラウザの種類を記録し、そのための識別子をブラウザに保存します。画面の録画やキー入力の記録は行いません。データを販売することはありません。",
-    ],
-  },
   notFound: { title: "ここには何もありません。", body: "このページは存在しません。", home: "Kitehand に戻る" },
 };
 
