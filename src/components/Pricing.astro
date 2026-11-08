@@ -1,7 +1,8 @@
 ---
-// The plans side by side: Free, which starts in the app with one hand and one
-// job, and Own Key and Pro, priced per hand and applied for at the foot of the
-// page, with what Pro comes to beside a person's wage.
+// The plans side by side, under the one rule they follow, that a company pays
+// for each hand: Free, which starts in the app with one hand and one job, and
+// Pro and Own Key, applied for at the foot of the page, with what Pro comes to
+// beside a person's wage.
 import Phrases from "./Phrases.astro";
 import type { Copy } from "../i18n/copy";
 import { START } from "../lib/links";
@@ -18,6 +19,8 @@ const p = copy.pricing;
   <div class="wrap">
     <span class="eyebrow">{p.eyebrow}</span>
     <h2 class="section-title"><Phrases text={p.title} /></h2>
+    <p class="pricing-lede">{p.lede}</p>
+    <p class="pricing-lede pricing-example">{p.example}</p>
     <div class="plans">
       {
         p.plans.map((plan) => (
