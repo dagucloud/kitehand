@@ -6,7 +6,7 @@ import type { LegalDoc } from "./terms";
 
 const en: LegalDoc = {
   title: "Privacy Policy",
-  updated: "Last updated: November 6, 2026",
+  updated: "Last updated: November 8, 2026",
   intro: [
     "Descarty, Inc. (“we”) provides Kitehand. This policy explains what the Kitehand app (app.kitehand.ai) and website (kitehand.ai) handle, where it goes, and where it is kept.",
     "In short: hands work in an environment we run on Google Cloud, and what they keep is kept in the United States. The talk with a hand and what it reads go to an AI model so that it can do the work. We do not use them to train an AI model, and we do not sell personal information.",
@@ -46,7 +46,7 @@ const en: LegalDoc = {
       title: "5. AI models",
       body: [
         "The talk with a hand, what you hand over, and the mail, pages and files it reads go to an AI model so that it can do the work.",
-        "The AI model included in Kitehand is reached through OpenRouter, only on hosts that neither store nor train on this data. We keep no record of the text sent to it.",
+        "The AI models included in Kitehand are DeepSeek V4.1 Flash, and OpenAI GPT-6.1 Terra for reading screens. They are reached through OpenRouter, only on hosts that neither keep nor train on this data (OpenRouter's Zero Data Retention). DeepSeek V4.1 Flash runs only on hosts headquartered in the United States or the European Union, never DeepSeek itself or a host based in China; GPT-6.1 Terra runs only on Microsoft Azure in the EU. We keep no record of the text sent to them. If the models change, we update this section.",
         "A model you choose goes straight to the provider you chose, under that provider's terms. If you choose OpenRouter, it too keeps to hosts that neither store nor train on this data.",
       ],
     },
@@ -64,7 +64,7 @@ const en: LegalDoc = {
           "Web3Forms (the enquiry form)",
           "Apple, Google and Mozilla (push notifications, encrypted so that they cannot read them)",
         ],
-        "Most of these companies are in the United States and process information on servers there. The country of a host OpenRouter routes to depends on the host. For the United States' system for protecting personal information, see the information published by Japan's <a href=\"https://www.ppc.go.jp/\">Personal Information Protection Commission</a>.",
+        "Most of these companies are in the United States and process information on servers there. The hosts OpenRouter routes the included AI models to are headquartered in the United States or the European Union. For the United States' system for protecting personal information, see the information published by Japan's <a href=\"https://www.ppc.go.jp/\">Personal Information Protection Commission</a>.",
       ],
     },
     {
@@ -115,7 +115,7 @@ const en: LegalDoc = {
 
 const ja: LegalDoc = {
   title: "プライバシーポリシー",
-  updated: "最終更新日：2026年11月6日",
+  updated: "最終更新日：2026年11月8日",
   intro: [
     "Descarty株式会社（以下「当社」）は、Kitehand を提供しています。本ポリシーは、Kitehand のアプリ（app.kitehand.ai）とウェブサイト（kitehand.ai）が扱う情報、その送り先、保管場所について説明します。",
     "要点：担当者は、当社が Google Cloud で運用する環境で働き、保管するものはアメリカ合衆国に置きます。担当者との会話と担当者が読む内容は、仕事のために AI モデルに送られます。当社はこれらで AI モデルを学習させず、個人情報を販売しません。",
@@ -155,7 +155,7 @@ const ja: LegalDoc = {
       title: "5. AI モデル",
       body: [
         "担当者との会話、お客様が渡したもの、担当者が読むメール、ページ、ファイルの内容は、仕事のために AI モデルに送られます。",
-        "Kitehand に含まれる AI モデルは OpenRouter を通じて利用し、保存も学習もしない提供先に限ります。当社は、送った文章を記録しません。",
+        "Kitehand に含まれる AI モデルは、DeepSeek V4.1 Flash と、画面を読むための OpenAI GPT-6.1 Terra です。OpenRouter を通じて利用し、送った内容を保存も学習もしない事業者（OpenRouter のゼロデータ保持の対象）に限ります。DeepSeek V4.1 Flash は本社が米国または EU にある事業者だけが動かし、DeepSeek 社や中国に拠点を置く事業者には送りません。GPT-6.1 Terra は EU の Microsoft Azure だけで動きます。当社は、送った文章を記録しません。モデルを変えるときは、この項目を更新します。",
         "お客様が選んだモデルには、お客様が選んだプロバイダに直接送られ、そのプロバイダの規約に従います。OpenRouter を選んだ場合も、保存も学習もしない提供先に限ります。",
       ],
     },
@@ -173,7 +173,7 @@ const ja: LegalDoc = {
           "Web3Forms（ご相談のフォーム）",
           "Apple、Google、Mozilla（プッシュ通知。暗号化しており、これらの事業者は内容を読めません）",
         ],
-        "これらの多くはアメリカ合衆国の事業者で、同国のサーバーで情報を処理します。OpenRouter が振り分けるホストの所在国は、ホストによって異なります。アメリカ合衆国の個人情報の保護に関する制度については、<a href=\"https://www.ppc.go.jp/\">個人情報保護委員会のウェブサイト</a>で公表されている情報をご参照ください。",
+        "これらの多くはアメリカ合衆国の事業者で、同国のサーバーで情報を処理します。Kitehand に含まれる AI モデルの振り分け先は、本社が米国または EU にある事業者です。アメリカ合衆国の個人情報の保護に関する制度については、<a href=\"https://www.ppc.go.jp/\">個人情報保護委員会のウェブサイト</a>で公表されている情報をご参照ください。",
       ],
     },
     {
