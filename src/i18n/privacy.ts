@@ -15,7 +15,7 @@ const en: LegalDoc = {
     {
       title: "1. The website",
       body: [
-        "When you ask us about a job, your email, company, name, company size and the job you describe reach us through the form service Web3Forms. We use them to reply to you. Ask us to delete them at any time.",
+        "When you email us about a job, we use what you send to reply to you. Ask us to delete it at any time.",
         "We use PostHog to count visits. It records the pages viewed, the referring site, and the type of device and browser, and keeps an identifier for this in your browser. It does not record the screen or keystrokes.",
         "The site is served by Cloudflare, which may keep records of requests for security and operations.",
       ],
@@ -31,6 +31,7 @@ const en: LegalDoc = {
       body: [
         "A hand keeps what you hand over, its talk with you, how it does the work, the record of that work, the files it makes, your questions and approvals, and the sign-ins you give it. These may include personal information about your customers and others.",
         "Each hand works in its own environment, and what it keeps is encrypted under that hand's own key, which we hold. Passwords you give a hand are not sent to an AI model.",
+        "When you publish a public page, anyone can see it and the name it is published under. Stars, and starting a hand from a page, are recorded against your account, and the page shows only how many.",
       ],
     },
     {
@@ -61,7 +62,6 @@ const en: LegalDoc = {
           "OpenRouter, Inc. and the hosts it routes to (the included AI model)",
           "Stripe (payment)",
           "PostHog, Inc. (counting visits to the site)",
-          "Web3Forms (the enquiry form)",
           "Apple, Google and Mozilla (push notifications, encrypted so that they cannot read them)",
         ],
         "Most of these companies are in the United States and process information on servers there. The hosts OpenRouter routes the included AI models to are headquartered in the United States or the European Union. For the United States' system for protecting personal information, see the information published by Japan's <a href=\"https://www.ppc.go.jp/\">Personal Information Protection Commission</a>.",
@@ -124,7 +124,7 @@ const ja: LegalDoc = {
     {
       title: "1. ウェブサイト",
       body: [
-        "ご相談の際は、メールアドレス・会社名・お名前・会社の人数・任せたい仕事を、フォームサービス Web3Forms を通じて受け取り、お返事に使います。いつでも削除をご依頼いただけます。",
+        "メールでご相談いただいた内容は、お返事に使います。いつでも削除をご依頼いただけます。",
         "訪問数を把握するため、PostHog を利用しています。PostHog は、閲覧したページ、参照元のサイト、端末とブラウザの種類を記録し、そのための識別子をブラウザに保存します。画面の録画やキー入力の記録は行いません。",
         "サイトは Cloudflare で配信しており、Cloudflare は安全と運用のためにリクエストの記録を保存することがあります。",
       ],
@@ -140,6 +140,7 @@ const ja: LegalDoc = {
       body: [
         "担当者は、お客様が渡したもの、お客様との会話、仕事のやり方、作業の記録、作ったファイル、確認と承認、お客様が渡したサインイン情報を保管します。これらには、お客様の取引先などの個人情報が含まれることがあります。",
         "担当者はそれぞれ分かれた環境で働き、保管するものは担当者ごとの鍵で暗号化します。鍵は当社が管理します。お客様が担当者に渡したパスワードは、AI モデルに送られません。",
+        "公開ページを公開すると、その内容と公開時の名前は誰でも見られます。スターと、ページから担当者を始めたことはアカウントに紐づけて記録し、ページには人数だけを表示します。",
       ],
     },
     {
@@ -170,7 +171,6 @@ const ja: LegalDoc = {
           "OpenRouter, Inc. とその振り分け先のホスト（Kitehand に含まれる AI モデル）",
           "Stripe（決済）",
           "PostHog, Inc.（サイトの訪問数）",
-          "Web3Forms（ご相談のフォーム）",
           "Apple、Google、Mozilla（プッシュ通知。暗号化しており、これらの事業者は内容を読めません）",
         ],
         "これらの多くはアメリカ合衆国の事業者で、同国のサーバーで情報を処理します。Kitehand に含まれる AI モデルの振り分け先は、本社が米国または EU にある事業者です。アメリカ合衆国の個人情報の保護に関する制度については、<a href=\"https://www.ppc.go.jp/\">個人情報保護委員会のウェブサイト</a>で公表されている情報をご参照ください。",

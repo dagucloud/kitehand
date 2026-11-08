@@ -26,7 +26,6 @@ chips.forEach((chip) => {
     render(sample.diagnosis, sample.slug);
     const t = tally(sample.diagnosis);
     track("work_read", { slug: sample.slug, hours: t.taken, people: t.people, tasks: sample.diagnosis.duties.length });
-    window.dispatchEvent(new CustomEvent("kitehand:read", { detail: current }));
   });
 });
 
@@ -101,10 +100,4 @@ result.querySelector("[data-act='save']")?.addEventListener("click", async () =>
   link.click();
   setTimeout(() => URL.revokeObjectURL(link.href), 1000);
   track("result_saved", { slug: current.slug });
-});
-
-// Handing the example over opens the application with it named as the work.
-result.querySelector("[data-act='apply']")?.addEventListener("click", () => {
-  track("apply_opened", { slug: current.slug });
-  window.dispatchEvent(new CustomEvent("kitehand:apply", { detail: current }));
 });

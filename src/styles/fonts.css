@@ -70,7 +70,7 @@
   font-style: normal;
   font-weight: 800;
   font-display: swap;
-  src: url("/fonts/shippori-mincho-b1-800-7f3092d92c.woff2") format("woff2");
+  src: url("/fonts/shippori-mincho-b1-800-61689bdbee.woff2") format("woff2");
 }
 
 @font-face {
@@ -78,7 +78,7 @@
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url("/fonts/zen-kaku-gothic-new-400-a16340e064.woff2") format("woff2");
+  src: url("/fonts/zen-kaku-gothic-new-400-116dda8ac1.woff2") format("woff2");
 }
 
 @font-face {
@@ -94,5 +94,5 @@
   font-style: normal;
   font-weight: 700;
   font-display: swap;
-  src: url("/fonts/zen-kaku-gothic-new-700-3b7d58a741.woff2") format("woff2");
+  src: url("/fonts/zen-kaku-gothic-new-700-8342d32040.woff2") format("woff2");
 }
