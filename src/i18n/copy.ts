@@ -74,6 +74,7 @@ export type Copy = {
     options: { name: string; cells: string[] }[];
     notes: string[];
   };
+  ranking: { eyebrow: string; title: string; lede: string; by: string; used: string; usedOnce: string; cta: string };
   trust: { eyebrow: string; title: string; items: { title: string; body: string }[] };
   // Free, then the paid plans priced per hand: Own Key, where the company
   // brings its own AI model, and Pro, which is featured.
@@ -242,6 +243,15 @@ const en: Copy = {
       "¹ Median wage for general office clerks, $21.64 an hour, times 160 hours, before payroll costs. U.S. Bureau of Labor Statistics, May 2025.",
       "² Time Etc's smallest plan, October 2026.",
     ],
+  },
+  ranking: {
+    eyebrow: "Ranking",
+    title: "The hands people use most.",
+    lede: "Published by the people who made them. Star the ones you like, and start your own from any of them.",
+    by: "by {author}",
+    used: "Used {count} times",
+    usedOnce: "Used once",
+    cta: "Publish your own hand",
   },
   trust: {
     eyebrow: "Confidential",
@@ -465,6 +475,15 @@ const ja: Copy = {
       "¹ 一般事務の派遣料金（8時間あたり18,112円・税込）を税抜にし、20日分で計算。厚生労働省「令和6年度 労働者派遣事業報告書の集計結果」。",
       "² CASTER BIZ と HELP YOU の月30時間プラン（税抜、2026年10月時点）。",
     ],
+  },
+  ranking: {
+    eyebrow: "ランキング",
+    title: "いま、よく使われている担当者。",
+    lede: "つくった人が公開した担当者です。気に入ったらスターを付けて、そのまま自分の担当者を始められます。",
+    by: "{author} の担当者",
+    used: "{count}回使われました",
+    usedOnce: "1回使われました",
+    cta: "自分の担当者を公開する",
   },
   trust: {
     eyebrow: "秘密を守る",

@@ -2,3 +2,4 @@ User-agent: *
 Allow: /
 
 Sitemap: https://kitehand.ai/sitemap-index.xml
+Sitemap: https://app.kitehand.ai/sitemap.xml
