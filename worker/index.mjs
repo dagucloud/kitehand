@@ -3,7 +3,6 @@
 // ranking. A home page reads it here, not in the browser, so search engines
 // read the ranking and follow its links.
 
-const CONSOLE = "https://console.dagu.sh";
 const PAGES = "https://app.kitehand.ai/s/";
 // shown is how many hands a home page names, and keptSeconds how long the
 // ranking is kept before the console is asked again.
@@ -15,9 +14,9 @@ const escaped = (value) =>
 
 // ranking reads the hands ranked highest in a language; a ranking that cannot
 // be read is one with no hands, and the home page goes out without it.
-export async function ranking(lang, fetcher = fetch) {
+export async function ranking(console, lang, fetcher = fetch) {
   try {
-    const response = await fetcher(`${CONSOLE}/gui/api/public-pages?lang=${lang}&limit=${shown}`, { cf: { cacheTtl: keptSeconds, cacheEverything: true } });
+    const response = await fetcher(`${console}/gui/api/public-pages?lang=${lang}&limit=${shown}`, { cf: { cacheTtl: keptSeconds, cacheEverything: true } });
     return response.ok ? (await response.json()).pages : [];
   } catch {
     return [];
@@ -58,7 +57,7 @@ export default {
   async fetch(request, env) {
     const { pathname } = new URL(request.url);
     const lang = pathname === "/ja/" ? "ja" : "en";
-    const pages = await ranking(lang);
+    const pages = await ranking(env.CONSOLE_ORIGIN, lang);
     if (!pages.length) {
       return env.ASSETS.fetch(request);
     }

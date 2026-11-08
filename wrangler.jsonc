@@ -12,5 +12,6 @@
     "not_found_handling": "404-page",
     "html_handling": "auto-trailing-slash"
   },
+  "vars": { "CONSOLE_ORIGIN": "https://console.dagu.sh" },
   "routes": [{ "pattern": "kitehand.ai", "custom_domain": true }]
 }

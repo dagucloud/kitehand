@@ -25,10 +25,10 @@ test("a hand no one used yet does not say so", () => {
 });
 
 test("a ranking the console cannot give is one with no hands, so the home page goes out without it", async () => {
-  assert.deepEqual(await ranking("ja", async () => new Response("{}", { status: 500 })), []);
-  assert.deepEqual(await ranking("ja", async () => { throw new Error("down"); }), []);
+  assert.deepEqual(await ranking("https://console.example.test", "ja", async () => new Response("{}", { status: 500 })), []);
+  assert.deepEqual(await ranking("https://console.example.test", "ja", async () => { throw new Error("down"); }), []);
   const asked = [];
-  const pages = await ranking("ja", async (url) => { asked.push(url); return Response.json({ pages: [{ id: "a" }] }); });
+  const pages = await ranking("https://console.example.test", "ja", async (url) => { asked.push(url); return Response.json({ pages: [{ id: "a" }] }); });
   assert.deepEqual(pages, [{ id: "a" }]);
-  assert.deepEqual(asked, ["https://console.dagu.sh/gui/api/public-pages?lang=ja&limit=10"]);
+  assert.deepEqual(asked, ["https://console.example.test/gui/api/public-pages?lang=ja&limit=10"]);
 });

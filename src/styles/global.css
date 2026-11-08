@@ -2485,7 +2485,7 @@ a.badge:hover {
 }
 .ranking-lede {
   max-width: 620px;
-  margin: 0 0 28px;
+  margin: 20px 0 28px;
   color: var(--ink-2);
 }
 .ranking-list {
