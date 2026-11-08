@@ -1,0 +1,32 @@
+---
+// The foot of the page: the way to start in the app, and beside it the way to
+// ask the team about a job first.
+import Phrases from "./Phrases.astro";
+import type { Copy } from "../i18n/copy";
+import { START } from "../lib/links";
+
+interface Props {
+  copy: Copy;
+}
+
+const { copy } = Astro.props;
+const a = copy.start;
+const mail = "company@descarty.com";
+---
+
+<section class="section start-foot" id="start">
+  <div class="wrap grid">
+    <div>
+      <span class="eyebrow">{a.eyebrow}</span>
+      <h2 class="section-title"><Phrases text={a.title} /></h2>
+      <p class="lede">{a.lede}</p>
+      <a class="btn btn--shu btn--large" href={START} data-start="foot">{a.start} <span class="arrow">→</span></a>
+      <p class="agree">{a.agree[0]}<a href={`${copy.lang === "ja" ? "/ja/" : "/"}terms/`}>{a.agree[1]}</a>{a.agree[2]}</p>
+    </div>
+    <div class="ask">
+      <p class="ask-title">{a.ask}</p>
+      <p class="ask-lede">{a.askLede}</p>
+      <a class="ask-mail" href={`mailto:${mail}`}>{mail}</a>
+    </div>
+  </div>
+</section>

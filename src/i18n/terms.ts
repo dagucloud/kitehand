@@ -12,7 +12,7 @@ export type LegalDoc = {
 
 const en: LegalDoc = {
   title: "Terms of Service",
-  updated: "Last updated: November 6, 2026",
+  updated: "Last updated: November 7, 2026",
   intro: [
     "These terms apply to Kitehand (app.kitehand.ai and kitehand.ai, the “Service”), provided by Descarty, Inc. (“we”). By signing up for or using the Service, you agree to these terms. If you have a separate written contract with us, that contract prevails where it differs from these terms.",
   ],
@@ -34,7 +34,8 @@ const en: LegalDoc = {
       body: [
         "The Service has a free trial and the paid plans Own Key and Pro. Current prices and what each plan includes are on the <a href=\"/#pricing\">pricing section</a>.",
         "The free trial gives one hand one job for up to 30 runs over 14 days, with AI usage for the trial, once, and needs no credit card. Once its runs or its 14 days are used up, the hand's work waits until you move to a paid plan.",
-        "Paid plans are priced per hand and paid in advance, monthly or yearly, by credit card through Stripe. They renew automatically on each renewal date until cancelled. Prices exclude tax, which is added as the law of your country or region requires, including Japan's consumption tax. An application for a paid plan is accepted when we send you its invoice.",
+        "Paid plans are priced per hand and paid in advance, monthly or yearly, by credit card through Stripe. They renew automatically on each renewal date until cancelled. Prices exclude tax, which is added as the law of your country or region requires, including Japan's consumption tax. A paid plan starts when your payment goes through.",
+        "Adding a hand or moving to a higher plan is charged at once for the rest of the current period, and applies once paid. Removing a hand or moving to a lower plan applies at once, and what is left of the period is credited to your next payment.",
         "A hand on a paid plan takes up to 5 jobs. Runs have no set cap, but for use far beyond ordinary office work, such as repeating at very short intervals, we may ask you to add a hand or adjust the use. The AI usage Pro includes assumes ordinary use as well, and a hand may stop if use goes far beyond it.",
         "We give at least 30 days' notice of a price change, which applies from your first renewal after that. If a payment fails, we may suspend the paid plan.",
       ],
@@ -42,7 +43,7 @@ const en: LegalDoc = {
     {
       title: "4. Cancellation and refunds",
       body: [
-        "You can cancel at any time, and keep the plan until the end of the period you have paid for. If you ask within 30 days of first starting a paid plan, we refund everything you have paid for it in full. We give no other refund, prorated or otherwise. When a plan ends, its hands go back to the free trial with the runs and days they have left, and nothing is deleted.",
+        "You can cancel at any time, and keep the plan until the end of the period you have paid for. If you ask within 30 days of first starting a paid plan, we refund everything you have paid for it in full. We give no other refund, prorated or otherwise; a credit for removing a hand or moving to a lower plan goes to your next payment. When a plan ends, its hands go back to the free trial with the runs and days they have left, and nothing is deleted.",
       ],
     },
     {
@@ -148,7 +149,7 @@ const en: LegalDoc = {
 
 const ja: LegalDoc = {
   title: "利用規約",
-  updated: "最終更新日：2026年11月6日",
+  updated: "最終更新日：2026年11月7日",
   intro: [
     "本規約は、Descarty株式会社（以下「当社」）が提供する Kitehand（app.kitehand.ai と kitehand.ai。以下「本サービス」）に適用されます。本サービスに登録または利用した場合、本規約に同意いただいたものとみなします。当社と別に書面の契約を結んだ場合、本規約と異なる点はその契約が優先します。",
   ],
@@ -170,7 +171,8 @@ const ja: LegalDoc = {
       body: [
         "本サービスには、無料体験と、有料プランの自前キーおよびプロがあります。現在の料金と各プランの内容は<a href=\"/ja/#pricing\">料金の欄</a>に掲載しています。",
         "無料体験では、担当者1人に仕事を1件、14日間で30回まで任せられ、体験分の AI の利用料を含みます。いずれも一度限りで、クレジットカードの登録は不要です。30回を使い切るか14日が過ぎると、有料プランに切り替えるまで担当者の仕事は止まって待ちます。",
-        "有料プランは担当者1人ごとの料金で、月払いまたは年払いの前払いです。お支払いは Stripe によるクレジットカード決済で、解約するまで更新日に自動で決済されます。料金は税別で、消費税その他、お客様の国や地域の法令に従った税を加算します。有料プランのお申し込みは、当社が請求書をお送りした時点で成立します。",
+        "有料プランは担当者1人ごとの料金で、月払いまたは年払いの前払いです。お支払いは Stripe によるクレジットカード決済で、解約するまで更新日に自動で決済されます。料金は税別で、消費税その他、お客様の国や地域の法令に従った税を加算します。有料プランは、お支払いが完了した時点で開始します。",
+        "担当者の追加や上位のプランへの変更は、今の期間の残りの分を直ちに請求し、お支払いの完了後に適用します。担当者の削減や下位のプランへの変更は直ちに適用し、今の期間の残りの分を次回のお支払いから差し引きます。",
         "有料プランでは、担当者1人に仕事を5件まで任せられます。回数に定めた上限はありませんが、ごく短い間隔での繰り返しなど、通常の事務の範囲を大きく超える利用には、担当者の追加や利用の調整をお願いすることがあります。プロに含まれる AI の利用も通常の利用を前提としており、大きく超えると担当者が止まることがあります。",
         "料金を変更する場合は30日以上前に通知し、その後の最初の更新から適用します。お支払いを確認できない場合、有料プランを停止することがあります。",
       ],
@@ -178,7 +180,7 @@ const ja: LegalDoc = {
     {
       title: "4. 解約と返金",
       body: [
-        "いつでも解約でき、お支払い済みの期間の末日までご利用いただけます。有料プランを最初に始めてから30日以内にお申し出いただいた場合は、お支払い済みの料金の全額を返金します。それ以外の返金（日割りの返金を含みます）はありません。プランの終了後、担当者は残りの回数と日数の無料体験に戻り、データは削除されません。",
+        "いつでも解約でき、お支払い済みの期間の末日までご利用いただけます。有料プランを最初に始めてから30日以内にお申し出いただいた場合は、お支払い済みの料金の全額を返金します。それ以外の返金（日割りの返金を含みます）はありません。担当者の削減や下位のプランへの変更の分は、次回のお支払いから差し引きます。プランの終了後、担当者は残りの回数と日数の無料体験に戻り、データは削除されません。",
       ],
     },
     {

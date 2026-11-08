@@ -6,7 +6,7 @@ import type { LegalDoc } from "./terms";
 
 const en: LegalDoc = {
   title: "Privacy Policy",
-  updated: "Last updated: November 6, 2026",
+  updated: "Last updated: November 7, 2026",
   intro: [
     "Descarty, Inc. (“we”) provides Kitehand. This policy explains what the Kitehand app (app.kitehand.ai) and website (kitehand.ai) handle, where it goes, and where it is kept.",
     "In short: hands work in an environment we run on Google Cloud, and what they keep is kept in the United States. The talk with a hand and what it reads go to an AI model so that it can do the work. We do not use them to train an AI model, and we do not sell personal information.",
@@ -15,7 +15,7 @@ const en: LegalDoc = {
     {
       title: "1. The website",
       body: [
-        "When you ask us about a job, your email, company, name, company size and the job you describe reach us through the form service Web3Forms. We use them to reply to you. Ask us to delete them at any time.",
+        "When you email us about a job, we use what you send to reply to you. Ask us to delete it at any time.",
         "We use PostHog to count visits. It records the pages viewed, the referring site, and the type of device and browser, and keeps an identifier for this in your browser. It does not record the screen or keystrokes.",
         "The site is served by Cloudflare, which may keep records of requests for security and operations.",
       ],
@@ -61,7 +61,6 @@ const en: LegalDoc = {
           "OpenRouter, Inc. and the hosts it routes to (the included AI model)",
           "Stripe (payment)",
           "PostHog, Inc. (counting visits to the site)",
-          "Web3Forms (the enquiry form)",
           "Apple, Google and Mozilla (push notifications, encrypted so that they cannot read them)",
         ],
         "Most of these companies are in the United States and process information on servers there. The country of a host OpenRouter routes to depends on the host. For the United States' system for protecting personal information, see the information published by Japan's <a href=\"https://www.ppc.go.jp/\">Personal Information Protection Commission</a>.",
@@ -115,7 +114,7 @@ const en: LegalDoc = {
 
 const ja: LegalDoc = {
   title: "プライバシーポリシー",
-  updated: "最終更新日：2026年11月6日",
+  updated: "最終更新日：2026年11月7日",
   intro: [
     "Descarty株式会社（以下「当社」）は、Kitehand を提供しています。本ポリシーは、Kitehand のアプリ（app.kitehand.ai）とウェブサイト（kitehand.ai）が扱う情報、その送り先、保管場所について説明します。",
     "要点：担当者は、当社が Google Cloud で運用する環境で働き、保管するものはアメリカ合衆国に置きます。担当者との会話と担当者が読む内容は、仕事のために AI モデルに送られます。当社はこれらで AI モデルを学習させず、個人情報を販売しません。",
@@ -124,7 +123,7 @@ const ja: LegalDoc = {
     {
       title: "1. ウェブサイト",
       body: [
-        "ご相談の際は、メールアドレス・会社名・お名前・会社の人数・任せたい仕事を、フォームサービス Web3Forms を通じて受け取り、お返事に使います。いつでも削除をご依頼いただけます。",
+        "メールでご相談いただいた内容は、お返事に使います。いつでも削除をご依頼いただけます。",
         "訪問数を把握するため、PostHog を利用しています。PostHog は、閲覧したページ、参照元のサイト、端末とブラウザの種類を記録し、そのための識別子をブラウザに保存します。画面の録画やキー入力の記録は行いません。",
         "サイトは Cloudflare で配信しており、Cloudflare は安全と運用のためにリクエストの記録を保存することがあります。",
       ],
@@ -170,7 +169,6 @@ const ja: LegalDoc = {
           "OpenRouter, Inc. とその振り分け先のホスト（Kitehand に含まれる AI モデル）",
           "Stripe（決済）",
           "PostHog, Inc.（サイトの訪問数）",
-          "Web3Forms（ご相談のフォーム）",
           "Apple、Google、Mozilla（プッシュ通知。暗号化しており、これらの事業者は内容を読めません）",
         ],
         "これらの多くはアメリカ合衆国の事業者で、同国のサーバーで情報を処理します。OpenRouter が振り分けるホストの所在国は、ホストによって異なります。アメリカ合衆国の個人情報の保護に関する制度については、<a href=\"https://www.ppc.go.jp/\">個人情報保護委員会のウェブサイト</a>で公表されている情報をご参照ください。",

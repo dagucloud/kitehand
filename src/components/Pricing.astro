@@ -1,10 +1,10 @@
 ---
 // The plans side by side: Free, which starts in the app with one hand and one
-// job, and Own Key and Pro, priced per hand and applied for at the foot of the
-// page, with what Pro comes to beside a person's wage.
+// job, and Own Key and Pro, priced per hand and bought in the app, monthly or
+// yearly, with what Pro comes to beside a person's wage.
 import Phrases from "./Phrases.astro";
 import type { Copy } from "../i18n/copy";
-import { START } from "../lib/links";
+import { START, planLink } from "../lib/links";
 
 interface Props {
   copy: Copy;
@@ -34,11 +34,12 @@ const p = copy.pricing;
                 <li>{item}</li>
               ))}
             </ul>
-            {plan.apply && <p class="yearly">{p.yearly}</p>}
+            {plan.buy && <p class="yearly">{p.yearly}</p>}
             <div class="plan-foot">
-              <a class:list={["btn", plan.featured ? "btn--shu" : "btn--ghost"]} href={plan.apply ? "#apply" : START} data-start={plan.id} data-plan={plan.apply ? plan.name : undefined}>
+              <a class:list={["btn", plan.featured ? "btn--shu" : "btn--ghost"]} href={plan.buy ? planLink(plan.buy, "monthly") : START} data-start={plan.id}>
                 {plan.cta} <span class="arrow">→</span>
               </a>
+              {plan.buy && <a class="plan-yearly" href={planLink(plan.buy, "yearly")} data-start={`${plan.id}-yearly`}>{p.yearlyCta}</a>}
             </div>
           </div>
         ))
@@ -67,12 +68,5 @@ const p = copy.pricing;
   }
   document.querySelectorAll<HTMLAnchorElement>("[data-start]").forEach((link) =>
     link.addEventListener("click", () => track("start_clicked", { from: "pricing", plan: link.dataset.start ?? "" })),
-  );
-  // Applying for a plan chooses it in the form at the foot of the page.
-  document.querySelectorAll<HTMLAnchorElement>(".pricing [data-plan]").forEach((link) =>
-    link.addEventListener("click", () => {
-      const choice = document.querySelector<HTMLInputElement>(`[data-apply] [name=plan][value="${link.dataset.plan}"]`);
-      if (choice) choice.checked = true;
-    }),
   );
 </script>

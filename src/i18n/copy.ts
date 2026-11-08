@@ -80,34 +80,22 @@ export type Copy = {
   pricing: {
     eyebrow: string;
     title: string;
-    plans: { id: string; name: string; lede: string; price: string; per: string; includes: string[]; cta: string; apply?: boolean; featured?: boolean }[];
+    plans: { id: string; name: string; lede: string; price: string; per: string; includes: string[]; cta: string; buy?: "own_key" | "pro"; featured?: boolean }[];
     anchor: string;
     yearly: string;
+    yearlyCta: string;
   };
   faq: { eyebrow: string; title: string; items: { q: string; a: string }[] };
-  // The foot of the page: the way to start, and beside it a form to ask
-  // the team about a job first.
-  apply: {
+  // The foot of the page: the way to start, and beside it the way to ask the
+  // team about a job first.
+  start: {
     eyebrow: string;
     title: string;
     lede: string;
     start: string;
     ask: string;
     askLede: string;
-    plan: string;
-    plans: string[];
-    email: string;
-    company: string;
-    name: string;
-    size: string;
-    sizes: [string, string, string, string];
-    job: string;
-    jobHint: string;
-    submit: string;
     agree: [string, string, string];
-    sending: string;
-    done: string;
-    error: string;
   };
   jobs: {
     eyebrow: string;
@@ -273,8 +261,8 @@ const en: Copy = {
         price: "$49",
         per: "/ month per hand",
         includes: ["Up to 5 jobs per hand", "No cap on runs", "Anthropic, OpenAI, Google Gemini or OpenRouter", "Your model stays the same until you change it", "AI usage billed by your provider", "Set up by you", "A full refund within 30 days"],
-        cta: "Apply for Own Key",
-        apply: true,
+        cta: "Start Own Key",
+        buy: "own_key",
       },
       {
         id: "pro",
@@ -283,13 +271,14 @@ const en: Copy = {
         price: "$99",
         per: "/ month per hand",
         includes: ["Up to 5 jobs per hand", "No cap on runs", "No setup fee, and AI usage included", "Your first job set up with us on a call", "A full refund within 30 days"],
-        cta: "Apply for Pro",
-        apply: true,
+        cta: "Start Pro",
+        buy: "pro",
         featured: true,
       },
     ],
     anchor: "About 1/35 of a full-time office clerk's median wage.",
     yearly: "Pay yearly and get two months free. Prices exclude tax.",
+    yearlyCta: "Pay yearly",
   },
   faq: {
     eyebrow: "FAQ",
@@ -304,33 +293,20 @@ const en: Copy = {
       { q: "Does it stop when our computers are off?", a: "No. Kitehand works in the cloud, nights and weekends included." },
       { q: "How is our data handled?", a: "In an environment kept apart for your company, with sign-ins kept encrypted. Nothing you hand over trains an AI model. We sign an NDA on request." },
       { q: "What does the free trial include?", a: "One hand taking one job for up to 30 runs over 14 days, with questions and approvals on your phone and AI usage for the trial. Once its runs or its 14 days are used, its work waits until you move to a paid plan." },
-      { q: "How are the paid plans billed?", a: "Per hand: Own Key is $49 a month or $490 a year, and Pro is $99 a month or $990 a year, so a year costs ten months' price. You pay by card through Stripe, and prices exclude tax. Each hand takes up to 5 jobs with no cap on runs; for more work, add a hand." },
+      { q: "How are the paid plans billed?", a: "Per hand: Own Key is $49 a month or $490 a year, and Pro is $99 a month or $990 a year, so a year costs ten months' price. You buy in the app and pay by card through Stripe, and prices exclude tax. Each hand takes up to 5 jobs with no cap on runs; for more work, add a hand from the app, charged for the rest of the period." },
       { q: "Can we use our own AI model?", a: "Yes, on any plan. From a hand's menu, choose a model from Anthropic, OpenAI, Google Gemini or OpenRouter and enter your API key. Kitehand checks the model can do the work before saving it, and it stays the same until you change it. Your provider bills you for usage, and what the hand reads goes to that provider under its terms." },
       { q: "How is Own Key different from Pro?", a: "Both give each hand up to 5 jobs with no cap on runs. Pro includes AI usage and sets up your first job with you on a call. Own Key is half the price: you bring your own model and key, pay your provider for usage, and set it up yourself." },
-      { q: "Can we cancel?", a: "Any time. You keep the plan to the end of the period you've paid for and aren't charged again; then the hand goes back to the free trial with the runs and days it has left. Within the first 30 days of a paid plan you get a full refund." },
+      { q: "Can we cancel?", a: "Any time, from the app. You keep the plan to the end of the period you've paid for and aren't charged again; then the hand goes back to the free trial with the runs and days it has left. Within the first 30 days of a paid plan you get a full refund." },
     ],
   },
-  apply: {
+  start: {
     eyebrow: "Start",
     title: "Start with one job.",
     lede: "Sign up, and hand your first job to a hand on the free trial: a job description, a manual or one line, as you have it.",
     start: "Start the free trial",
-    ask: "Apply for a plan, or ask us",
-    askLede: "Write the job and how many hands you want. We'll email you how much of it Kitehand can take, and how your plan is billed.",
-    plan: "Plan",
-    plans: ["Own Key", "Pro", "Not sure yet"],
-    email: "Work email",
-    company: "Company",
-    name: "Your name",
-    size: "People in your company",
-    sizes: ["10 or fewer", "11–50", "51–300", "301 or more"],
-    job: "The job to hand over",
-    jobHint: "A job description, a manual or one line. Paste it as you have it.",
-    submit: "Send",
-    agree: ["Starting the free trial or applying for a plan means you agree to the ", "Terms of Service", "."],
-    sending: "Sending…",
-    done: "Got it. We'll email you how much of it Kitehand can take.",
-    error: "That didn't go through. Check your email and company, and try again.",
+    ask: "Ask us first",
+    askLede: "Not sure a job fits? Email us what it is, and we'll tell you how much of it Kitehand can take.",
+    agree: ["Starting the free trial or paying for a plan means you agree to the ", "Terms of Service", "."],
   },
   jobs: {
     eyebrow: "Read by Kitehand",
@@ -495,8 +471,8 @@ const ja: Copy = {
         price: "7,400円",
         per: "／月・担当者1人（税別）",
         includes: ["任せる仕事は1人5件まで", "回数の上限なし", "Anthropic・OpenAI・Google Gemini・OpenRouter から選べる", "モデルは、変えるまで同じまま", "AI の利用料はプロバイダから直接請求", "設定はご自身で", "30日以内なら全額返金"],
-        cta: "自前キーを申し込む",
-        apply: true,
+        cta: "自前キーを始める",
+        buy: "own_key",
       },
       {
         id: "pro",
@@ -505,13 +481,14 @@ const ja: Copy = {
         price: "14,800円",
         per: "／月・担当者1人（税別）",
         includes: ["任せる仕事は1人5件まで", "回数の上限なし", "初期費用なし。AI の利用料も込み", "最初の仕事は、オンラインで一緒に設定", "30日以内なら全額返金"],
-        cta: "プロを申し込む",
-        apply: true,
+        cta: "プロを始める",
+        buy: "pro",
         featured: true,
       },
     ],
     anchor: "フルタイムの事務の派遣料金（月約33万円）の、約22分の1です。",
     yearly: "年払いなら10か月分。2か月分お得です。",
+    yearlyCta: "年払いで始める",
   },
   faq: {
     eyebrow: "よくある質問",
@@ -526,33 +503,20 @@ const ja: Copy = {
       { q: "パソコンを閉じたら止まりますか？", a: "止まりません。担当者はクラウドで働くので、夜も休日も進みます。" },
       { q: "データはどう扱われますか？", a: "会社ごとに分かれた環境で扱い、サインイン情報は暗号化して保管します。預かったデータで AI モデルを学習させることはありません。ご希望があれば秘密保持契約（NDA）を結びます。" },
       { q: "無料体験では何ができますか？", a: "担当者1人に仕事を1件、14日間で30回まで任せられます。確認と承認はスマホで受けられ、AI の利用料も体験分は込みです。30回を使い切るか14日が過ぎると、有料プランに切り替えるまで仕事は止まって待ちます。" },
-      { q: "有料プランの料金はどうかかりますか？", a: "担当者1人につき、自前キーは月7,400円か年74,000円、プロは月14,800円か年148,000円です（いずれも税別）。年払いは10か月分です。お支払いは Stripe によるクレジットカード決済です。1人に仕事を5件まで、回数の上限なく任せられます。仕事が増えたら、担当者を増やします。" },
+      { q: "有料プランの料金はどうかかりますか？", a: "担当者1人につき、自前キーは月7,400円か年74,000円、プロは月14,800円か年148,000円です（いずれも税別）。年払いは10か月分です。アプリから購入でき、お支払いは Stripe によるクレジットカード決済です。1人に仕事を5件まで、回数の上限なく任せられます。仕事が増えたら、アプリから担当者を増やせます（今の期間の残りの分を請求します）。" },
       { q: "自分で選んだ AI モデルを使えますか？", a: "はい、どのプランでも使えます。担当者のメニューから、Anthropic・OpenAI・Google Gemini・OpenRouter のモデルを選び、API キーを入れてください。保存する前に、仕事ができるモデルかを確かめます。モデルは変えるまで同じままです。利用料はプロバイダから直接請求され、担当者が読む内容はそのプロバイダの規約のもとで送られます。" },
       { q: "自前キーとプロの違いは？", a: "どちらも1人に仕事を5件まで、回数の上限なく任せられます。プロは AI の利用料込みで、最初の仕事をオンラインで一緒に設定します。自前キーは料金が半額で、ご自分のモデルとキーを使い、利用料をプロバイダに直接払い、設定もご自身で行います。" },
-      { q: "解約はできますか？", a: "いつでも解約でき、お支払い済みの期間の終わりまで使えて、次の請求からはかかりません。その後、担当者は残りの回数と日数の無料体験に戻ります。有料プランの最初の30日以内なら、全額を返金します。" },
+      { q: "解約はできますか？", a: "アプリからいつでも解約でき、お支払い済みの期間の終わりまで使えて、次の請求からはかかりません。その後、担当者は残りの回数と日数の無料体験に戻ります。有料プランの最初の30日以内なら、全額を返金します。" },
     ],
   },
-  apply: {
+  start: {
     eyebrow: "はじめる",
     title: "まず、仕事をひとつ。",
     lede: "登録して、無料体験の担当者に最初の仕事を渡してください。職務記述書・手順書・ひとこと、いまある形のままで。",
     start: "無料で試す",
-    ask: "お申し込み・ご相談",
-    askLede: "任せたい仕事と、担当者の人数を書いて送ってください。どこまで任せられるかと、ご請求の流れをメールでお返事します。",
-    plan: "プラン",
-    plans: ["自前キー", "プロ", "まだ決めていない"],
-    email: "メールアドレス",
-    company: "会社名",
-    name: "お名前",
-    size: "会社の人数",
-    sizes: ["10人以下", "11〜50人", "51〜300人", "301人以上"],
-    job: "任せたい仕事",
-    jobHint: "職務記述書・手順書・ひとこと、どれでも。いまある形のまま貼り付けてください。",
-    submit: "送る",
-    agree: ["無料体験の開始とプランのお申し込みには、", "利用規約", "が適用されます。"],
-    sending: "送信中…",
-    done: "受け付けました。どこまで任せられるかをメールでお返事します。",
-    error: "送信できませんでした。メールアドレスと会社名を確かめて、もう一度お試しください。",
+    ask: "先に相談する",
+    askLede: "任せられるか迷ったら、仕事の内容をメールでお送りください。どこまで任せられるかをお返事します。",
+    agree: ["無料体験の開始と有料プランのお支払いには、", "利用規約", "が適用されます。"],
   },
   jobs: {
     eyebrow: "Kitehand が読んだ仕事",
