@@ -6,7 +6,7 @@ import type { LegalDoc } from "./terms";
 
 const en: LegalDoc = {
   title: "Privacy Policy",
-  updated: "Last updated: November 9, 2026",
+  updated: "Last updated: November 10, 2026",
   intro: [
     "Descarty, Inc. (“we”) provides Kitehand. This policy explains what the Kitehand app (app.kitehand.ai) and website (kitehand.ai) handle, where it goes, and where it is kept.",
     "In short: hands work in an environment we run on Google Cloud, and what they keep is kept in the United States. The talk with a hand and what it reads go to an AI model so that it can do the work. We do not use them to train an AI model, and we do not sell personal information.",
@@ -31,7 +31,6 @@ const en: LegalDoc = {
       body: [
         "A hand keeps what you hand over, its talk with you, how it does the work, the record of that work, the files it makes, your questions and approvals, and the sign-ins you give it. These may include personal information about your customers and others.",
         "Each hand works in its own environment, and what it keeps is encrypted under that hand's own key, which we hold. Passwords you give a hand are not sent to an AI model.",
-        "When you publish a public page, anyone can see it and the name it is published under. Stars, and starting a hand from a page, are recorded against your account, and the page shows only how many.",
       ],
     },
     {
@@ -115,7 +114,7 @@ const en: LegalDoc = {
 
 const ja: LegalDoc = {
   title: "プライバシーポリシー",
-  updated: "最終更新日：2026年11月9日",
+  updated: "最終更新日：2026年11月10日",
   intro: [
     "Descarty株式会社（以下「当社」）は、Kitehand を提供しています。本ポリシーは、Kitehand のアプリ（app.kitehand.ai）とウェブサイト（kitehand.ai）が扱う情報、その送り先、保管場所について説明します。",
     "要点：担当者は、当社が Google Cloud で運用する環境で働き、保管するものはアメリカ合衆国に置きます。担当者との会話と担当者が読む内容は、仕事のために AI モデルに送られます。当社はこれらで AI モデルを学習させず、個人情報を販売しません。",
@@ -140,7 +139,6 @@ const ja: LegalDoc = {
       body: [
         "担当者は、お客様が渡したもの、お客様との会話、仕事のやり方、作業の記録、作ったファイル、確認と承認、お客様が渡したサインイン情報を保管します。これらには、お客様の取引先などの個人情報が含まれることがあります。",
         "担当者はそれぞれ分かれた環境で働き、保管するものは担当者ごとの鍵で暗号化します。鍵は当社が管理します。お客様が担当者に渡したパスワードは、AI モデルに送られません。",
-        "公開ページを公開すると、その内容と公開時の名前は誰でも見られます。スターと、ページから担当者を始めたことはアカウントに紐づけて記録し、ページには人数だけを表示します。",
       ],
     },
     {

@@ -12,7 +12,7 @@ export type LegalDoc = {
 
 const en: LegalDoc = {
   title: "Terms of Service",
-  updated: "Last updated: November 8, 2026",
+  updated: "Last updated: November 10, 2026",
   intro: [
     "These terms apply to Kitehand (app.kitehand.ai and kitehand.ai, the “Service”), provided by Descarty, Inc. (“we”). By signing up for or using the Service, you agree to these terms. If you have a separate written contract with us, that contract prevails where it differs from these terms.",
   ],
@@ -81,7 +81,6 @@ const en: LegalDoc = {
           "Keeping backups of important data",
         ],
         "A hand can make mistakes. For work where a mistake would matter, such as payments or sending anything outside your company, set it to wait for your approval.",
-        "When you publish a hand's public page, anyone can read it and the name it is published under, and it appears in search results and the ranking. You are responsible for having the rights to what you publish and for leaving out other people's personal information and anything confidential. We may take down a public page we judge to break the law or these terms.",
       ],
     },
     {
@@ -150,7 +149,7 @@ const en: LegalDoc = {
 
 const ja: LegalDoc = {
   title: "利用規約",
-  updated: "最終更新日：2026年11月8日",
+  updated: "最終更新日：2026年11月10日",
   intro: [
     "本規約は、Descarty株式会社（以下「当社」）が提供する Kitehand（app.kitehand.ai と kitehand.ai。以下「本サービス」）に適用されます。本サービスに登録または利用した場合、本規約に同意いただいたものとみなします。当社と別に書面の契約を結んだ場合、本規約と異なる点はその契約が優先します。",
   ],
@@ -219,7 +218,6 @@ const ja: LegalDoc = {
           "重要なデータのバックアップ",
         ],
         "担当者は誤ることがあります。支払いや社外への送信など、誤ると困る仕事は、承認してから進むように設定してください。",
-        "担当者の公開ページを公開すると、ページの内容と公開時の名前は誰でも閲覧でき、検索結果やランキングに表示されます。公開する内容について必要な権利を持つこと、他人の個人情報や秘密情報を含めないことは、お客様の責任です。当社は、法令や本規約に反すると判断した公開ページを非公開にできます。",
       ],
     },
     {
