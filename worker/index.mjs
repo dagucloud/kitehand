@@ -35,13 +35,13 @@ export function cards(pages) {
     .join("");
 }
 
-// withHands shows the home page's hands, which it was built with hidden and
-// empty.
+// withHands shows the home page's hands and the link to them in its header,
+// which it was built with hidden, and fills their list.
 function withHands(page, pages) {
   return new HTMLRewriter()
-    .on("[data-hands]", {
-      element(section) {
-        section.removeAttribute("hidden");
+    .on("[data-hands], [data-hands-link]", {
+      element(shown) {
+        shown.removeAttribute("hidden");
       },
     })
     .on("[data-hands-list]", {

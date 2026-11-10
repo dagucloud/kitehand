@@ -7,7 +7,7 @@ export type Copy = {
   lang: Lang;
   other: { lang: Lang; label: string; home: string };
   meta: { title: string; description: string; og: string };
-  nav: { read: string; how: string; compare: string; pricing: string; faq: string; cta: string };
+  nav: { hands: string; read: string; how: string; compare: string; pricing: string; faq: string; cta: string };
   hero: {
     badge: string;
     kicker: string;
@@ -124,7 +124,7 @@ const en: Copy = {
     description: "Order entry, bookkeeping, shipping, online stores. Hand Kitehand the job as a job description, a manual or one line, and it does the work the same way every day, nights and weekends included. Try it free; paid plans from $49 a month per hand.",
     og: "/og-en.png",
   },
-  nav: { read: "How much", how: "How it works", compare: "Compare", pricing: "Pricing", faq: "FAQ", cta: "Try free" },
+  nav: { hands: "Ready-made hands", read: "How much", how: "How it works", compare: "Compare", pricing: "Pricing", faq: "FAQ", cta: "Try free" },
   hero: {
     badge: "Free trial · start with one hand",
     kicker: "Hand over a job description, a manual or a line",
@@ -342,7 +342,7 @@ const ja: Copy = {
     description: "受注の入力、経理、出荷の手配、EC の運営。職務記述書・手順書・ひとことで仕事を渡せば、Kitehand の担当者が覚えて、夜も休日も毎日同じやり方でこなします。無料で試せて、有料は担当者1人 月7,400円（税別）から。",
     og: "/og-ja.png",
   },
-  nav: { read: "何人分か", how: "しくみ", compare: "比べる", pricing: "料金", faq: "よくある質問", cta: "無料で試す" },
+  nav: { hands: "すぐ使える担当者", read: "何人分か", how: "しくみ", compare: "比べる", pricing: "料金", faq: "よくある質問", cta: "無料で試す" },
   hero: {
     badge: "無料で試せます · 担当者1人から",
     kicker: "職務記述書・手順書・ひとことで渡せる",

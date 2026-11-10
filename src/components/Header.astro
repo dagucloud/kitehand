@@ -19,6 +19,8 @@ const to = (anchor: string) => (home ? `#${anchor}` : `${base}#${anchor}`);
   <div class="wrap bar">
     <a class="logo" href={base} aria-label="Kitehand"><img src="/lockup.svg" alt="Kitehand" width="134" height="30" /></a>
     <nav>
+      {/* Shown by the Worker with the section it leads to. */}
+      {home && <a href="#hands" data-hands-link hidden>{copy.nav.hands}</a>}
       <a href={to("read")}>{copy.nav.read}</a>
       <a href={to("how")}>{copy.nav.how}</a>
       <a href={to("compare")}>{copy.nav.compare}</a>
