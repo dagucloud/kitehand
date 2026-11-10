@@ -1,0 +1,22 @@
+---
+// Kitehand's ready-made hands in the page's language. The page is built with
+// the section hidden and its list empty; the Worker fills the list and shows
+// the section when there are hands to name (worker/index.mjs).
+import type { Copy } from "../i18n/copy";
+import Phrases from "./Phrases.astro";
+
+interface Props {
+  copy: Copy;
+}
+
+const { copy } = Astro.props;
+---
+
+<section class="section ready-hands" id="hands" data-hands hidden>
+  <div class="wrap">
+    <span class="eyebrow">{copy.hands.eyebrow}</span>
+    <h2 class="section-title"><Phrases text={copy.hands.title} /></h2>
+    <p class="ready-hands-lede">{copy.hands.lede}</p>
+    <ul class="ready-hands-list" data-hands-list></ul>
+  </div>
+</section>

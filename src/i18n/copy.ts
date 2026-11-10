@@ -74,7 +74,7 @@ export type Copy = {
     options: { name: string; cells: string[] }[];
     notes: string[];
   };
-  ranking: { eyebrow: string; title: string; lede: string; by: string; used: string; usedOnce: string; cta: string };
+  hands: { eyebrow: string; title: string; lede: string };
   trust: { eyebrow: string; title: string; items: { title: string; body: string }[] };
   // Free, then the paid plans priced per hand: Own Key, where the company
   // brings its own AI model, and Pro, which is featured.
@@ -234,14 +234,10 @@ const en: Copy = {
       "² Time Etc's smallest plan, October 2026.",
     ],
   },
-  ranking: {
-    eyebrow: "Ranking",
-    title: "The hands people use most.",
-    lede: "Published by the people who made them. Star the ones you like, and start your own from any of them.",
-    by: "by {author}",
-    used: "Used {count} times",
-    usedOnce: "Used once",
-    cta: "Publish your own hand",
+  hands: {
+    eyebrow: "Ready-made hands",
+    title: "Start with a hand that already knows the job.",
+    lede: "Each of these is a job we've already taught a hand. Open one to see how it does the work and what it did last time, then start your own from it, free.",
   },
   trust: {
     eyebrow: "Confidential",
@@ -456,14 +452,10 @@ const ja: Copy = {
       "² CASTER BIZ と HELP YOU の月30時間プラン（税抜、2026年10月時点）。",
     ],
   },
-  ranking: {
-    eyebrow: "ランキング",
-    title: "いま、よく使われている担当者。",
-    lede: "つくった人が公開した担当者です。気に入ったらスターを付けて、そのまま自分の担当者を始められます。",
-    by: "{author} の担当者",
-    used: "{count}回使われました",
-    usedOnce: "1回使われました",
-    cta: "自分の担当者を公開する",
+  hands: {
+    eyebrow: "すぐ使える担当者",
+    title: "仕事を覚えた担当者から、始められます。",
+    lede: "どれも、仕事を覚えさせてある担当者です。開くと、仕事の進め方と前回やったことが見られます。そのまま自分の担当者として、無料で始められます。",
   },
   trust: {
     eyebrow: "秘密を守る",

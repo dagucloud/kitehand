@@ -7,11 +7,11 @@ import Day from "./Day.astro";
 import Facts from "./Facts.astro";
 import Faq from "./Faq.astro";
 import Footer from "./Footer.astro";
+import Hands from "./Hands.astro";
 import Header from "./Header.astro";
 import Hero from "./Hero.astro";
 import How from "./How.astro";
 import Pricing from "./Pricing.astro";
-import Ranking from "./Ranking.astro";
 import Reader from "./Reader.astro";
 import Trust from "./Trust.astro";
 
@@ -27,7 +27,7 @@ const path = copy.lang === "ja" ? "/ja/" : "/";
   <Header copy={copy} alternate={copy.other.home} />
   <main>
     <Hero copy={copy} />
-    <Ranking copy={copy} />
+    <Hands copy={copy} />
     <Facts copy={copy} />
     <Reader copy={copy} />
     <Day copy={copy} />

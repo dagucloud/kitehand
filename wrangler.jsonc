@@ -1,6 +1,6 @@
 {
   // kitehand.ai: the static site in dist/, served as a Worker's assets. The
-  // Worker runs only for the home pages, which show the ranking.
+  // Worker runs only for the home pages, which name the ready-made hands.
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "kitehand",
   "main": "worker/index.mjs",

@@ -2387,82 +2387,86 @@ a.badge:hover {
   }
 }
 
-/* The ranking: the hands people use most, written in by the Worker. */
-.ranking {
+/* The ready-made hands: a card each, written in by the Worker. The hero
+   keeps room below itself for its phone, so the section adds none above. */
+.ready-hands {
   padding-top: 0;
 }
-.ranking-lede {
-  max-width: 620px;
-  margin: 20px 0 28px;
+
+.ready-hands-lede {
+  margin: 22px 0 0;
+  max-width: 34em;
+  font-size: 18px;
   color: var(--ink-2);
 }
-.ranking-list {
-  margin: 0;
+
+.ready-hands-list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  margin: clamp(36px, 5vw, 60px) 0 0;
   padding: 0;
   list-style: none;
-  border-top: 1px solid var(--line-2);
 }
-.ranking-row {
+
+@media (max-width: 980px) {
+  .ready-hands-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* A narrow screen's hero ends at its phone, so the section stands off it. */
+@media (max-width: 560px) {
+  .ready-hands {
+    padding-top: 72px;
+  }
+  .ready-hands-list {
+    grid-template-columns: 1fr;
+  }
+}
+
+.ready-hand {
   display: flex;
-  align-items: flex-start;
-  gap: 18px;
-  padding: 18px 4px;
-  border-bottom: 1px solid var(--line-2);
-  color: inherit;
+  flex-direction: column;
+  height: 100%;
+  padding: 26px;
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: 0 0 0 1px rgba(29, 32, 39, 0.06);
   text-decoration: none;
-}
-.ranking-row:hover strong {
-  color: var(--shu);
-}
-.ranking-rank {
-  flex: 0 0 2em;
-  color: var(--shu);
-  font-size: 22px;
-  font-weight: 700;
-  font-variant-numeric: tabular-nums;
-  text-align: center;
-}
-.ranking-name {
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  gap: 2px;
-  min-width: 0;
   overflow-wrap: anywhere;
+  transition: transform 0.25s var(--ease), box-shadow 0.25s;
 }
-.ranking-name span {
+
+.ready-hand:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 0 1px rgba(29, 32, 39, 0.06), var(--shadow);
+}
+
+.ready-hand strong {
+  font: 600 19px/1.35 var(--sans);
+}
+
+/* A long line about a hand is cut short; its page says the rest. */
+.ready-hand-summary {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+  line-clamp: 4;
+  overflow: hidden;
+  margin-top: 10px;
+  font-size: 15px;
   color: var(--ink-2);
-  font-size: 14px;
 }
-.ranking-summary {
-  margin-top: 4px;
-}
-.ranking-counts {
-  display: flex;
-  flex: 0 0 auto;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 2px;
-  color: var(--ink-2);
-  font-size: 14px;
-  font-variant-numeric: tabular-nums;
-}
-.ranking-stars {
-  color: var(--ink);
+
+.ready-hand .arrow {
+  margin-top: auto;
+  padding-top: 18px;
+  color: var(--shu);
   font-weight: 700;
+  transition: transform 0.25s var(--ease);
 }
-.ranking-foot {
-  margin: 28px 0 0;
-}
-@media (max-width: 640px) {
-  .ranking-row {
-    flex-wrap: wrap;
-  }
-  .ranking-counts {
-    flex: 1 0 100%;
-    flex-direction: row;
-    justify-content: flex-start;
-    gap: 12px;
-    padding-left: calc(2em + 18px);
-  }
+
+.ready-hand:hover .arrow {
+  transform: translateX(3px);
 }
